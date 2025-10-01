@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< Updated upstream:Assets/Adaptive Performance/Settings.meta
 guid: 9fcb60ab4a300d343a416b0b2d24d9e2
+========
+guid: a9f19b7f47a33b04ca5f3a18667267f7
+>>>>>>>> Stashed changes:Assets/Prefabs.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
