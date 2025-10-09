@@ -45,26 +45,4 @@ public class ItemShape
         
         return rotated;
     }
-    
-    // Metody pomocnicze do tworzenia popularnych kształtów
-    public static ItemShape CreateRectangle(int width, int height)
-    {
-        var shape = new ItemShape();
-        shape.occupiedCells.Clear();
-        
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                shape.occupiedCells.Add(new Vector2Int(x, y));
-            }
-        }
-        
-        return shape;
-    }
-    
-    public static ItemShape CreateSingleCell()
-    {
-        return new ItemShape();
-    }
 }
