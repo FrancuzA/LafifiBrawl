@@ -9,24 +9,19 @@ public class DragableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     private Transform originalParent;
     private Vector3 originalPosition;
     private Canvas canvas;
-    private ItemShapeVisualizer shapeVisualizer;
     
     private void Awake()
     {
         image = GetComponent<Image>();
         canvas = GetComponentInParent<Canvas>();
-        shapeVisualizer = GetComponent<ItemShapeVisualizer>();
     }
     
     public void OnBeginDrag(PointerEventData eventData)
     {
-        // Upewnij się, że komponenty są zainicjalizowane
         if (image == null)
             image = GetComponent<Image>();
         if (canvas == null)
             canvas = GetComponentInParent<Canvas>();
-        if (shapeVisualizer == null)
-            shapeVisualizer = GetComponent<ItemShapeVisualizer>();
             
         originalParent = transform.parent;
         originalPosition = transform.localPosition;
@@ -44,35 +39,21 @@ public class DragableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         if (canvas != null)
         {
             Vector2 position;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                canvas.transform as RectTransform,
-                eventData.position,
-                canvas.worldCamera,
-                out position);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, eventData.position, canvas.worldCamera, out position);
             transform.localPosition = position;
-            
-            // Pokazuj kształt obiektu podczas przeciągania
-            if (shapeVisualizer != null)
-            {
-                shapeVisualizer.ShowShapeAtPosition(transform.position);
-            }
+    
         }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        // Ukryj wizualizację kształtu
-        if (shapeVisualizer != null)
-        {
-            shapeVisualizer.HideShape();
-        }
-        
         // Sprawdź czy parentAfterDrag został zmieniony przez OnDrop
         if (parentAfterDrag != originalParent)
         {
             // Drop się udał - umieść obiekt w nowym rodzicu
             transform.SetParent(parentAfterDrag);
             transform.localPosition = Vector3.zero;
+            transform.localScale = Vector3.one;
         }
         else
         {
