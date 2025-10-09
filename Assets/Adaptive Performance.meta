@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: c6ad9b7a02782ea458668f4f87bdef9a
+<<<<<<<< Updated upstream:Assets/Adaptive Performance.meta
+guid: e933860ab466f0444a075be01ac65d4c
+========
+guid: 4105bd8d5735cb34ba44c44d978176bc
+>>>>>>>> Stashed changes:Assets/Lafifis.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
