@@ -10,6 +10,7 @@ public class Dependencies : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        DontDestroyOnLoad(this.gameObject);
     }
 
     private Dictionary<Type, object> dependencies = new();
