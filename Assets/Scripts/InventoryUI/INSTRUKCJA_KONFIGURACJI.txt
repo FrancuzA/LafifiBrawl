@@ -1,0 +1,229 @@
+﻿═══════════════════════════════════════════════════════════════════════════
+   INSTRUKCJA KONFIGURACJI GRID INVENTORY Z RÓŻNYMI ROZMIARAMI ITEMÓW
+═══════════════════════════════════════════════════════════════════════════
+
+📋 SPIS SKRYPTÓW I ICH PRZEZNACZENIE:
+════════════════════════════════════════════════════════════════════════════
+
+1. InventoryItem.cs - ScriptableObject (NIE PODPINAJ DO ŻADNEGO OBIEKTU)
+2. GridInventoryItem.cs - Klasa pomocnicza (NIE PODPINAJ DO ŻADNEGO OBIEKTU)
+3. Grid.cs - Klasa pomocnicza (NIE PODPINAJ DO ŻADNEGO OBIEKTU)
+4. InventoryGrid.cs - PODEPNIJ DO GŁÓWNEGO OBIEKTU INVENTORY
+5. InventoryUI.cs - PODEPNIJ DO GŁÓWNEGO OBIEKTU INVENTORY
+6. Test.cs - PODEPNIJ DO GŁÓWNEGO OBIEKTU INVENTORY (do testów)
+7. InventoryItemDragHandler.cs - PODEPNIJ DO PREFABA ITEMU (opcjonalnie)
+
+
+════════════════════════════════════════════════════════════════════════════
+KROK 1: STWÓRZ ITEMY (SCRIPTABLE OBJECTS)
+════════════════════════════════════════════════════════════════════════════
+
+1. W folderze Project kliknij PPM → Create → Inventory → Item
+2. Nazwij go np. "Sword" (Miecz 1x3)
+3. W Inspectorze ustaw:
+   - Item Name: "Miecz"
+   - Width: 1
+   - Height: 3
+   - Icon: [Przeciągnij sprite miecza]
+   - Description: "Długi miecz"
+
+4. Powtórz dla innych itemów:
+   - "Potion" (1x1) - mała mikstora
+   - "Shield" (2x2) - tarcza
+   - "Bow" (1x4) - łuk
+   - "Helmet" (2x1) - hełm
+   itp.
+
+
+════════════════════════════════════════════════════════════════════════════
+KROK 2: STWÓRZ HIERARCHIĘ UI
+════════════════════════════════════════════════════════════════════════════
+
+Hierarchy:
+├── Canvas (Screen Space - Overlay)
+│   └── InventoryPanel (Panel)
+│       └── GridContainer (Empty GameObject z Grid Layout Group WYŁĄCZONYM)
+
+Szczegóły konfiguracji:
+
+A) Canvas:
+   - Render Mode: Screen Space - Overlay
+   - (Standardowe ustawienia Canvas)
+
+B) InventoryPanel:
+   - Dodaj komponent: Image (tło inventory)
+   - Color: półprzezroczyste tło (np. czarne z alpha 0.8)
+   - Szerokość: 640, Wysokość: 320 (dostosuj do potrzeb)
+
+C) GridContainer:
+   - To będzie rodzic dla wszystkich komórek i itemów
+   - WAŻNE: To pusty GameObject (RectTransform), BEZ Grid Layout Group!
+   - Anchor: Left-Bottom (lewy dolny róg)
+   - Pozycja: (0, 0)
+
+
+════════════════════════════════════════════════════════════════════════════
+KROK 3: STWÓRZ PREFAB KOMÓRKI (CELL)
+════════════════════════════════════════════════════════════════════════════
+
+1. W Hierarchy stwórz: GameObject → UI → Image
+2. Nazwij go "CellPrefab"
+3. Konfiguracja:
+   - Image Component:
+     * Color: Szary z alpha (R:0.3, G:0.3, B:0.3, A:0.5)
+     * Raycast Target: ✓ (zaznaczone)
+   - RectTransform:
+     * Width: 64
+     * Height: 64
+
+4. Przeciągnij do folderu Prefabs aby stworzyć prefab
+5. Usuń z Hierarchy
+
+
+════════════════════════════════════════════════════════════════════════════
+KROK 4: STWÓRZ PREFAB ITEMU (ITEM VISUAL)
+════════════════════════════════════════════════════════════════════════════
+
+1. W Hierarchy stwórz: GameObject → UI → Image
+2. Nazwij go "ItemPrefab"
+3. Konfiguracja:
+   - Image Component:
+     * Source Image: (zostaw puste - będzie ustawiane dynamicznie)
+     * Color: Biały (R:1, G:1, B:1, A:1)
+     * Raycast Target: ✓ (zaznaczone)
+     * Preserve Aspect: ✓ (opcjonalnie)
+   - RectTransform:
+     * Width: 64 (będzie zmieniane dynamicznie)
+     * Height: 64 (będzie zmieniane dynamicznie)
+   
+4. OPCJONALNIE - Dla Drag & Drop:
+   - Dodaj komponent: CanvasGroup
+   - Dodaj skrypt: InventoryItemDragHandler
+     (pola inventoryGrid i inventoryUI będą ustawiane przez kod)
+
+5. Przeciągnij do folderu Prefabs
+6. Usuń z Hierarchy
+
+
+════════════════════════════════════════════════════════════════════════════
+KROK 5: STWÓRZ GŁÓWNY OBIEKT INVENTORY
+════════════════════════════════════════════════════════════════════════════
+
+1. W Hierarchy stwórz pusty GameObject
+2. Nazwij go "InventorySystem"
+3. Pozycja może być (0, 0, 0) - nie ma znaczenia dla UI
+
+4. Dodaj komponent: InventoryGrid
+   Pola do wypełnienia:
+   ┌─────────────────────────────────────────────────────────────┐
+   │ Width: 10              (10 komórek szerokości)              │
+   │ Height: 5              (5 komórek wysokości)                │
+   │ Cell Size: 64          (rozmiar komórki w pikselach)        │
+   │ Origin Position: [GridContainer] (przeciągnij z Hierarchy)  │
+   └─────────────────────────────────────────────────────────────┘
+
+5. Dodaj komponent: InventoryUI
+   Pola do wypełnienia:
+   ┌─────────────────────────────────────────────────────────────┐
+   │ Inventory Grid: [Automatycznie znajdzie]                    │
+   │ Cell Prefab: [Przeciągnij CellPrefab z Prefabs]            │
+   │ Item Prefab: [Przeciągnij ItemPrefab z Prefabs]            │
+   │ Grid Container: [Przeciągnij GridContainer z Hierarchy]     │
+   │ Normal Cell Color: (0.3, 0.3, 0.3, 0.5) - szary            │
+   │ Highlight Cell Color: (0.5, 0.8, 0.5, 0.5) - zielony       │
+   │ Invalid Cell Color: (0.8, 0.3, 0.3, 0.5) - czerwony        │
+   └─────────────────────────────────────────────────────────────┘
+
+6. Dodaj komponent: Test (do testowania)
+   Pola do wypełnienia:
+   ┌─────────────────────────────────────────────────────────────┐
+   │ Inventory Grid: [Automatycznie znajdzie]                    │
+   │ Inventory UI: [Automatycznie znajdzie]                      │
+   │ Test Items: [Tablica - dodaj utworzone InventoryItems]     │
+   │   - Element 0: Sword                                        │
+   │   - Element 1: Potion                                       │
+   │   - Element 2: Shield                                       │
+   │   (dodaj więcej przyciskiem +)                              │
+   └─────────────────────────────────────────────────────────────┘
+
+
+════════════════════════════════════════════════════════════════════════════
+STRUKTURA FINALNA W HIERARCHY:
+════════════════════════════════════════════════════════════════════════════
+
+Scene
+├── Main Camera
+├── InventorySystem (3 skrypty: InventoryGrid, InventoryUI, Test)
+└── Canvas
+    └── InventoryPanel
+        └── GridContainer
+            └── (komórki i itemy będą tworzone automatycznie)
+
+
+════════════════════════════════════════════════════════════════════════════
+STEROWANIE (w Play Mode):
+════════════════════════════════════════════════════════════════════════════
+
+🖱️ LEWY PRZYCISK MYSZY - Dodaje aktualny item w miejscu kliknięcia
+🖱️ PRAWY PRZYCISK MYSZY - Usuwa item w miejscu kliknięcia
+⌨️ SPACJA - Zmienia aktualny item (przełącza między testItems)
+
+W konsoli zobaczysz komunikaty:
+- "Placed [nazwa] (WxH) at (X, Y)" - item dodany
+- "Cannot place [nazwa] at (X, Y)" - brak miejsca
+- "Removed [nazwa] from (X, Y)" - item usunięty
+
+
+════════════════════════════════════════════════════════════════════════════
+WAŻNE UWAGI:
+════════════════════════════════════════════════════════════════════════════
+
+✓ GridContainer MUSI być dzieckiem Canvas
+✓ Cell Size w InventoryGrid MUSI odpowiadać rozmiarowi CellPrefab
+✓ Origin Position MUSI wskazywać na GridContainer
+✓ Itemy są tworzone jako ScriptableObjects (Create → Inventory → Item)
+✓ Grid automatycznie sprawdza czy item się mieści
+✓ Większe itemy zajmują wiele komórek (np. 2x2 = 4 komórki)
+
+
+════════════════════════════════════════════════════════════════════════════
+ROZWIĄZYWANIE PROBLEMÓW:
+════════════════════════════════════════════════════════════════════════════
+
+Problem: Itemy nie są widoczne
+→ Sprawdź czy ItemPrefab ma komponent Image
+→ Sprawdź czy InventoryItems mają przypisane ikony (Sprite)
+
+Problem: Nie mogę dodać żadnego itemu
+→ Sprawdź Origin Position w InventoryGrid
+→ Sprawdź czy klikasz w obszarze gridu
+→ Zmniejsz rozmiar itemu (width/height) lub zwiększ rozmiar gridu
+
+Problem: Komórki się nie pokazują
+→ Sprawdź czy CellPrefab jest przypisany
+→ Sprawdź czy GridContainer jest przypisany
+→ Uruchom grę - komórki tworzą się w Start()
+
+Problem: Kolor komórek nie zmienia się
+→ Sprawdź czy CellPrefab ma komponent Image
+→ Sprawdź kolory w InventoryUI (alpha musi być > 0)
+
+
+════════════════════════════════════════════════════════════════════════════
+DALSZY ROZWÓJ:
+════════════════════════════════════════════════════════════════════════════
+
+Po przetestowaniu możesz dodać:
+- Drag & Drop (użyj InventoryItemDragHandler na ItemPrefab)
+- Rotację itemów (dodaj pole rotation w InventoryItem)
+- Stackowanie itemów tego samego typu
+- Zapisywanie inventory do pliku
+- Wielokrotne inventory (plecak, skrzynia, itp.)
+- Tooltip z opisem itemu
+- Dźwięki przy dodawaniu/usuwaniu
+
+
+════════════════════════════════════════════════════════════════════════════
+Powodzenia! 🎮
+════════════════════════════════════════════════════════════════════════════
+
