@@ -5,35 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="439fb33a-b1a3-426d-9b11-bcaeed9647f0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/InventoryUI/Editor.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/InventoryUI/Editor/InventorySetupHelper.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/InventoryUI/Editor/InventorySetupHelper.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/InventoryUI/GridInventoryItem.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/InventoryUI/GridInventoryItem.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/InventoryUI/INSTRUKCJA_KONFIGURACJI.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/InventoryUI/INSTRUKCJA_KONFIGURACJI.txt.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/InventoryUI/InventoryGrid.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/InventoryUI/InventoryGrid.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/InventoryUI/InventoryItem.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/InventoryUI/InventoryItem.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/InventoryUI/InventoryItemDragHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/InventoryUI/InventoryItemDragHandler.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/InventoryUI/InventoryUI.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/InventoryUI/InventoryUI.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.LafifiBrawl/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.LafifiBrawl/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Adaptive Performance/AdaptivePerformanceGeneralSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Adaptive Performance/AdaptivePerformanceGeneralSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Adaptive Performance/Settings/Simulator Provider Settings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Adaptive Performance/Settings/Simulator Provider Settings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/InputSystem_Actions.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/InputSystem_Actions.inputactions" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionDemos/Photon-Fusion-Intro-Sample-2.0.6-Stable-1034.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Photon-Fusion-Menu-2.0.6-Stable-1034.unitypackage.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Lafifis/Marek.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Lafifis/Marek.asset.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/General/Editor.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/General/GridShape.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/General/GridShape.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/General/InventoryGrid.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/General/InventoryGrid.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/General/InventoryItem.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/General/InventoryItem.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/General/InventorySlot.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/General/InventorySlot.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/General/ItemShape.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/General/ItemShape.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/General/Lafifi.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/General/Lafifi.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/General/LafifiSO.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/General/LafifiSO.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI Projekt/AdjustGridLayoutCellSize.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI Projekt/AdjustGridLayoutCellSize.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI Projekt/ScaleScript.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI Projekt/ScaleScript.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/InventoryUI/Grid.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/InventoryUI/Grid.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/InventoryUI/Test.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/InventoryUI/Test.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/URPProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/URPProjectSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -57,6 +51,7 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/InventoryUI/Editor/InventorySetupHelper.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/InventoryUI/Grid.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
@@ -64,6 +59,9 @@
   &quot;associatedIndex&quot;: 1
 }</component>
   <component name="ProjectId" id="33SaIbANeeSWd9PXK0UaCLyiMvr" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -150,6 +148,7 @@
       <workItem from="1759313304894" duration="651000" />
       <workItem from="1760547808268" duration="14000" />
       <workItem from="1760549616777" duration="2140000" />
+      <workItem from="1760559079929" duration="2597000" />
     </task>
     <servers />
   </component>
