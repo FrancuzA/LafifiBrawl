@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 
 public class GetReady : MonoBehaviour
 {
@@ -14,4 +14,4 @@ public class GetReady : MonoBehaviour
             Debug.LogWarning("NetworkRunner not initialized yet. Please wait for the game to start.");
         }
     }
-}
+}*/

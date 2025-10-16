@@ -1,4 +1,4 @@
-using Fusion;
+/*using Fusion;
 using UnityEngine;
 
 public class Unit : NetworkBehaviour
@@ -70,4 +70,4 @@ public class Unit : NetworkBehaviour
             Runner.Despawn(Object);
         }
     }
-}
+}*/

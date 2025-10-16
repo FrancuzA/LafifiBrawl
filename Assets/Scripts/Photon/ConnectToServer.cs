@@ -1,3 +1,4 @@
+/*
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
@@ -21,3 +22,4 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         SceneManager.LoadScene("MainMenu");
     }
 }
+*/
