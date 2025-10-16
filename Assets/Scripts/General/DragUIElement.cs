@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -7,7 +9,6 @@ using UnityEngine.UI;
 public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
     [Header("Drag Settings")]
-    public float distanceFromTarget;
     [Range(0, 1)] public float alphaThreshold = 0.1f;
 
     [Header("Visual Feedback")]
@@ -21,15 +22,18 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private Vector3 originalScale;
     private Vector3 targetScale;
 
-   
+    private CanvasGroup canvasGroup;
     private float originalZPosition;
     private Vector3 originalPosition;
     public Vector3 startPosition;
-    
+    public Vector3 centerOffsetValue;
 
-    private Transform originalParent;
-    private int originalSiblingIndex;
-    private CanvasGroup canvasGroup;
+    [Header("ItemInfo")]
+    public List<GameObject> cellsToCheck;
+    public int requairedSpace;
+    public int currentSpaceInGrid = 0;
+    public LayerMask layer;
+    public Transform cellToSnap;
 
     private void Awake()
     {
@@ -39,9 +43,9 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         image = GetComponent<Image>();
         originalScale = rectTransform.localScale;
         targetScale = originalScale;
-
+        requairedSpace = cellsToCheck.Count;
         originalZPosition = rectTransform.position.z;
-
+        originalPosition = gameObject.transform.position;
         canvasGroup = GetComponent<CanvasGroup>();
         if (canvasGroup == null)
         {
@@ -58,19 +62,16 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         }
     }
 
-    private void OnEnable()
-    {
-        gameObject.transform.SetLocalPositionAndRotation(new Vector3(0, 0, -0.1f), Quaternion.identity);
-    }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (canvas.renderMode == RenderMode.WorldSpace)
+        if (canvas.renderMode == RenderMode.ScreenSpaceOverlay)
         {
             Dependencies.Instance.UnregisterDependency<DragUIElement>();
             Dependencies.Instance.RegisterDependency<DragUIElement>(this);
+            ResetAvaibleSpsace();
             originalZPosition = rectTransform.position.z;
-            originalPosition = gameObject.transform.position;
+            
             RectTransformUtility.ScreenPointToWorldPointInRectangle(
                 rectTransform,
                 eventData.position,
@@ -83,16 +84,12 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             isDragging = true;
             targetScale = originalScale * dragScaleFactor;
 
-            originalParent = transform.parent;
-            originalSiblingIndex = transform.GetSiblingIndex();
-
-            transform.SetParent(canvas.transform);
-            transform.SetAsLastSibling();
-
             if (canvasGroup != null)
             {
                 canvasGroup.blocksRaycasts = false;
             }
+
+            RemoveItemFromGrid();
         }
     }
 
@@ -100,11 +97,18 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         isDragging = false;
         targetScale = originalScale;
-        gameObject.transform.SetPositionAndRotation(originalPosition, Quaternion.identity);
 
-        transform.SetParent(originalParent);
-        transform.SetSiblingIndex(originalSiblingIndex);
-
+        CheckSpace();
+        if(currentSpaceInGrid == requairedSpace)
+        {
+            Debug.Log("test");
+            FindCellToSnap();
+            PlaceItemOnGrid();
+        }
+        else
+        {
+            gameObject.transform.SetPositionAndRotation(originalPosition, Quaternion.identity);
+        }
         if (canvasGroup != null)
         {
             canvasGroup.blocksRaycasts = true;
@@ -113,7 +117,7 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (isDragging && canvas.renderMode == RenderMode.WorldSpace)
+        if (isDragging && canvas.renderMode == RenderMode.ScreenSpaceOverlay)
         {
             RectTransformUtility.ScreenPointToWorldPointInRectangle(
                 canvas.GetComponent<RectTransform>(),
@@ -135,6 +139,213 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                 rectTransform.localScale,
                 targetScale,
                 Time.deltaTime * scaleSpeed);
+        }
+    }
+
+    public void CheckSpace()
+    {
+        if (EventSystem.current == null)
+        {
+            Debug.LogError("No EventSystem found in scene!");
+            return;
+        }
+
+        GraphicRaycaster raycaster = FindObjectOfType<GraphicRaycaster>();
+        if (raycaster == null)
+        {
+            Debug.LogError("No GraphicRaycaster found! Make sure your Canvas has one.");
+            return;
+        }
+
+
+        foreach (GameObject cell in cellsToCheck)
+        {
+            if (cell == null) continue;
+
+            Vector2 screenPosition;
+
+            RectTransform rectTransform = cell.GetComponent<RectTransform>();
+            if (rectTransform != null)
+            {
+                screenPosition = rectTransform.position;
+            }
+            else
+            {
+                screenPosition = Camera.main.WorldToScreenPoint(cell.transform.position);
+            }
+
+
+            PointerEventData pointerData = new PointerEventData(EventSystem.current);
+            pointerData.position = screenPosition;
+
+            List<RaycastResult> results = new List<RaycastResult>();
+            raycaster.Raycast(pointerData, results);
+
+            if (results.Count > 0)
+            {
+                foreach (RaycastResult result in results)
+                {
+                    CellScript cellScript = result.gameObject.GetComponent<CellScript>();
+                    if (cellScript != null)
+                    {
+                        cellScript.SendInfoToItem();
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log($"No UI elements found at position for cell: {cell.name}");
+            }
+        }
+    }
+
+    public void AddAvaibleSpace(int hasSpace)
+    {
+        currentSpaceInGrid += hasSpace;
+    }
+
+    public void ResetAvaibleSpsace()
+    {
+        currentSpaceInGrid = 0;
+    }
+
+    public void FindCellToSnap() 
+    {
+            Vector2 screenPosition;
+
+            RectTransform rectTransform = cellsToCheck[0].GetComponent<RectTransform>();
+            if (rectTransform != null)
+            {
+                screenPosition = rectTransform.position;
+            }
+            else
+            {
+                screenPosition = Camera.main.WorldToScreenPoint(cellsToCheck[0].transform.position);
+            }
+
+            GraphicRaycaster raycaster = FindObjectOfType<GraphicRaycaster>();
+
+            PointerEventData pointerData = new PointerEventData(EventSystem.current);
+            pointerData.position = screenPosition;
+
+            List<RaycastResult> results = new List<RaycastResult>();
+            raycaster.Raycast(pointerData, results);
+
+            if (results.Count > 0)
+            {
+                foreach (RaycastResult result in results)
+                {
+                  CellScript cellScript = result.gameObject.GetComponent<CellScript>();
+                   if (cellScript != null)
+                  {
+                    cellScript.SendTransformToItem();
+                    break;
+                  }
+                 }
+            }
+            else
+            {
+                Debug.Log($"No UI elements found at position for cell: {cellsToCheck[0].name}");
+            }
+        
+    }
+
+    public void SetCellToSnap(Transform position)
+    {
+        cellToSnap = position;
+    }
+
+    public void PlaceItemOnGrid()
+    {
+        gameObject.transform.SetPositionAndRotation(cellToSnap.position + centerOffsetValue, Quaternion.identity);
+
+
+        foreach (GameObject cell in cellsToCheck)
+        {
+            if (cell == null) continue;
+
+            Vector2 screenPosition;
+
+            RectTransform rectTransform = cell.GetComponent<RectTransform>();
+            if (rectTransform != null)
+            {
+                screenPosition = rectTransform.position;
+            }
+            else
+            {
+                screenPosition = Camera.main.WorldToScreenPoint(cell.transform.position);
+            }
+
+            GraphicRaycaster raycaster = FindObjectOfType<GraphicRaycaster>();
+
+            PointerEventData pointerData = new PointerEventData(EventSystem.current);
+            pointerData.position = screenPosition;
+
+            List<RaycastResult> results = new List<RaycastResult>();
+            raycaster.Raycast(pointerData, results);
+
+            if (results.Count > 0)
+            {
+                foreach (RaycastResult result in results)
+                {
+                    CellScript cellScript = result.gameObject.GetComponent<CellScript>();
+                    if (cellScript != null)
+                    {
+                        cellScript.SetAsOccupiedState();
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log($"No UI elements found at position for cell: {cell.name}");
+            }
+        }
+    }
+
+    public void RemoveItemFromGrid()
+    {
+        foreach (GameObject cell in cellsToCheck)
+        {
+            if (cell == null) continue;
+
+            Vector2 screenPosition;
+
+            RectTransform rectTransform = cell.GetComponent<RectTransform>();
+            if (rectTransform != null)
+            {
+                screenPosition = rectTransform.position;
+            }
+            else
+            {
+                screenPosition = Camera.main.WorldToScreenPoint(cell.transform.position);
+            }
+
+            GraphicRaycaster raycaster = FindObjectOfType<GraphicRaycaster>();
+
+            PointerEventData pointerData = new PointerEventData(EventSystem.current);
+            pointerData.position = screenPosition;
+
+            List<RaycastResult> results = new List<RaycastResult>();
+            raycaster.Raycast(pointerData, results);
+
+            if (results.Count > 0)
+            {
+                foreach (RaycastResult result in results)
+                {
+                    CellScript cellScript = result.gameObject.GetComponent<CellScript>();
+                    if (cellScript != null)
+                    {
+                        cellScript.SetAsbackpackState(); ;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log($"No UI elements found at position for cell: {cell.name}");
+            }
         }
     }
 
