@@ -1,4 +1,4 @@
-using Fusion;
+/*using Fusion;
 using UnityEngine;
 
 [System.Serializable]
@@ -14,4 +14,4 @@ public struct UnitData : INetworkStruct
         GridPosition = gridPos;
         OwnerPlayerId = ownerId;
     }
-}
+}*/
