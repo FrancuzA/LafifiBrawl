@@ -6,8 +6,11 @@ using Random = UnityEngine.Random;
 
 public class UnitSpawner : NetworkBehaviour
 {
-    [SerializeField] private GameObject[] unitPrefabs;
+    public static UnitSpawner Instance;
+    
+    [SerializeField] private GameObject unitPrefab;
     [SerializeField] private Transform[] spawnPoints;
+    [SerializeField] private UnitsStats[] unitsStats;
     private bool canSpawn = true;
 
     private IEnumerator SpawnUnits()
@@ -21,12 +24,27 @@ public class UnitSpawner : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void SpawnUnitsServerRpc()
     {
-        var unit = Instantiate(unitPrefabs[Random.Range(0, unitPrefabs.Length - 1)], spawnPoints[Random.Range(0, spawnPoints.Length - 1)].position, Quaternion.identity);
+        SpawnUnitClientRpc();
+    }
+    
+    [ClientRpc]
+    private void SpawnUnitClientRpc(ClientRpcParams clientRpcParams = default)
+    {
+        var unit = Instantiate(unitPrefab, spawnPoints[Random.Range(0, spawnPoints.Length)].position, Quaternion.identity);
+        var playerUnit = unit.GetComponent<PlayerUnit>();
+        playerUnit.Stats = unitsStats[Random.Range(0, unitsStats.Length)];
         unit.GetComponent<NetworkObject>().Spawn();
     }
 
     public override void OnNetworkSpawn()
     {
-        if(IsOwner) StartCoroutine(SpawnUnits());
+        base.OnNetworkSpawn();
+        if (!Instance) {
+            Instance = this;
+        }
+        else {
+            Destroy(this);
+        }
+        StartCoroutine(SpawnUnits());
     }
 }

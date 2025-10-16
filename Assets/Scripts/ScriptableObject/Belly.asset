@@ -10,10 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7541534406d73a545b39c63e92a84730, type: 3}
-  m_Name: Square
+  m_Name: Belly
   m_EditorClassIdentifier: 
-  CharacterName: 
-  CharacterImage: {fileID: 0}
-  CurrentHealthPoints: 50
-  MaxHealthPoints: 50
-  AttackDMG: 20
+  CharacterName: Celan My Belly
+  CharacterImage: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  MaxHealthPoints: 18
+  AttackDMG: 1
+  AttackSpd: 1
+  Ult: 3
+  UltCD: 14
+  UltCost: 6

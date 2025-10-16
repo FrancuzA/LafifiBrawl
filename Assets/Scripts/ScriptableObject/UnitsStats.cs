@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,8 +9,22 @@ public class UnitsStats : ScriptableObject
     public string CharacterName;
     public Sprite CharacterImage;
     [Header("Health")]
-    public int CurrentHealthPoints;
-    public int MaxHealthPoints;
+    public ushort MaxHealthPoints;
     [Header("Attack")]
-    public int AttackDMG;
+    public float AttackDMG;
+    public ushort AttackSpd;
+    [Header("Ult")]
+    public UltID Ult;
+    public ushort UltCD;
+    public ushort UltCost;
+}
+
+public enum UltID
+{
+    Lafifi = 0,
+    Kon = 1,
+    Grzegorz = 2,
+    Belly = 3,
+    Angelika = 4,
+    Rat = 5
 }
