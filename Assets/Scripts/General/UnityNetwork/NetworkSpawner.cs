@@ -1,4 +1,4 @@
-using System.Collections;
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -8,8 +8,11 @@ public class NetworkSpawner : MonoBehaviour
     public static NetworkSpawner Instance { get; private set; }
     
     [SerializeField] private GameObject unitPrefab;
-    [SerializeField] private Transform mySpawnPoint;
-    [SerializeField] private Transform enemySpawnPoint;
+    [SerializeField] private Transform playerOneSpawnPoint;
+    [SerializeField] private Transform PlayerTwoSpawnpoint;
+    
+    public List<GameObject> myUnits = new();
+    public List<GameObject> enemyUnits = new();
 
     private void Awake()
     {
@@ -21,25 +24,32 @@ public class NetworkSpawner : MonoBehaviour
         Instance = this;
     }
     
-    public void SpawnUnitsForPlayer(ulong playerClientId, UnitsStats stats)
+    public void SpawnUnitsForPlayer(NetworkClient playerClient, UnitsStats stats)
     {
         // Określ pozycję spawnu na podstawie clientId
         // Niższe clientId (host, zazwyczaj 0) spawn'uje na dole (mySpawnPoint)
         // Wyższe clientId (client, zazwyczaj 1) spawn'uje na górze (enemySpawnPoint)
-        bool spawnAtLeft = playerClientId == 0;
+        bool playerZero = playerClient.ClientId == 0;
         
-        Transform spawnPoint = spawnAtLeft ? mySpawnPoint : enemySpawnPoint;
+        Transform spawnPoint = playerZero ? playerOneSpawnPoint : PlayerTwoSpawnpoint;
         Vector3 spawnPosition = GetRandomSpawnPosition(spawnPoint);
         
         var unit = Instantiate(unitPrefab, spawnPosition, Quaternion.identity);
         var playerUnit = unit.GetComponent<PlayerUnit>();
-        playerUnit.Stats = stats;
         
-        var networkObject = unit.GetComponent<NetworkObject>();
-        networkObject.SpawnWithOwnership(playerClientId);
+        var unitNetworkObject = unit.GetComponent<NetworkObject>();
+        unitNetworkObject.SpawnWithOwnership(playerClient.ClientId);
         
         // Ustaw kolor po spawnie na wszystkich klientach
-        playerUnit.SetColorClientRpc(playerClientId);
+        playerUnit.SetColorClientRpc(playerClient.ClientId);
+        playerUnit.SetStatsClientRpc(
+            stats.CharacterName, stats.lafifiImg, 
+            stats.MaxHealthPoints,
+            stats.AttackDMG,
+            stats.AttackSpd,
+            stats.Ult,
+            stats.UltCD,
+            stats.UltCost);
     }
     
     private Vector3 GetRandomSpawnPosition(Transform spawnPoint)

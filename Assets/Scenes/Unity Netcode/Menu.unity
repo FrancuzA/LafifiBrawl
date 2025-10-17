@@ -410,7 +410,7 @@ GameObject:
   m_Component:
   - component: {fileID: 211964619}
   m_Layer: 0
-  m_Name: EnemySpawnpoints
+  m_Name: PlayerTwoSpawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1256,8 +1256,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitPrefab: {fileID: 1648190094190495329, guid: e890ba8159cfbd9409b9af847680a278, type: 3}
-  mySpawnPoint: {fileID: 1753998605}
-  enemySpawnPoint: {fileID: 211964619}
+  playerOneSpawnPoint: {fileID: 1753998605}
+  PlayerTwoSpawnpoint: {fileID: 211964619}
+  myUnits: []
+  enemyUnits: []
 --- !u!1 &1485443311
 GameObject:
   m_ObjectHideFlags: 0
@@ -1491,7 +1493,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1753998605}
   m_Layer: 0
-  m_Name: MySpawnPoints
+  m_Name: PlayerOneSpawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

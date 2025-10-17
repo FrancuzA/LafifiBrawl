@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7541534406d73a545b39c63e92a84730, type: 3}
-  m_Name: Grzegorz
+  m_Name: Rat
   m_EditorClassIdentifier: 
-  CharacterName: Grzegorz
-  lafifiImg: 1
-  MaxHealthPoints: 25
-  AttackDMG: 1.5
-  AttackSpd: 2
-  Ult: 2
-  UltCD: 10
-  UltCost: 5
+  CharacterName: Rat
+  lafifiImg: 5
+  MaxHealthPoints: 30
+  AttackDMG: 0.5
+  AttackSpd: 1
+  Ult: 5
+  UltCD: 8
+  UltCost: 3
