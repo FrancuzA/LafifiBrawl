@@ -9,11 +9,9 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class PlayerUnit : NetworkBehaviour
 {
-    public UnitsStats Stats = null;
+    public UnitsStats Stats;
     
-    [Header("Name and Image")]
-    public string CharacterName;
-    public SpriteRenderer spriteRenderer;
+    private SpriteRenderer spriteRenderer;
     [Header("Health")]
     public ushort MaxHealthPoints;
     [Header("Attack")]
@@ -23,26 +21,15 @@ public class PlayerUnit : NetworkBehaviour
     public UltID Ult;
     public ushort UltCD;
     public ushort UltCost;
-    
 
-    public override void OnNetworkSpawn()
+    private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        StartCoroutine(SetStats());
     }
-
-    private IEnumerator SetStats()
+    
+    [ClientRpc]
+    public void SetColorClientRpc(ulong unitOwnerId)
     {
-        yield return Stats != null;
-        CharacterName = Stats.CharacterName;
-        spriteRenderer.sprite = Stats.CharacterImage;
-        MaxHealthPoints = Stats.MaxHealthPoints;
-        AttackDMG = Stats.AttackDMG;
-        AttackSpd = Stats.AttackSpd;
-        Ult = Stats.Ult;
-        UltCD = Stats.UltCD;
-        UltCost = Stats.UltCost;
-
-        spriteRenderer.color = NetworkObject.IsOwner ? Color.green : Color.red;
+        spriteRenderer.color = unitOwnerId == NetworkManager.Singleton.LocalClientId ? Color.green : Color.red;
     }
 }

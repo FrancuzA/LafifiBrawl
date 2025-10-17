@@ -127,3 +127,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  stats:
+  - {fileID: 11400000, guid: a2960a92cbf25f4459be2acc84e8fd59, type: 2}
