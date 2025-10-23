@@ -311,6 +311,8 @@ GameObject:
   - component: {fileID: 580674423}
   - component: {fileID: 580674422}
   - component: {fileID: 580674421}
+  - component: {fileID: 580674425}
+  - component: {fileID: 580674424}
   m_Layer: 5
   m_Name: HostButton
   m_TagString: Untagged
@@ -432,6 +434,68 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 580674419}
   m_CullTransparentMesh: 1
+--- !u!114 &580674424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 580674419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -331935372
+      Data2: 1122136587
+      Data3: 1931890105
+      Data4: 2093545722
+    Path: event:/UIClick
+  Event: 
+  EventPlayTrigger: 19
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
+--- !u!114 &580674425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 580674419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1080175590
+      Data2: 1233046612
+      Data3: 913984658
+      Data4: -1108607292
+    Path: event:/UIHover
+  Event: 
+  EventPlayTrigger: 17
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &610797455
 GameObject:
   m_ObjectHideFlags: 0
@@ -680,8 +744,8 @@ GameObject:
   m_Component:
   - component: {fileID: 897722643}
   - component: {fileID: 897722642}
-  - component: {fileID: 897722641}
   - component: {fileID: 897722644}
+  - component: {fileID: 897722645}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -689,14 +753,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &897722641
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 897722640}
-  m_Enabled: 1
 --- !u!20 &897722642
 Camera:
   m_ObjectHideFlags: 0
@@ -807,6 +863,20 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &897722645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 897722640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 610797455}
 --- !u!1 &1523936574
 GameObject:
   m_ObjectHideFlags: 0
@@ -975,6 +1045,8 @@ GameObject:
   - component: {fileID: 1948260990}
   - component: {fileID: 1948260989}
   - component: {fileID: 1948260988}
+  - component: {fileID: 1948260992}
+  - component: {fileID: 1948260991}
   m_Layer: 5
   m_Name: JoinButton
   m_TagString: Untagged
@@ -1096,6 +1168,68 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1948260986}
   m_CullTransparentMesh: 1
+--- !u!114 &1948260991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948260986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -331935372
+      Data2: 1122136587
+      Data3: 1931890105
+      Data4: 2093545722
+    Path: event:/UIClick
+  Event: 
+  EventPlayTrigger: 19
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
+--- !u!114 &1948260992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948260986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1080175590
+      Data2: 1233046612
+      Data3: 913984658
+      Data4: -1108607292
+    Path: event:/UIHover
+  Event: 
+  EventPlayTrigger: 17
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &1981697544
 GameObject:
   m_ObjectHideFlags: 0
@@ -1125,7 +1259,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3efc576c29a297a449c9b3b7d69fcf54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _runner: {fileID: 0}
 --- !u!4 &1981697546
 Transform:
   m_ObjectHideFlags: 0
