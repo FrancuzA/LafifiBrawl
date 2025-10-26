@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -34,6 +36,10 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public int currentSpaceInGrid = 0;
     public LayerMask layer;
     public Transform cellToSnap;
+
+    [Header("Audio")]
+    public EventReference backpackSoundRef;
+    public EventInstance backpackSound;
 
     private void Awake()
     {
@@ -259,8 +265,9 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void PlaceItemOnGrid()
     {
         gameObject.transform.SetPositionAndRotation(cellToSnap.position + centerOffsetValue, Quaternion.identity);
-
-
+        backpackSound = RuntimeManager.CreateInstance(backpackSoundRef);
+        backpackSound.start();
+        backpackSound.release();
         foreach (GameObject cell in cellsToCheck)
         {
             if (cell == null) continue;

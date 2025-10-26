@@ -1,0 +1,330 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8958856769717817622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/WinJingle
+  m_EditorClassIdentifier: 
+  Path: event:/WinJingle
+  Guid:
+    Data1: -1461581334
+    Data2: 1169865472
+    Data3: 1665146015
+    Data4: 1261362375
+  Banks:
+  - {fileID: 4022192506484085297}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 3209
+--- !u!114 &-5793571762003444867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/loseJingle
+  m_EditorClassIdentifier: 
+  Path: event:/loseJingle
+  Guid:
+    Data1: 802484801
+    Data2: 1130601097
+    Data3: -685119047
+    Data4: -304377191
+  Banks:
+  - {fileID: 4022192506484085297}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 6000
+--- !u!114 &-1782744582279725104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UIHover
+  m_EditorClassIdentifier: 
+  Path: event:/UIHover
+  Guid:
+    Data1: -1080175590
+    Data2: 1233046612
+    Data3: 913984658
+    Data4: -1108607292
+  Banks:
+  - {fileID: 4022192506484085297}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 31
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
+  m_Name: FMODStudioCache
+  m_EditorClassIdentifier: 
+  EditorBanks:
+  - {fileID: 4403019268308880073}
+  - {fileID: 4022192506484085297}
+  EditorEvents:
+  - {fileID: 7870034514370308229}
+  - {fileID: -1782744582279725104}
+  - {fileID: 4537675553544211492}
+  - {fileID: 7513149110400012901}
+  - {fileID: -5793571762003444867}
+  - {fileID: -8958856769717817622}
+  - {fileID: 5591950170020248052}
+  - {fileID: 7417157417760632834}
+  - {fileID: 5400466280648529308}
+  EditorParameters: []
+  MasterBanks:
+  - {fileID: 4022192506484085297}
+  StringsBanks:
+  - {fileID: 4403019268308880073}
+  cacheVersion: 131849
+  cacheTime: 638968238746569329
+  SerializableEventsDict:
+  - key: event:/BackPackSound
+    index: 0
+  - key: event:/UIHover
+    index: 1
+  - key: event:/UIClick
+    index: 2
+  - key: event:/UnitDeath
+    index: 3
+  - key: event:/loseJingle
+    index: 4
+  - key: event:/WinJingle
+    index: 5
+--- !u!114 &4022192506484085297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/MusicAndSounds/LafifiSounds/Build/Desktop/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 638968238746549332
+  FileSizes:
+  - Name: Desktop
+    Value: 259136
+  Exists: 1
+--- !u!114 &4403019268308880073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/MusicAndSounds/LafifiSounds/Build/Desktop/Master.strings.bank
+  Name: Master.strings
+  StudioPath: bank:/Master.strings
+  lastModified: 638968238746569329
+  FileSizes:
+  - Name: Desktop
+    Value: 1150
+  Exists: 1
+--- !u!114 &4537675553544211492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UIClick
+  m_EditorClassIdentifier: 
+  Path: event:/UIClick
+  Guid:
+    Data1: -331935372
+    Data2: 1122136587
+    Data3: 1931890105
+    Data4: 2093545722
+  Banks:
+  - {fileID: 4022192506484085297}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 139
+--- !u!114 &5400466280648529308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/BloodRegen
+  m_EditorClassIdentifier: 
+  Path: event:/BloodRegen
+  Guid:
+    Data1: 662150173
+    Data2: 1104784902
+    Data3: -1111507310
+    Data4: -1216426409
+  Banks:
+  - {fileID: 4022192506484085297}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 162
+--- !u!114 &5591950170020248052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/BuyingSound
+  m_EditorClassIdentifier: 
+  Path: event:/BuyingSound
+  Guid:
+    Data1: 119400806
+    Data2: 1332667908
+    Data3: -794892655
+    Data4: -1138312457
+  Banks:
+  - {fileID: 4022192506484085297}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1667
+--- !u!114 &7417157417760632834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/BattleStart
+  m_EditorClassIdentifier: 
+  Path: event:/BattleStart
+  Guid:
+    Data1: 1495307272
+    Data2: 1154298709
+    Data3: 819073419
+    Data4: 1644019563
+  Banks:
+  - {fileID: 4022192506484085297}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 6000
+--- !u!114 &7513149110400012901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UnitDeath
+  m_EditorClassIdentifier: 
+  Path: event:/UnitDeath
+  Guid:
+    Data1: 688519417
+    Data2: 1134827591
+    Data3: 1705441435
+    Data4: -1405598763
+  Banks:
+  - {fileID: 4022192506484085297}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 606
+--- !u!114 &7870034514370308229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/BackPackSound
+  m_EditorClassIdentifier: 
+  Path: event:/BackPackSound
+  Guid:
+    Data1: 1084016397
+    Data2: 1140291326
+    Data3: 1054329248
+    Data4: -1751623397
+  Banks:
+  - {fileID: 4022192506484085297}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1750
