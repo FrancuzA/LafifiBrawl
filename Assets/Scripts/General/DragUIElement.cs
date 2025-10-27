@@ -1,6 +1,8 @@
 using FMOD.Studio;
 using FMODUnity;
 using System.Collections.Generic;
+using General;
+using General.Managers;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -38,11 +40,11 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public Transform cellToSnap;
 
     [Header("Audio")]
-    public EventReference backpackSoundRef;
-    public EventInstance backpackSound;
+    [SerializeField] private AudioManager audioManager;
 
     private void Awake()
     {
+        audioManager = Dependencies.Instance.GetDependency<AudioManager>();
         startPosition = gameObject.transform.position;
         rectTransform = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
@@ -248,7 +250,7 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                     cellScript.SendTransformToItem();
                     break;
                   }
-                 }
+                }
             }
             else
             {
@@ -265,9 +267,8 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void PlaceItemOnGrid()
     {
         gameObject.transform.SetPositionAndRotation(cellToSnap.position + centerOffsetValue, Quaternion.identity);
-        backpackSound = RuntimeManager.CreateInstance(backpackSoundRef);
-        backpackSound.start();
-        backpackSound.release();
+        audioManager.StopBackpackSound();
+        audioManager.PlayBackpackSound();
         foreach (GameObject cell in cellsToCheck)
         {
             if (cell == null) continue;

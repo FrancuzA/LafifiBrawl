@@ -112,7 +112,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: 4403019268308880073}
   cacheVersion: 131849
-  cacheTime: 638968238746569329
+  cacheTime: 638971212052463285
   SerializableEventsDict:
   - key: event:/BackPackSound
     index: 0
@@ -126,6 +126,12 @@ MonoBehaviour:
     index: 4
   - key: event:/WinJingle
     index: 5
+  - key: event:/BuyingSound
+    index: 6
+  - key: event:/BattleStart
+    index: 7
+  - key: event:/BloodRegen
+    index: 8
 --- !u!114 &4022192506484085297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,7 +147,7 @@ MonoBehaviour:
   Path: Assets/MusicAndSounds/LafifiSounds/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638968238746549332
+  lastModified: 638971212052447792
   FileSizes:
   - Name: Desktop
     Value: 259136
@@ -161,7 +167,7 @@ MonoBehaviour:
   Path: Assets/MusicAndSounds/LafifiSounds/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638968238746569329
+  lastModified: 638971212052463285
   FileSizes:
   - Name: Desktop
     Value: 1150

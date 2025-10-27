@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: -5177388603050735206, guid: 8884154dfe85442a3a3578be807dbcdf, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -88,15 +88,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a374fc74860011448945115d7a9215c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxBlood: 10
   currentBlood: 0
   inGame: 1
-  BloodRegenRef:
-    Guid:
-      Data1: 662150173
-      Data2: 1104784902
-      Data3: -1111507310
-      Data4: -1216426409
-    Path: event:/BloodRegen
 --- !u!1 &8852517533119448976
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,10 +125,10 @@ RectTransform:
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -1551}
-  m_SizeDelta: {x: -1160, y: -3739}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 102.5735}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &6279283873212653082
 CanvasRenderer:
   m_ObjectHideFlags: 0
