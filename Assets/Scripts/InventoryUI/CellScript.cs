@@ -1,3 +1,4 @@
+using General;
 using UnityEngine;
 
 public class CellScript : MonoBehaviour
@@ -9,13 +10,13 @@ public class CellScript : MonoBehaviour
     {
         if (CellState == 1) 
         {
-            Dependencies.Instance.GetDependancy<DragUIElement>().AddAvaibleSpace(1);
+            Dependencies.Instance.GetDependency<DragUIElement>().AddAvaibleSpace(1);
         }
     }
 
     public void SendTransformToItem() 
     {
-        Dependencies.Instance.GetDependancy<DragUIElement>().SetCellToSnap(gameObject.transform);
+        Dependencies.Instance.GetDependency<DragUIElement>().SetCellToSnap(gameObject.transform);
     }
     public void SetEmptyState()
     {

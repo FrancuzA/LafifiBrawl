@@ -2,43 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class Dependencies : MonoBehaviour
+namespace General
 {
-    public static Dependencies Instance;
-
-    private void Awake()
+    [DefaultExecutionOrder(-50)]
+    public class Dependencies : MonoBehaviour
     {
-        Instance = this;
-        DontDestroyOnLoad(this.gameObject);
-    }
+        public static Dependencies Instance;
+        private Dictionary<Type, object> dependencies = new();
 
-    private Dictionary<Type, object> dependencies = new();
-
-    public void RegisterDependency<T>(T instance)
-    {
-        if (dependencies.ContainsKey(typeof(T)))
+        private void Awake()
         {
-            return;
-        }
-        dependencies.Add(typeof(T), instance);
-    }
-
-    public T GetDependancy<T>()
-    {
-        if (dependencies.TryGetValue(typeof(T), out var value))
-        {
-            return (T)value;
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
         }
 
-        return default;
-    }
-
-    public void UnregisterDependency<T>()
-    {
-        if (dependencies.ContainsKey(typeof(T)))
+        public void RegisterDependency<T>(T instance)
         {
-            dependencies.Remove(typeof(T));
+            if (dependencies.ContainsKey(typeof(T)))
+            {
+                return;
+            }
+            dependencies.Add(typeof(T), instance);
+        }
+
+        public T GetDependency<T>()
+        {
+            if (dependencies.TryGetValue(typeof(T), out var value))
+            {
+                return (T)value;
+            }
+
+            return default;
+        }
+
+        public void UnregisterDependency<T>()
+        {
+            if (dependencies.ContainsKey(typeof(T)))
+            {
+                dependencies.Remove(typeof(T));
+            }
         }
     }
 }
