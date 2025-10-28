@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "Units Statistics", menuName = "Scriptable/Units Statistics")]
 public class UnitsStats : ScriptableObject
