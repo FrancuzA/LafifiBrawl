@@ -1,12 +1,12 @@
 using System.Collections.Generic;
+using General;
+using General.UnityNetwork;
 using Unity.Netcode;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class NetworkSpawner : MonoBehaviour
 {
-    public static NetworkSpawner Instance { get; private set; }
-    
     [SerializeField] private GameObject unitPrefab;
     [SerializeField] private Transform playerOneSpawnPoint;
     [SerializeField] private Transform PlayerTwoSpawnpoint;
@@ -16,19 +16,19 @@ public class NetworkSpawner : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
+        if(Dependencies.Instance.GetDependency<NetworkSpawner>() != null)
         {
             Destroy(gameObject);
             return;
         }
-        Instance = this;
+        Dependencies.Instance.RegisterDependency(this);
     }
     
     public void SpawnUnitsForPlayer(NetworkClient playerClient, UnitsStats stats)
     {
         // Określ pozycję spawnu na podstawie clientId
-        // Niższe clientId (host, zazwyczaj 0) spawn'uje na dole (mySpawnPoint)
-        // Wyższe clientId (client, zazwyczaj 1) spawn'uje na górze (enemySpawnPoint)
+        // Niższe clientId (host, zazwyczaj 0) spawn'uje z lewej (mySpawnPoint)
+        // Wyższe clientId (client, zazwyczaj 1) spawn'uje z prawej (enemySpawnPoint)
         bool playerZero = playerClient.ClientId == 0;
         
         Transform spawnPoint = playerZero ? playerOneSpawnPoint : PlayerTwoSpawnpoint;
@@ -59,3 +59,4 @@ public class NetworkSpawner : MonoBehaviour
         return spawnPoint.position + new Vector3(xOffset, yOffset, 0);
     }
 }
+

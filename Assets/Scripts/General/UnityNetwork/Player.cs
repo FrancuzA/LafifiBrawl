@@ -1,31 +1,31 @@
 using System.Collections;
+using General;
 using Unity.Netcode;
 using UnityEngine;
 
 public class Player : NetworkBehaviour
 {
-    [SerializeField]
-    private UnitsStats[] stats;
+    [SerializeField] private UnitsStats[] stats;
+    [SerializeField] private GameObject bloodManager;
     private SpriteRenderer spriteRenderer;
     private bool isSpawning = true;
+    private NetworkSpawner networkSpawner;
     
     [Header("Stats")]
     public NetworkVariable<ushort> playerHealth = new NetworkVariable<ushort>(100);
-    public NetworkVariable<ushort> mana = new NetworkVariable<ushort>(100);
+    public NetworkVariable<int> blood = new NetworkVariable<int>(10);
 
     public override void OnNetworkSpawn()
     {
+        
         spriteRenderer = GetComponent<SpriteRenderer>();
+        networkSpawner = Dependencies.Instance.GetDependency<NetworkSpawner>();
         if (IsOwner)
         {
             transform.position = new Vector3(0, -3.8f, 0);
             spriteRenderer.color = Color.white;
+            bloodManager.SetActive(true);
             StartCoroutine(SpawnUnitsRoutine());
-            // TYLKO HOST SPAWN'UJE JEDNOSTKI - to zapobiega duplikowaniu
-            /*if (IsServer && NetworkSpawner.Instance != null)
-            {
-                StartCoroutine(SpawnUnitsRoutine());
-            }*/
         }
         else
         {
@@ -37,38 +37,23 @@ public class Player : NetworkBehaviour
     private IEnumerator SpawnUnitsRoutine()
     {
         yield return new WaitUntil(() => NetworkManager.Singleton.ConnectedClients.Count > 1);
-        for (int i = 0; i < 50; i++)
+        var wait = new WaitForSeconds(0.1f);
+        for (var i = 0; i < 50; i++)
         {
             SpawnUnitServerRpc();
-            yield return new WaitForSeconds(0.05f);
+            yield return wait;
         }
         
     }
-    
-    /*[ClientRpc]
-    public void AddUnitToListClientRpc(ulong ownerClientId, GameObject unitNetworkObject)
-    {
-        if (NetworkSpawner.Instance == null) return;
-        if (ownerClientId == NetworkManager.Singleton.LocalClientId)
-        {
-            NetworkSpawner.Instance.myUnits.Add(unitNetworkObject.gameObject);
-        }
-        else
-        {
-            NetworkSpawner.Instance.enemyUnits.Add(unitNetworkObject.gameObject);
-        }
-    }*/
     
     [ServerRpc]
     private void SpawnUnitServerRpc(ServerRpcParams rpcParams = default)
     {
         var clientId = rpcParams.Receive.SenderClientId;
         var client = NetworkManager.Singleton.ConnectedClients[clientId];
-        if (NetworkSpawner.Instance != null)
-        {
-            NetworkSpawner.Instance.SpawnUnitsForPlayer(client, stats[Random.Range(0, stats.Length)]);
-        }
-        
+        if (!networkSpawner) networkSpawner = Dependencies.Instance.GetDependency<NetworkSpawner>();
+        networkSpawner.SpawnUnitsForPlayer(client, stats[Random.Range(0, stats.Length)]);
+
     }
 
 }

@@ -4,7 +4,7 @@ public class GetReady : MonoBehaviour
 {
     public void StartGetReady()
     {
-        BasicSpawner basicSpawner = Dependencies.Instance.GetDependancy<BasicSpawner>();
+        BasicSpawner basicSpawner = Dependencies.Instance.GetDependency<BasicSpawner>();
         if (basicSpawner != null && basicSpawner._runner != null)
         {
             basicSpawner.ReadyUp();

@@ -275,6 +275,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b431f55ed33466f488adc1f18d30b708, type: 2}
   - {fileID: 11400000, guid: 532926fbdbdb1a84e9fd90d56d84b2cd, type: 2}
   - {fileID: 11400000, guid: 3f763f5ece5ed7d419433555cbb80cb9, type: 2}
+  bloodManager: {fileID: 7415435213623478296}
   playerHealth:
     m_InternalValue: 100
   mana:
@@ -737,6 +738,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bloodbar
       objectReference: {fileID: 0}
+    - target: {fileID: 8852517533119448976, guid: 05e00d987abf91649a6d8ff328a796e5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -745,5 +750,10 @@ PrefabInstance:
 --- !u!224 &3727859245380200152 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3426846762843318608, guid: 05e00d987abf91649a6d8ff328a796e5, type: 3}
+  m_PrefabInstance: {fileID: 2031860942042812296}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7415435213623478296 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8852517533119448976, guid: 05e00d987abf91649a6d8ff328a796e5, type: 3}
   m_PrefabInstance: {fileID: 2031860942042812296}
   m_PrefabAsset: {fileID: 0}
