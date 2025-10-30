@@ -44,7 +44,6 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     private void Awake()
     {
-        audioManager = Dependencies.Instance.GetDependency<AudioManager>();
         startPosition = gameObject.transform.position;
         rectTransform = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
@@ -267,6 +266,7 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void PlaceItemOnGrid()
     {
         gameObject.transform.SetPositionAndRotation(cellToSnap.position + centerOffsetValue, Quaternion.identity);
+        if(audioManager == null)audioManager = Dependencies.Instance.GetDependency<AudioManager>();
         audioManager.StopBackpackSound();
         audioManager.PlayBackpackSound();
         foreach (GameObject cell in cellsToCheck)
