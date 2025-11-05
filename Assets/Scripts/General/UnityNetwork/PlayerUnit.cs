@@ -11,6 +11,7 @@ namespace General.UnityNetwork
     [RequireComponent(typeof(SpriteRenderer))]
     public class PlayerUnit : NetworkBehaviour
     {
+        private bool canAttack;
         public UnitsStats stats = null;
     
         [Header("Look")]
@@ -33,6 +34,20 @@ namespace General.UnityNetwork
         private void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            StartCoroutine(AttackCoroutine());
+        }
+
+        private IEnumerator AttackCoroutine()
+        {
+            var wait = new WaitForSeconds(AttackSpd);
+            canAttack = true;
+            while (true)
+            {
+                yield return new WaitUntil(() => !canAttack);
+                Debug.Log($"{gameObject.name} is waiting to attack again.");
+                yield return wait;
+                canAttack = true;
+            }
         }
 
         private void Update()
@@ -42,11 +57,12 @@ namespace General.UnityNetwork
             }
         }
 
-        private void OnCollisionEnter2D(Collision2D other)
+        private void OnCollisionStay2D(Collision2D other)
         {
             if(!other.gameObject.CompareTag("Unit")) return;
             other.gameObject.TryGetComponent(out PlayerUnit enemyUnit);
             if(enemyUnit.OwnerClientId == OwnerClientId) return;
+            if (!canAttack) return;
             Attack(enemyUnit);
         
         }
@@ -54,49 +70,35 @@ namespace General.UnityNetwork
         private void Attack(PlayerUnit enemyUnit)
         {
             enemyUnit.TakeDamageClientRpc(AttackDMG);
+            Debug.Log($"{gameObject.name} attacked {enemyUnit.gameObject.name} for {AttackDMG} damage.");
         }
 
         [ServerRpc(RequireOwnership = false)]
         private void WalkForwardServerRpc(){
-            if(OwnerClientId == 0)
+            MoveOrDie(OwnerClientId == 0 ? Vector3.right : Vector3.left);
+        }
+
+        private void MoveOrDie(Vector3 dir)
+        {
+            if (_targetUnit)
             {
-                if(!_targetUnit){
-                    transform.Translate(Vector3.right * (0.2f * Time.deltaTime));
-                    var collider2Ds = Physics2D.OverlapCircleAll(transform.position, 1f);
-                    foreach (var coli in collider2Ds)
-                    {
-                        if (!coli.gameObject.CompareTag("Unit")) continue;
-                        coli.gameObject.TryGetComponent(out PlayerUnit enemyUnit);
-                        if (enemyUnit.OwnerClientId == OwnerClientId) continue;
-                        _targetUnit = enemyUnit;
-                        break;
-                    }
-                }
-                else
+                transform.Translate((_targetUnit.transform.position - transform.position).normalized * (0.2f * Time.deltaTime));
+            }
+            else
+            {
+                transform.Translate(dir * (0.2f * Time.deltaTime));
+                var collider2Ds = Physics2D.OverlapCircleAll(transform.position, 10f);
+                foreach (var coli in collider2Ds)
                 {
-                    transform.Translate((_targetUnit.transform.position - transform.position).normalized * (0.2f * Time.deltaTime));
-                }
-            
-            } else {
-                if(!_targetUnit){
-                    transform.Translate(Vector3.left * (0.2f * Time.deltaTime));
-                    var collider2Ds = Physics2D.OverlapCircleAll(transform.position, 1f);
-                    foreach (var coli in collider2Ds)
-                    {
-                        if (!coli.gameObject.CompareTag("Unit")) continue;
-                        coli.gameObject.TryGetComponent(out PlayerUnit enemyUnit);
-                        if (enemyUnit.OwnerClientId == OwnerClientId) continue;
-                        _targetUnit = enemyUnit;
-                        break;
-                    }
-                }
-                else
-                {
-                    transform.Translate((_targetUnit.transform.position - transform.position).normalized * (0.2f * Time.deltaTime));
+                    if (!coli.gameObject.CompareTag("Unit")) continue;
+                    coli.gameObject.TryGetComponent(out PlayerUnit enemyUnit);
+                    if (enemyUnit.OwnerClientId == OwnerClientId) continue;
+                    _targetUnit = enemyUnit;
+                    break;
                 }
             }
         }
-    
+
         [ServerRpc(RequireOwnership = false)]
         private void DespawnUnitServerRpc(){
             NetworkObject.Despawn();
@@ -112,7 +114,14 @@ namespace General.UnityNetwork
                 DespawnUnitServerRpc();
             }
         }
-        
+
+        [ClientRpc]
+        public void SetStartHealthPointsClientRpc()
+        {
+            if (!IsOwner) return;
+            CurrentHealthPoints.Value = MaxHealthPoints;
+        }
+
 
         [ClientRpc]
         public void SetStatsClientRpc(string characterName, LafifiImg lafifiImg, ushort maxHealthPoints, 

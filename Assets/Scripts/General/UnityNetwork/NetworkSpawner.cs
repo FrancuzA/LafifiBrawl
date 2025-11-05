@@ -10,9 +10,6 @@ public class NetworkSpawner : MonoBehaviour
     [SerializeField] private GameObject unitPrefab;
     [SerializeField] private Transform playerOneSpawnPoint;
     [SerializeField] private Transform PlayerTwoSpawnpoint;
-    
-    public List<GameObject> myUnits = new();
-    public List<GameObject> enemyUnits = new();
 
     private void Awake()
     {
@@ -42,6 +39,8 @@ public class NetworkSpawner : MonoBehaviour
         
         // Ustaw kolor po spawnie na wszystkich klientach
         playerUnit.SetColorClientRpc(playerClient.ClientId);
+
+        // Ustaw statystyki jednostki
         playerUnit.SetStatsClientRpc(
             stats.CharacterName, stats.lafifiImg, 
             stats.MaxHealthPoints,
@@ -50,6 +49,8 @@ public class NetworkSpawner : MonoBehaviour
             stats.Ult,
             stats.UltCD,
             stats.UltCost);
+
+        playerUnit.SetStartHealthPointsClientRpc();
     }
     
     private Vector3 GetRandomSpawnPosition(Transform spawnPoint)
