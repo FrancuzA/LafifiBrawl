@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{c72a8c27-4dae-48fc-8244-5d1cf568cbd9}">
+		<property name="assetPath">
+			<value>clean my belly/Belley2.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.89997732426303856</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{00c42129-2f75-4b3d-85b2-b3552ef0fe15}</destination>
+		</relationship>
+	</object>
+</objects>
