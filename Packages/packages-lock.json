@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.community.netcode.transport.photon-realtime": {
+      "version": "https://github.com/Unity-Technologies/multiplayer-community-contributions.git?path=/Transports/com.community.netcode.transport.photon-realtime",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "5cea8f048cc16f3575fabcf03af3ebafbc390499"
+    },
     "com.unity.2d.animation": {
       "version": "10.1.4",
       "depth": 1,
