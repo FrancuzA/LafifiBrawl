@@ -1,7 +1,5 @@
-using System;
-using System.Collections;
+using General;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 
 public class Shopmanager : MonoBehaviour
@@ -19,6 +17,7 @@ public class Shopmanager : MonoBehaviour
 
     private void InitializeShop()
     {
+        Dependencies.Instance.RegisterDependency<Shopmanager>(this);
         ChosenItems.Clear();
         foreach (Transform placement in ItemPlacements)
         {
@@ -30,7 +29,8 @@ public class Shopmanager : MonoBehaviour
             }
             Debug.Log("chosen " + newItemIndex);
             ChosenItems.Add(newItemIndex);
-            Instantiate(ItemsToBuy[newItemIndex], placement.position, Quaternion.identity, placement);
+            GameObject spawnedItem = Instantiate(ItemsToBuy[newItemIndex], placement.position, Quaternion.identity, placement);
+            spawnedItem.GetComponent<DragUIElement>().isBought = false;
         }
     }
 
