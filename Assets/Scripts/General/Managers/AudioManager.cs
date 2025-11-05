@@ -64,6 +64,33 @@ namespace General.Managers
             RuntimeManager.PlayOneShot(eventRef, soundPos);
         }
 
+        public void PlayUlt(UltID ult)
+        {
+            switch (ult)
+            {
+                case UltID.Belly:
+                    PlayCleanMaBelleyUlt();
+                    break;
+                case UltID.Grzegorz:
+                    PlayGrzegorzUlt();
+                    break;
+                case UltID.Kon:
+                    PlayKonLongUlt();
+                    break;
+                case UltID.Lafifi:
+                    PlayLafifiUlt();
+                    break;
+                case UltID.Angelika:
+                    PlayAngelikaUlt();
+                    break;
+                case UltID.Rat:
+                    PlayRatUlt();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(ult), ult, null);
+            }
+        }
+
         public void PlayAngelikaUlt()
         {
             PlayEventInstance(AngelikaUltInstance);
