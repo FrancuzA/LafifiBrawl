@@ -1,10 +1,7 @@
-using FMOD.Studio;
-using FMODUnity;
 using System.Collections.Generic;
 using General;
 using General.Managers;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -18,29 +15,36 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [Header("Visual Feedback")]
     [SerializeField] private float dragScaleFactor = 1.05f;
     [SerializeField] private float scaleSpeed = 10f;
-    private RectTransform rectTransform;
-    private Canvas canvas;
-    private bool isDragging = false;
-    private Vector3 offset;
-    private Image image;
-    private Vector3 originalScale;
-    private Vector3 targetScale;
-
-    private CanvasGroup canvasGroup;
-    private float originalZPosition;
-    private Vector3 originalPosition;
-    public Vector3 startPosition;
-    public Vector3 centerOffsetValue;
 
     [Header("ItemInfo")]
     public List<GameObject> cellsToCheck;
-    public int requairedSpace;
-    public int currentSpaceInGrid = 0;
-    public LayerMask layer;
-    public Transform cellToSnap;
+    public Vector3 centerOffsetValue;
+    public int cost;
+    public TextMeshProUGUI costText;
+    public bool isBought = true;
 
     [Header("Audio")]
     [SerializeField] private AudioManager audioManager;
+
+
+    private Canvas canvas;
+    private CanvasGroup canvasGroup;
+    private RectTransform rectTransform;
+    private Transform cellToSnap;
+    private Image image;
+    private Vector3 originalPosition;
+    private Vector3 startPosition;
+    private Vector3 offset;
+    private Vector3 originalScale;
+    private Vector3 targetScale;
+    private float originalZPosition;
+    private int requairedSpace;
+    private int currentSpaceInGrid = 0;
+    private bool isDragging = false;
+    private Shopmanager shop;
+    
+    
+    
 
     private void Awake()
     {
@@ -54,6 +58,8 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         originalZPosition = rectTransform.position.z;
         originalPosition = gameObject.transform.position;
         canvasGroup = GetComponent<CanvasGroup>();
+        costText.text = cost.ToString();
+        shop = Dependencies.Instance.GetDependency<Shopmanager>();
         if (canvasGroup == null)
         {
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
@@ -72,8 +78,15 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (canvas.renderMode == RenderMode.ScreenSpaceOverlay)
+        if (!isBought)
         {
+            if (cost > shop.Money) return;
+            else {isBought = true; shop.Money -= cost; }
+        }
+
+        if (canvas.renderMode == RenderMode.ScreenSpaceOverlay && isBought)
+        {
+            if (costText != null) DestroyText();
             Dependencies.Instance.UnregisterDependency<DragUIElement>();
             Dependencies.Instance.RegisterDependency<DragUIElement>(this);
             ResetAvaibleSpsace();
@@ -115,6 +128,7 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         else
         {
             gameObject.transform.SetPositionAndRotation(originalPosition, Quaternion.identity);
+            if (originalPosition != startPosition) { PlaceItemOnGrid(); }
         }
         if (canvasGroup != null)
         {
@@ -157,7 +171,7 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             return;
         }
 
-        GraphicRaycaster raycaster = FindObjectOfType<GraphicRaycaster>();
+        GraphicRaycaster raycaster = FindFirstObjectByType<GraphicRaycaster>();
         if (raycaster == null)
         {
             Debug.LogError("No GraphicRaycaster found! Make sure your Canvas has one.");
@@ -220,7 +234,6 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void FindCellToSnap() 
     {
             Vector2 screenPosition;
-
             RectTransform rectTransform = cellsToCheck[0].GetComponent<RectTransform>();
             if (rectTransform != null)
             {
@@ -231,7 +244,7 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                 screenPosition = Camera.main.WorldToScreenPoint(cellsToCheck[0].transform.position);
             }
 
-            GraphicRaycaster raycaster = FindObjectOfType<GraphicRaycaster>();
+            GraphicRaycaster raycaster = FindFirstObjectByType<GraphicRaycaster>();
 
             PointerEventData pointerData = new PointerEventData(EventSystem.current);
             pointerData.position = screenPosition;
@@ -266,7 +279,8 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void PlaceItemOnGrid()
     {
         gameObject.transform.SetPositionAndRotation(cellToSnap.position + centerOffsetValue, Quaternion.identity);
-        if(audioManager == null)audioManager = Dependencies.Instance.GetDependency<AudioManager>();
+        originalPosition = gameObject.transform.position;
+        if (audioManager == null)audioManager = Dependencies.Instance.GetDependency<AudioManager>();
         audioManager.StopBackpackSound();
         audioManager.PlayBackpackSound();
         foreach (GameObject cell in cellsToCheck)
@@ -285,7 +299,7 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                 screenPosition = Camera.main.WorldToScreenPoint(cell.transform.position);
             }
 
-            GraphicRaycaster raycaster = FindObjectOfType<GraphicRaycaster>();
+            GraphicRaycaster raycaster = FindFirstObjectByType<GraphicRaycaster>();
 
             PointerEventData pointerData = new PointerEventData(EventSystem.current);
             pointerData.position = screenPosition;
@@ -330,7 +344,7 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                 screenPosition = Camera.main.WorldToScreenPoint(cell.transform.position);
             }
 
-            GraphicRaycaster raycaster = FindObjectOfType<GraphicRaycaster>();
+            GraphicRaycaster raycaster = FindFirstObjectByType<GraphicRaycaster>();
 
             PointerEventData pointerData = new PointerEventData(EventSystem.current);
             pointerData.position = screenPosition;
@@ -355,6 +369,11 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                 Debug.Log($"No UI elements found at position for cell: {cell.name}");
             }
         }
+    }
+
+    public void DestroyText()
+    {
+        Destroy(costText.gameObject);
     }
 
 }
