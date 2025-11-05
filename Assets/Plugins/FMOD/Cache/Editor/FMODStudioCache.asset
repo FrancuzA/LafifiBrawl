@@ -281,7 +281,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: 4403019268308880073}
   cacheVersion: 131849
-  cacheTime: 638979485665382805
+  cacheTime: 638979495643708164
   SerializableEventsDict:
   - key: event:/BackPackSound
     index: 0
@@ -357,7 +357,7 @@ MonoBehaviour:
   Path: Assets/MusicAndSounds/LafifiSounds/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638979485665372818
+  lastModified: 638979495643688122
   FileSizes:
   - Name: Desktop
     Value: 661056
@@ -377,7 +377,7 @@ MonoBehaviour:
   Path: Assets/MusicAndSounds/LafifiSounds/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638979485665382805
+  lastModified: 638979495643708164
   FileSizes:
   - Name: Desktop
     Value: 1458
