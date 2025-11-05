@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="EncodableAsset" id="{b55beec9-dd11-4ff9-9ecd-6bfba8ea7c5c}">
+		<property name="assetPath">
+			<value>koń long/</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{00c42129-2f75-4b3d-85b2-b3552ef0fe15}</destination>
+		</relationship>
+	</object>
+</objects>

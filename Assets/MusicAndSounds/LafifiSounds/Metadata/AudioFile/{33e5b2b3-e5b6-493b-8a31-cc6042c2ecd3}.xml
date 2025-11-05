@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{33e5b2b3-e5b6-493b-8a31-cc6042c2ecd3}">
+		<property name="assetPath">
+			<value>autoatak/autoatak (3).wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>4.0110000000000001</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{00c42129-2f75-4b3d-85b2-b3552ef0fe15}</destination>
+		</relationship>
+	</object>
+</objects>

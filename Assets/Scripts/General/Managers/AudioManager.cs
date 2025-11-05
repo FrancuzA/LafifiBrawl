@@ -10,9 +10,23 @@ namespace General.Managers
     {
         public EventReference bloodRegenRef;
         public EventReference backpackSoundRef;
+        public EventReference AngelikaUlt;
+        public EventReference RatUlt;
+        public EventReference GrzegorzUlt;
+        public EventReference CleanMABelleyUlt;
+        public EventReference LafifiUlt;
+        public EventReference KonLongUlt;
+        public EventReference Attack;
         
         private List<EventInstance> _eventInstances = new List<EventInstance>();
         private EventInstance _backpackSoundInstance;
+        private EventInstance AngelikaUltInstance;
+        private EventInstance RatUltInstance;
+        private EventInstance GrzegorzUltInstance;
+        private EventInstance CleanMABelleyUltInstance;
+        private EventInstance LafifiUltInstance;
+        private EventInstance KonLongUltInstance;
+        private EventInstance AttackInstance;
         
         
         private void Awake()
@@ -26,6 +40,14 @@ namespace General.Managers
             DontDestroyOnLoad(gameObject);
             
             _backpackSoundInstance = CreateEventInstance(backpackSoundRef);
+            AngelikaUltInstance = CreateEventInstance(AngelikaUlt);
+            RatUltInstance = CreateEventInstance(RatUlt);
+            GrzegorzUltInstance = CreateEventInstance(GrzegorzUlt);
+            CleanMABelleyUltInstance = CreateEventInstance(CleanMABelleyUlt);
+            LafifiUltInstance = CreateEventInstance(LafifiUlt);
+            KonLongUltInstance = CreateEventInstance(KonLongUlt);
+            AttackInstance = CreateEventInstance(Attack);
+
         }
 
         private void OnDestroy()
@@ -41,7 +63,37 @@ namespace General.Managers
         {
             RuntimeManager.PlayOneShot(eventRef, soundPos);
         }
-        
+
+        public void PlayAngelikaUlt()
+        {
+            PlayEventInstance(AngelikaUltInstance);
+        }
+
+        public void PlayRatUlt()
+        {
+            PlayEventInstance(RatUltInstance);
+        }
+        public void PlayCleanMaBelleyUlt()
+        {
+            PlayEventInstance(CleanMABelleyUltInstance);
+        }
+        public void PlayKonLongUlt()
+        {
+            PlayEventInstance(KonLongUltInstance);
+        }
+        public void PlayGrzegorzUlt()
+        {
+            PlayEventInstance(GrzegorzUltInstance);
+        }
+        public void PlayLafifiUlt()
+        {
+            PlayEventInstance(LafifiUltInstance);
+        }
+
+        public void PlayAttackSound() 
+        {
+            PlayEventInstance(AttackInstance);
+        }
         public void PlayBackpackSound()
         {
             PlayEventInstance(_backpackSoundInstance);

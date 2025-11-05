@@ -27,6 +27,87 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 3209
+--- !u!114 &-8064991417853560298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/lafifiUlt
+  m_EditorClassIdentifier: 
+  Path: event:/lafifiUlt
+  Guid:
+    Data1: 611145052
+    Data2: 1086599964
+    Data3: 927224458
+    Data4: 1539214071
+  Banks:
+  - {fileID: 4022192506484085297}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2600
+--- !u!114 &-8026986274978752092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Attack
+  m_EditorClassIdentifier: 
+  Path: event:/Attack
+  Guid:
+    Data1: 399599631
+    Data2: 1174696725
+    Data3: -1922872916
+    Data4: 15216311
+  Banks:
+  - {fileID: 4022192506484085297}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 600
+--- !u!114 &-6915300388808447902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/RatUlt
+  m_EditorClassIdentifier: 
+  Path: event:/RatUlt
+  Guid:
+    Data1: 1848912753
+    Data2: 1196412460
+    Data3: -120390500
+    Data4: -775757941
+  Banks:
+  - {fileID: 4022192506484085297}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 950
 --- !u!114 &-5793571762003444867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54,6 +135,87 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 6000
+--- !u!114 &-5283718231935889055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/KonLongUlt
+  m_EditorClassIdentifier: 
+  Path: event:/KonLongUlt
+  Guid:
+    Data1: 1541215532
+    Data2: 1277087988
+    Data3: 855445675
+    Data4: -1887373714
+  Banks:
+  - {fileID: 4022192506484085297}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1003
+--- !u!114 &-4544057985057519762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/CleanMaBelleyUlt
+  m_EditorClassIdentifier: 
+  Path: event:/CleanMaBelleyUlt
+  Guid:
+    Data1: -323538540
+    Data2: 1261673364
+    Data3: -1179161948
+    Data4: -165147904
+  Banks:
+  - {fileID: 4022192506484085297}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1500
+--- !u!114 &-2271717239446744714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/AngelikaUlt
+  m_EditorClassIdentifier: 
+  Path: event:/AngelikaUlt
+  Guid:
+    Data1: -334782473
+    Data2: 1280259435
+    Data3: 355417531
+    Data4: -1778358945
+  Banks:
+  - {fileID: 4022192506484085297}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1400
 --- !u!114 &-1782744582279725104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,13 +268,20 @@ MonoBehaviour:
   - {fileID: 5591950170020248052}
   - {fileID: 7417157417760632834}
   - {fileID: 5400466280648529308}
+  - {fileID: -8026986274978752092}
+  - {fileID: -5283718231935889055}
+  - {fileID: -8064991417853560298}
+  - {fileID: -6915300388808447902}
+  - {fileID: -4544057985057519762}
+  - {fileID: 1073209034672154541}
+  - {fileID: -2271717239446744714}
   EditorParameters: []
   MasterBanks:
   - {fileID: 4022192506484085297}
   StringsBanks:
   - {fileID: 4403019268308880073}
   cacheVersion: 131849
-  cacheTime: 638979394045942701
+  cacheTime: 638979485665382805
   SerializableEventsDict:
   - key: event:/BackPackSound
     index: 0
@@ -132,6 +301,47 @@ MonoBehaviour:
     index: 7
   - key: event:/BloodRegen
     index: 8
+  - key: event:/Attack
+    index: 9
+  - key: event:/KonLongUlt
+    index: 10
+  - key: event:/lafifiUlt
+    index: 11
+  - key: event:/RatUlt
+    index: 12
+  - key: event:/CleanMaBelleyUlt
+    index: 13
+  - key: event:/GrzegorzUlt
+    index: 14
+  - key: event:/AngelikaUlt
+    index: 15
+--- !u!114 &1073209034672154541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/GrzegorzUlt
+  m_EditorClassIdentifier: 
+  Path: event:/GrzegorzUlt
+  Guid:
+    Data1: 1704176076
+    Data2: 1257418488
+    Data3: -1884200302
+    Data4: 1355237610
+  Banks:
+  - {fileID: 4022192506484085297}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 950
 --- !u!114 &4022192506484085297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,10 +357,10 @@ MonoBehaviour:
   Path: Assets/MusicAndSounds/LafifiSounds/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638979394045942701
+  lastModified: 638979485665372818
   FileSizes:
   - Name: Desktop
-    Value: 259136
+    Value: 661056
   Exists: 1
 --- !u!114 &4403019268308880073
 MonoBehaviour:
@@ -167,10 +377,10 @@ MonoBehaviour:
   Path: Assets/MusicAndSounds/LafifiSounds/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638979394045942701
+  lastModified: 638979485665382805
   FileSizes:
   - Name: Desktop
-    Value: 1150
+    Value: 1458
   Exists: 1
 --- !u!114 &4537675553544211492
 MonoBehaviour:

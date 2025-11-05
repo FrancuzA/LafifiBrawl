@@ -5076,6 +5076,146 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: Attack.Path
+      value: event:/Attack
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: RatUlt.Path
+      value: event:/RatUlt
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: LafifiUlt.Path
+      value: event:/lafifiUlt
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: KonLongUlt.Path
+      value: event:/KonLongUlt
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: AngelikaUlt.Path
+      value: event:/AngelikaUlt
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: GrzegorzUlt.Path
+      value: event:/GrzegorzUlt
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: Attack.Guid.Data1
+      value: 399599631
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: Attack.Guid.Data2
+      value: 1174696725
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: Attack.Guid.Data3
+      value: -1922872916
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: Attack.Guid.Data4
+      value: 15216311
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: RatUlt.Guid.Data1
+      value: 1848912753
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: RatUlt.Guid.Data2
+      value: 1196412460
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: RatUlt.Guid.Data3
+      value: -120390500
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: RatUlt.Guid.Data4
+      value: -775757941
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: LafifiUlt.Guid.Data1
+      value: 611145052
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: LafifiUlt.Guid.Data2
+      value: 1086599964
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: LafifiUlt.Guid.Data3
+      value: 927224458
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: LafifiUlt.Guid.Data4
+      value: 1539214071
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: CleanMABelleyUlt.Path
+      value: event:/CleanMaBelleyUlt
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: KonLongUlt.Guid.Data1
+      value: 1541215532
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: KonLongUlt.Guid.Data2
+      value: 1277087988
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: KonLongUlt.Guid.Data3
+      value: 855445675
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: KonLongUlt.Guid.Data4
+      value: -1887373714
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: AngelikaUlt.Guid.Data1
+      value: -334782473
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: AngelikaUlt.Guid.Data2
+      value: 1280259435
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: AngelikaUlt.Guid.Data3
+      value: 355417531
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: AngelikaUlt.Guid.Data4
+      value: -1778358945
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: GrzegorzUlt.Guid.Data1
+      value: 1704176076
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: GrzegorzUlt.Guid.Data2
+      value: 1257418488
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: GrzegorzUlt.Guid.Data3
+      value: -1884200302
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: GrzegorzUlt.Guid.Data4
+      value: 1355237610
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: CleanMABelleyUlt.Guid.Data1
+      value: -323538540
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: CleanMABelleyUlt.Guid.Data2
+      value: 1261673364
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: CleanMABelleyUlt.Guid.Data3
+      value: -1179161948
+      objectReference: {fileID: 0}
+    - target: {fileID: 6849035442614703210, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
+      propertyPath: CleanMABelleyUlt.Guid.Data4
+      value: -165147904
+      objectReference: {fileID: 0}
     - target: {fileID: 7993374632190114864, guid: de396f44fb65656448ac3448dda4f6bf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

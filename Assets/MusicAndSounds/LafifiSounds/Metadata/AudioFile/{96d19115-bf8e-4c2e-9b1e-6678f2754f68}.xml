@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{96d19115-bf8e-4c2e-9b1e-6678f2754f68}">
+		<property name="assetPath">
+			<value>french rat/ew-french (do pocięcia).mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>3.984</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{00c42129-2f75-4b3d-85b2-b3552ef0fe15}</destination>
+		</relationship>
+	</object>
+</objects>
