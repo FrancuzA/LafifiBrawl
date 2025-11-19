@@ -35,9 +35,14 @@ namespace General.UnityNetwork
         private void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
-            StartCoroutine(AttackCooldownCoroutine());
             if(!IsServer) return;
             CurrentHealthPoints.OnValueChanged += HealthChanged;
+        }
+
+        public override void OnNetworkSpawn()
+        {
+            base.OnNetworkSpawn();
+            StartCoroutine(AttackCooldownCoroutine());
         }
 
         private void HealthChanged(float previousValue, float newValue)
@@ -50,10 +55,11 @@ namespace General.UnityNetwork
 
         private IEnumerator AttackCooldownCoroutine()
         {
-            var wait = new WaitForSeconds(AttackSpd);
+            WaitForSeconds wait = new WaitForSeconds(AttackSpd);
             canAttack = true;
             while (CurrentHealthPoints.Value > 0)
             {
+                Debug.Log($"{gameObject.name} is ready to attack.");
                 yield return new WaitUntil(() => !canAttack);
                 Debug.Log($"{gameObject.name} is waiting to attack again.");
                 yield return wait;
