@@ -57,13 +57,13 @@ namespace General.UnityNetwork
         {
             WaitForSeconds wait = new WaitForSeconds(AttackSpd);
             canAttack = true;
-            while (true)
+            /*while (true)
             {
                 if (canAttack) continue;
                 Debug.Log($"{gameObject.name}:{NetworkObjectId} is waiting {AttackSpd} seconds to attack again.");
                 yield return wait;
                 canAttack = true;
-            }
+            }*/
         }
 
         private void Update()
