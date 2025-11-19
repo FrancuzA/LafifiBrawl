@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1d0ff559d6d3b6c449a70993c36e007d
+guid: 46b946546120a624fa85a3a20f5f5921
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3498711338708806169
-    second: lafifi_0
+      213: 8774024573681910882
+    second: TemczowyGregory_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -24,7 +24,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 1
+  isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: lafifi_0
+      name: TemczowyGregory_0
       rect:
         serializedVersion: 2
-        x: 108
-        y: 111
-        width: 1056
-        height: 1018
+        x: 66
+        y: 131
+        width: 1129
+        height: 2908
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 91aae53fc6bed8030800000000000000
-      internalID: 3498711338708806169
+      spriteID: 264cbdcecd893c970800000000000000
+      internalID: 8774024573681910882
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      lafifi_0: 3498711338708806169
+      TemczowyGregory_0: 8774024573681910882
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

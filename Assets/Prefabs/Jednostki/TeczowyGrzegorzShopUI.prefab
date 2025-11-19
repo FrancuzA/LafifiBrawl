@@ -218,6 +218,7 @@ GameObject:
   - component: {fileID: 853875338811740232}
   - component: {fileID: 1420451538842635872}
   - component: {fileID: 6222107715666760147}
+  - component: {fileID: -5608995259947388290}
   m_Layer: 5
   m_Name: TeczowyGrzegorzShopUI
   m_TagString: Untagged
@@ -276,9 +277,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 46b946546120a624fa85a3a20f5f5921, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -310,6 +311,22 @@ MonoBehaviour:
   costText: {fileID: 4425421538193161540}
   isBought: 1
   audioManager: {fileID: 0}
+--- !u!114 &-5608995259947388290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7950040068597558016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1619bbf87e46e8740a59216a5cbae71f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InventoryUI: {fileID: 0}
+  RTransform: {fileID: 5488898764413915762}
+  HeightMultip: 3
+  WidthMultip: 1
 --- !u!1 &8266218447003774361
 GameObject:
   m_ObjectHideFlags: 0

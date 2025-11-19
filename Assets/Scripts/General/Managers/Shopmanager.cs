@@ -1,5 +1,6 @@
 using General;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Shopmanager : MonoBehaviour
@@ -7,6 +8,7 @@ public class Shopmanager : MonoBehaviour
     public List<GameObject> ItemsToBuy = new List<GameObject>();
     public List<Transform> ItemPlacements = new List<Transform>();
     public List<int> ChosenItems = new List<int>();
+    public TextMeshProUGUI currentMoneyText;
     public int Money = 20;
     public bool killSwitch;
 
@@ -22,16 +24,15 @@ public class Shopmanager : MonoBehaviour
         foreach (Transform placement in ItemPlacements)
         {
             int newItemIndex = UnityEngine.Random.Range(0, ItemsToBuy.Count);
-            Debug.Log("First Index" + newItemIndex);
             if (ChosenItems.Count != 0)
             {
                 newItemIndex = CheckForDuplicate(newItemIndex);
             }
-            Debug.Log("chosen " + newItemIndex);
             ChosenItems.Add(newItemIndex);
             GameObject spawnedItem = Instantiate(ItemsToBuy[newItemIndex], placement.position, Quaternion.identity, placement);
             spawnedItem.GetComponent<DragUIElement>().isBought = false;
         }
+        UpdateMoneyCount();
     }
 
     private int CheckForDuplicate(int newIndex)
@@ -43,9 +44,13 @@ public class Shopmanager : MonoBehaviour
         while (ChosenItems.Contains(newIndex) && attempts < maxAttempts)
         {
             newIndex = UnityEngine.Random.Range(0, ItemsToBuy.Count);
-            Debug.Log("Rechosen index " + newIndex);
             attempts++;
         }
         return newIndex;
+    }
+
+    public void UpdateMoneyCount()
+    {
+        currentMoneyText.text = $"Gold: {Money.ToString()}";
     }
 }

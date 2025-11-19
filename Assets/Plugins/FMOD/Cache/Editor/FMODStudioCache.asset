@@ -189,6 +189,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1500
+--- !u!114 &-3199642627232948126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SellingSound
+  m_EditorClassIdentifier: 
+  Path: event:/SellingSound
+  Guid:
+    Data1: 1207680478
+    Data2: 1291785360
+    Data3: 270906505
+    Data4: 1676502480
+  Banks:
+  - {fileID: 4022192506484085297}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 903
 --- !u!114 &-2271717239446744714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,13 +302,14 @@ MonoBehaviour:
   - {fileID: -4544057985057519762}
   - {fileID: 1073209034672154541}
   - {fileID: -2271717239446744714}
+  - {fileID: -3199642627232948126}
   EditorParameters: []
   MasterBanks:
   - {fileID: 4022192506484085297}
   StringsBanks:
   - {fileID: 4403019268308880073}
   cacheVersion: 131849
-  cacheTime: 638991492863017381
+  cacheTime: 638991540755106769
   SerializableEventsDict:
   - key: event:/BackPackSound
     index: 0
@@ -315,6 +343,8 @@ MonoBehaviour:
     index: 14
   - key: event:/AngelikaUlt
     index: 15
+  - key: event:/SellingSound
+    index: 16
 --- !u!114 &1073209034672154541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,10 +387,10 @@ MonoBehaviour:
   Path: Assets/MusicAndSounds/LafifiSounds/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638991492863017381
+  lastModified: 638991540755096767
   FileSizes:
   - Name: Desktop
-    Value: 661056
+    Value: 675488
   Exists: 1
 --- !u!114 &4403019268308880073
 MonoBehaviour:
@@ -377,10 +407,10 @@ MonoBehaviour:
   Path: Assets/MusicAndSounds/LafifiSounds/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638991492863017381
+  lastModified: 638991540755106769
   FileSizes:
   - Name: Desktop
-    Value: 1458
+    Value: 1500
   Exists: 1
 --- !u!114 &4537675553544211492
 MonoBehaviour:

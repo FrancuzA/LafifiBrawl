@@ -42,6 +42,7 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private int currentSpaceInGrid = 0;
     private bool isDragging = false;
     private Shopmanager shop;
+    private AudioManager Audio;
     
     
     
@@ -60,6 +61,7 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         canvasGroup = GetComponent<CanvasGroup>();
         costText.text = cost.ToString();
         shop = Dependencies.Instance.GetDependency<Shopmanager>();
+        Audio = Dependencies.Instance.GetDependency<AudioManager>();
         if (canvasGroup == null)
         {
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
@@ -78,10 +80,18 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {  
         if (!isBought)
         {
             if (cost > shop.Money) return;
-            else {isBought = true; shop.Money -= cost; }
+            else 
+            {
+                    isBought = true; 
+                    shop.Money -= cost; 
+                    shop.UpdateMoneyCount();
+                    Audio.PlayBuySound();
+            }
         }
 
         if (canvas.renderMode == RenderMode.ScreenSpaceOverlay && isBought)
@@ -111,6 +121,15 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
             RemoveItemFromGrid();
         }
+        }
+
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            Audio.PlaySellSound();
+            shop.Money += cost; 
+            shop.UpdateMoneyCount();
+            Destroy(gameObject);
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -121,7 +140,6 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         CheckSpace();
         if(currentSpaceInGrid == requairedSpace)
         {
-            Debug.Log("test");
             FindCellToSnap();
             PlaceItemOnGrid();
         }

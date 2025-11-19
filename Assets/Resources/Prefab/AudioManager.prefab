@@ -58,3 +58,52 @@ MonoBehaviour:
       Data3: 1054329248
       Data4: -1751623397
     Path: event:/BackPackSound
+  AngelikaUlt:
+    Guid:
+      Data1: -334782473
+      Data2: 1280259435
+      Data3: 355417531
+      Data4: -1778358945
+    Path: event:/AngelikaUlt
+  RatUlt:
+    Guid:
+      Data1: 1848912753
+      Data2: 1196412460
+      Data3: -120390500
+      Data4: -775757941
+    Path: event:/RatUlt
+  GrzegorzUlt:
+    Guid:
+      Data1: 1704176076
+      Data2: 1257418488
+      Data3: -1884200302
+      Data4: 1355237610
+    Path: event:/GrzegorzUlt
+  CleanMABelleyUlt:
+    Guid:
+      Data1: -323538540
+      Data2: 1261673364
+      Data3: -1179161948
+      Data4: -165147904
+    Path: event:/CleanMaBelleyUlt
+  LafifiUlt:
+    Guid:
+      Data1: 611145052
+      Data2: 1086599964
+      Data3: 927224458
+      Data4: 1539214071
+    Path: event:/lafifiUlt
+  KonLongUlt:
+    Guid:
+      Data1: 1541215532
+      Data2: 1277087988
+      Data3: 855445675
+      Data4: -1887373714
+    Path: event:/KonLongUlt
+  Attack:
+    Guid:
+      Data1: 399599631
+      Data2: 1174696725
+      Data3: -1922872916
+      Data4: 15216311
+    Path: event:/Attack
