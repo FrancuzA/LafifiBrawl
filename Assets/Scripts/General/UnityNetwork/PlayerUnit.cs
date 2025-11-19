@@ -57,7 +57,7 @@ namespace General.UnityNetwork
         {
             WaitForSeconds wait = new WaitForSeconds(AttackSpd);
             canAttack = true;
-            while (CurrentHealthPoints.Value > 0)
+            while (true)
             {
                 Debug.Log($"{gameObject.name} is ready to attack.");
                 yield return new WaitUntil(() => !canAttack);
