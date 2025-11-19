@@ -17,6 +17,8 @@ namespace General.Managers
         public EventReference LafifiUlt;
         public EventReference KonLongUlt;
         public EventReference Attack;
+        public EventReference Buy;
+        public EventReference Sell;
         
         private List<EventInstance> _eventInstances = new List<EventInstance>();
         private EventInstance _backpackSoundInstance;
@@ -27,6 +29,8 @@ namespace General.Managers
         private EventInstance LafifiUltInstance;
         private EventInstance KonLongUltInstance;
         private EventInstance AttackInstance;
+        private EventInstance BuyInstance;
+        private EventInstance SellInstance;
         
         
         private void Awake()
@@ -47,7 +51,8 @@ namespace General.Managers
             LafifiUltInstance = CreateEventInstance(LafifiUlt);
             KonLongUltInstance = CreateEventInstance(KonLongUlt);
             AttackInstance = CreateEventInstance(Attack);
-
+            BuyInstance = CreateEventInstance(Buy);
+            SellInstance = CreateEventInstance(Sell);
         }
 
         private void OnDestroy()
@@ -129,6 +134,16 @@ namespace General.Managers
         public void StopBackpackSound()
         {
             StopEventInstance(_backpackSoundInstance);
+        }
+
+        public void PlayBuySound()
+        {
+            PlayEventInstance(BuyInstance);
+        }
+
+        public void PlaySellSound()
+        {
+            PlayEventInstance(SellInstance);
         }
 
         private EventInstance CreateEventInstance(EventReference eventRef, Vector3 soundPos = default)

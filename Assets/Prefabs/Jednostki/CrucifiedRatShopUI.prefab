@@ -288,6 +288,7 @@ GameObject:
   - component: {fileID: 6958666961677269248}
   - component: {fileID: 7961605469904143379}
   - component: {fileID: 7072867173070944069}
+  - component: {fileID: -5635676871364396956}
   m_Layer: 5
   m_Name: CrucifiedRatShopUI
   m_TagString: Untagged
@@ -384,6 +385,22 @@ MonoBehaviour:
   costText: {fileID: 8384861348934410367}
   isBought: 1
   audioManager: {fileID: 0}
+--- !u!114 &-5635676871364396956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6755685298009632228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1619bbf87e46e8740a59216a5cbae71f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InventoryUI: {fileID: 0}
+  RTransform: {fileID: 2146913552111836423}
+  HeightMultip: 3
+  WidthMultip: 3
 --- !u!1 &7384940543013475723
 GameObject:
   m_ObjectHideFlags: 0
