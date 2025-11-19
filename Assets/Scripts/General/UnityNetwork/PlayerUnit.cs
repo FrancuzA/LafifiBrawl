@@ -57,14 +57,13 @@ namespace General.UnityNetwork
         {
             WaitForSeconds wait = new WaitForSeconds(AttackSpd);
             canAttack = true;
-            while (CurrentHealthPoints.Value > 0)
+            /*while (true)
             {
-                Debug.Log($"{gameObject.name} is ready to attack.");
-                yield return new WaitUntil(() => !canAttack);
-                Debug.Log($"{gameObject.name} is waiting to attack again.");
+                if (canAttack) continue;
+                Debug.Log($"{gameObject.name}:{NetworkObjectId} is waiting {AttackSpd} seconds to attack again.");
                 yield return wait;
                 canAttack = true;
-            }
+            }*/
         }
 
         private void Update()
@@ -130,6 +129,7 @@ namespace General.UnityNetwork
         [ServerRpc(RequireOwnership = false)]
         private void DespawnUnitServerRpc()
         {
+            Debug.LogWarning($"Despawned: {gameObject.name}:{NetworkObjectId}.");
             NetworkObject.Despawn();
         }
         
