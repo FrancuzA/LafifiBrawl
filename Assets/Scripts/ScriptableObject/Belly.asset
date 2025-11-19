@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Belly
   m_EditorClassIdentifier: 
   CharacterName: Celan My Belly
-  CharacterImage: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  lafifiImg: 0
   MaxHealthPoints: 18
   AttackDMG: 1
   AttackSpd: 1

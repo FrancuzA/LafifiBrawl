@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using JetBrains.Annotations;
 using Unity.Netcode;
 using Unity.Netcode.Components;
 using UnityEngine;
@@ -29,19 +30,29 @@ namespace General.UnityNetwork
         public ushort UltCD;
         public ushort UltCost;
     
-        private PlayerUnit _targetUnit;
+        [CanBeNull] private PlayerUnit _targetUnit;
 
         private void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
-            StartCoroutine(AttackCoroutine());
+            StartCoroutine(AttackCooldownCoroutine());
+            if(!IsServer) return;
+            CurrentHealthPoints.OnValueChanged += HealthChanged;
         }
 
-        private IEnumerator AttackCoroutine()
+        private void HealthChanged(float previousValue, float newValue)
+        {
+            if (newValue <= 0)
+            {
+                DespawnUnitServerRpc();
+            }
+        }
+
+        private IEnumerator AttackCooldownCoroutine()
         {
             var wait = new WaitForSeconds(AttackSpd);
             canAttack = true;
-            while (true)
+            while (CurrentHealthPoints.Value > 0)
             {
                 yield return new WaitUntil(() => !canAttack);
                 Debug.Log($"{gameObject.name} is waiting to attack again.");
@@ -62,22 +73,12 @@ namespace General.UnityNetwork
             if(!other.gameObject.CompareTag("Unit")) return;
             other.gameObject.TryGetComponent(out PlayerUnit enemyUnit);
             if(enemyUnit.OwnerClientId == OwnerClientId) return;
+            if(_targetUnit == null || _targetUnit != enemyUnit)
+                _targetUnit = enemyUnit;
             if (!canAttack) return;
-            Attack(enemyUnit);
+            AttackEnemyUnitServerRpc();
         
         }
-
-        private void Attack(PlayerUnit enemyUnit)
-        {
-            enemyUnit.TakeDamageClientRpc(AttackDMG);
-            Debug.Log($"{gameObject.name} attacked {enemyUnit.gameObject.name} for {AttackDMG} damage.");
-        }
-
-        [ServerRpc(RequireOwnership = false)]
-        private void WalkForwardServerRpc(){
-            MoveOrDie(OwnerClientId == 0 ? Vector3.right : Vector3.left);
-        }
-
         private void MoveOrDie(Vector3 dir)
         {
             if (_targetUnit)
@@ -100,28 +101,38 @@ namespace General.UnityNetwork
         }
 
         [ServerRpc(RequireOwnership = false)]
-        private void DespawnUnitServerRpc(){
-            NetworkObject.Despawn();
+        private void AttackEnemyUnitServerRpc()
+        {
+            if(!_targetUnit) return;
+            _targetUnit.TakeDamageClientRpc(AttackDMG);
+            canAttack = false;
+            Debug.Log($"{gameObject.name} attacked {_targetUnit.gameObject.name} for {AttackDMG} damage.");
         }
-    
+
         [ClientRpc]
-        public void TakeDamageClientRpc(float damage)
+        private void TakeDamageClientRpc(float damage)
         {
             if(!IsOwner) return;
             CurrentHealthPoints.Value -= damage;
-            if (CurrentHealthPoints.Value <= 0)
-            {
-                DespawnUnitServerRpc();
-            }
         }
-
+        
+        [ServerRpc(RequireOwnership = false)]
+        private void WalkForwardServerRpc(){
+            MoveOrDie(OwnerClientId == 0 ? Vector3.right : Vector3.left);
+        }
+        
+        [ServerRpc(RequireOwnership = false)]
+        private void DespawnUnitServerRpc()
+        {
+            NetworkObject.Despawn();
+        }
+        
         [ClientRpc]
         public void SetStartHealthPointsClientRpc()
         {
             if (!IsOwner) return;
             CurrentHealthPoints.Value = MaxHealthPoints;
         }
-
 
         [ClientRpc]
         public void SetStatsClientRpc(string characterName, LafifiImg lafifiImg, ushort maxHealthPoints, 

@@ -37,8 +37,8 @@ public class Player : NetworkBehaviour
     private IEnumerator SpawnUnitsRoutine()
     {
         yield return new WaitUntil(() => NetworkManager.Singleton.ConnectedClients.Count > 1);
-        var wait = new WaitForSeconds(0.1f);
-        for (var i = 0; i < 50; i++)
+        var wait = new WaitForSeconds(1f);
+        for (var i = 0; i < 10; i++)
         {
             SpawnUnitServerRpc();
             yield return wait;

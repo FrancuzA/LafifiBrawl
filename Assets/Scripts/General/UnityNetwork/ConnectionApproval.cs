@@ -1,29 +1,32 @@
 using UnityEngine;
 
-public class ConnectionApproval : MonoBehaviour
+namespace General.UnityNetwork
 {
-    [SerializeField] private ushort maxPlayers = 2;
-    
-    private void Start()
+    public class ConnectionApproval : MonoBehaviour
     {
-        var networkManager = Unity.Netcode.NetworkManager.Singleton;
-        networkManager.ConnectionApprovalCallback += ApprovalCheck;
-    }
+        [SerializeField] private ushort maxPlayers = 2;
     
-    private void ApprovalCheck(Unity.Netcode.NetworkManager.ConnectionApprovalRequest request, Unity.Netcode.NetworkManager.ConnectionApprovalResponse response)
-    {
-        
-        response.Approved = true;
-        
-        if (Unity.Netcode.NetworkManager.Singleton.ConnectedClients.Count >= maxPlayers)
+        private void Start()
         {
-            response.Approved = false;
-            response.Reason = "Server full";
+            var networkManager = Unity.Netcode.NetworkManager.Singleton;
+            networkManager.ConnectionApprovalCallback += ApprovalCheck;
         }
+    
+        private void ApprovalCheck(Unity.Netcode.NetworkManager.ConnectionApprovalRequest request, Unity.Netcode.NetworkManager.ConnectionApprovalResponse response)
+        {
         
-        response.CreatePlayerObject = true;
-        response.PlayerPrefabHash = null;
+            response.Approved = true;
         
-        response.Pending = false;
+            if (Unity.Netcode.NetworkManager.Singleton.ConnectedClients.Count >= maxPlayers)
+            {
+                response.Approved = false;
+                response.Reason = "Server full";
+            }
+        
+            response.CreatePlayerObject = true;
+            response.PlayerPrefabHash = null;
+        
+            response.Pending = false;
+        }
     }
 }
