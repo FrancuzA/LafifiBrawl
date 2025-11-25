@@ -1,27 +1,30 @@
 using Unity.Netcode;
 using UnityEngine;
 
-public class PlayerAssign : NetworkBehaviour
+namespace General.UnityNetwork
 {
-    [SerializeField] private NetworkObject playerOne;
-    [SerializeField] private NetworkObject playerTwo;
-
-    private void Start()
+    public class PlayerAssign : NetworkBehaviour
     {
-        AssignPlayersServerRpc();
-    }
+        [SerializeField] private NetworkObject playerOne;
+        [SerializeField] private NetworkObject playerTwo;
 
-    [ServerRpc(RequireOwnership = false)]
-    private void AssignPlayersServerRpc(ServerRpcParams rpcParams = default)
-    {
-        if (rpcParams.Receive.SenderClientId == 0)
+        private void Start()
         {
-            playerOne.SpawnAsPlayerObject(rpcParams.Receive.SenderClientId, true);
-        }
-        else
-        {
-            playerTwo.SpawnAsPlayerObject(rpcParams.Receive.SenderClientId, true);
+            AssignPlayersServerRpc();
         }
 
+        [ServerRpc(RequireOwnership = false)]
+        private void AssignPlayersServerRpc(ServerRpcParams rpcParams = default)
+        {
+            if (rpcParams.Receive.SenderClientId == 0)
+            {
+                playerOne.ChangeOwnership(rpcParams.Receive.SenderClientId);
+            }
+            else
+            {
+                playerTwo.ChangeOwnership(rpcParams.Receive.SenderClientId);
+            }
+
+        }
     }
 }

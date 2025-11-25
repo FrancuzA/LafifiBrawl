@@ -20,6 +20,12 @@ public class Player : NetworkBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         networkSpawner = Dependencies.Instance.GetDependency<NetworkSpawner>();
+        
+    }
+
+    protected override void OnOwnershipChanged(ulong previous, ulong current)
+    {
+        base.OnOwnershipChanged(previous, current);
         if (IsOwner)
         {
             //transform.position = new Vector3(0, -3.8f, 0);
