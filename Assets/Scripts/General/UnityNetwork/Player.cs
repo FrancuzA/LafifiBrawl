@@ -21,7 +21,6 @@ public class Player : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         _networkSpawner = Dependencies.Instance.GetDependency<NetworkSpawner>();
-        _playerEquipment = Dependencies.Instance.GetDependency<PlayerEquipment>();
         if (IsOwner)
         {
             playerImage.color = Color.white;
