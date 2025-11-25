@@ -35,7 +35,7 @@ public class Player : NetworkBehaviour
         }
         else
         {
-            transform.position = new Vector3(0, 3.8f, 0);
+            //transform.position = new Vector3(0, 3.8f, 0);
             spriteRenderer.color = Color.black;
         }
     }

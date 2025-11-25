@@ -19,10 +19,12 @@ namespace General.UnityNetwork
         {
             if (rpcParams.Receive.SenderClientId == 0)
             {
+                playerOne.RemoveOwnership();
                 playerOne.ChangeOwnership(rpcParams.Receive.SenderClientId);
             }
             else
             {
+                playerOne.RemoveOwnership();
                 playerTwo.ChangeOwnership(rpcParams.Receive.SenderClientId);
             }
 
