@@ -47,7 +47,7 @@ namespace General.UnityNetwork
 
         private void HealthChanged(float previousValue, float newValue)
         {
-            if (newValue <= 0)
+            if (previousValue <= 0 || newValue <= 0)
             {
                 DespawnUnitServerRpc();
             }
