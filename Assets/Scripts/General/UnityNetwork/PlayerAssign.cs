@@ -17,14 +17,15 @@ namespace General.UnityNetwork
         [ServerRpc(RequireOwnership = false)]
         private void AssignPlayersServerRpc(ServerRpcParams rpcParams = default)
         {
-            if (rpcParams.Receive.SenderClientId == 0)
+            var clientId = rpcParams.Receive.SenderClientId;
+            if (clientId == 0)
             {
                 playerOne.RemoveOwnership();
                 playerOne.ChangeOwnership(rpcParams.Receive.SenderClientId);
             }
             else
             {
-                playerOne.RemoveOwnership();
+                playerTwo.RemoveOwnership();
                 playerTwo.ChangeOwnership(rpcParams.Receive.SenderClientId);
             }
 

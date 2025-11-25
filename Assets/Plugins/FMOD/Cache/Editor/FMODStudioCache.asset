@@ -15,7 +15,7 @@ MonoBehaviour:
   Path: Assets/MusicAndSounds/LafifiSounds/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638993330418125272
+  lastModified: 638996667803922800
   FileSizes:
   - Name: Desktop
     Value: 675488
@@ -167,7 +167,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: 119076324180582589}
   cacheVersion: 131849
-  cacheTime: 638993330418125272
+  cacheTime: 638996667803938285
   SerializableEventsDict:
   - key: event:/BattleStart
     index: 0
@@ -245,7 +245,7 @@ MonoBehaviour:
   Path: Assets/MusicAndSounds/LafifiSounds/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638993330418125272
+  lastModified: 638996667803938285
   FileSizes:
   - Name: Desktop
     Value: 1500
