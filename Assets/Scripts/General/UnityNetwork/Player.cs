@@ -3,12 +3,13 @@ using General;
 using General.UnityNetwork;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : NetworkBehaviour
 {
     [SerializeField] private UnitsStats[] stats;
     [SerializeField] private GameObject bloodManager;
-    private SpriteRenderer spriteRenderer;
+    private Image playerImage;
     private bool isSpawning = true;
     private NetworkSpawner networkSpawner;
     
@@ -18,7 +19,7 @@ public class Player : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        playerImage = GetComponent<Image>();
         networkSpawner = Dependencies.Instance.GetDependency<NetworkSpawner>();
         
     }
@@ -28,15 +29,16 @@ public class Player : NetworkBehaviour
         base.OnOwnershipChanged(previous, current);
         if (IsOwner)
         {
-            //transform.position = new Vector3(0, -3.8f, 0);
-            spriteRenderer.color = Color.white;
+            Debug.Log($"Player {OwnerClientId} gained ownership.");
+            playerImage.color = Color.white;
             bloodManager.SetActive(true);
+            Debug.Log($"Player {OwnerClientId} is owner, starting unit spawn.");
             StartCoroutine(SpawnUnitsRoutine());
         }
         else
         {
-            //transform.position = new Vector3(0, 3.8f, 0);
-            spriteRenderer.color = Color.black;
+            Debug.Log($"Player {OwnerClientId} is enemy.");
+            playerImage.color = Color.black;
         }
     }
 
@@ -44,7 +46,7 @@ public class Player : NetworkBehaviour
     {
         yield return new WaitUntil(() => NetworkManager.Singleton.ConnectedClients.Count > 1);
         var wait = new WaitForSeconds(1f);
-        for (var i = 0; i < 50; i++)
+        for (var i = 0; i < 10; i++)
         {
             SpawnUnitServerRpc();
             yield return wait;
