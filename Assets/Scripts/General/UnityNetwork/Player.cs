@@ -38,7 +38,7 @@ public class Player : NetworkBehaviour
     {
         yield return new WaitUntil(() => NetworkManager.Singleton.ConnectedClients.Count > 1);
         var wait = new WaitForSeconds(1f);
-        for (var i = 0; i < 10; i++)
+        for (var i = 0; i < 50; i++)
         {
             SpawnUnitServerRpc();
             yield return wait;
