@@ -516,7 +516,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1069803f71160e7469eb6def72816bc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerEq: {fileID: 2322771575285498565, guid: a2e0ad2ee0c298b4283704732ce85888, type: 3}
 --- !u!1 &703277334
 GameObject:
   m_ObjectHideFlags: 0
@@ -573,6 +572,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  playerEq: {fileID: 2322771575285498565, guid: a2e0ad2ee0c298b4283704732ce85888, type: 3}
   player1Ready:
     m_InternalValue: 0
   player2Ready:
