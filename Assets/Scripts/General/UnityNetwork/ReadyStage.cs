@@ -11,16 +11,12 @@ public class ReadyStage : NetworkBehaviour
     
     [SerializeField] private NetworkObject playerOne;
     [SerializeField] private NetworkObject playerTwo;
-    
-    private void Awake()
-    {
-        DontDestroyOnLoad(this);
-    }
 
     private void Start()
     {
         player1Ready.OnValueChanged += OnPlayerReadyChanged;
         player2Ready.OnValueChanged += OnPlayerReadyChanged;
+        DontDestroyOnLoad(this);
     }
 
     public void SetPlayerReady()
