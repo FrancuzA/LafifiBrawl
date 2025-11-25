@@ -9,7 +9,7 @@ public class Player : NetworkBehaviour
 {
     [SerializeField] private UnitsStats[] stats;
     [SerializeField] private GameObject bloodManager;
-    private Image playerImage;
+    [SerializeField] private Image playerImage;
     private bool isSpawning = true;
     private NetworkSpawner networkSpawner;
     
@@ -19,7 +19,6 @@ public class Player : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        playerImage = GetComponent<Image>();
         networkSpawner = Dependencies.Instance.GetDependency<NetworkSpawner>();
         if (IsOwner)
         {

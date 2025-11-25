@@ -752,69 +752,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3771318562681955125, guid: 11264863130052642aa0e6aed18a3297, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3771318562681955125, guid: 11264863130052642aa0e6aed18a3297, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3771318562681955125, guid: 11264863130052642aa0e6aed18a3297, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3771318562681955125, guid: 11264863130052642aa0e6aed18a3297, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3771318562681955125, guid: 11264863130052642aa0e6aed18a3297, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3771318562681955125, guid: 11264863130052642aa0e6aed18a3297, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4814291431589639086, guid: 11264863130052642aa0e6aed18a3297, type: 3}
-      propertyPath: GlobalObjectIdHash
-      value: 4115269206
-      objectReference: {fileID: 0}
-    - target: {fileID: 4814291431589639086, guid: 11264863130052642aa0e6aed18a3297, type: 3}
-      propertyPath: InScenePlacedSourceGlobalObjectIdHash
-      value: 1897521784
-      objectReference: {fileID: 0}
-    - target: {fileID: 6112529295038316214, guid: 11264863130052642aa0e6aed18a3297, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6112529295038316214, guid: 11264863130052642aa0e6aed18a3297, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6112529295038316214, guid: 11264863130052642aa0e6aed18a3297, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6112529295038316214, guid: 11264863130052642aa0e6aed18a3297, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6112529295038316214, guid: 11264863130052642aa0e6aed18a3297, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6112529295038316214, guid: 11264863130052642aa0e6aed18a3297, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8963333878927096346, guid: 11264863130052642aa0e6aed18a3297, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 1517613060
-      objectReference: {fileID: 0}
-    - target: {fileID: 8963333878927096346, guid: 11264863130052642aa0e6aed18a3297, type: 3}
-      propertyPath: InScenePlacedSourceGlobalObjectIdHash
-      value: 1897521784
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -829,14 +769,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 942005575469439546, guid: 0e96d6375c71a9845b3ee73bddf6c2f4, type: 3}
-      propertyPath: GlobalObjectIdHash
-      value: 1128874091
-      objectReference: {fileID: 0}
-    - target: {fileID: 942005575469439546, guid: 0e96d6375c71a9845b3ee73bddf6c2f4, type: 3}
-      propertyPath: InScenePlacedSourceGlobalObjectIdHash
-      value: 2925934646
-      objectReference: {fileID: 0}
     - target: {fileID: 1475969094779524310, guid: 0e96d6375c71a9845b3ee73bddf6c2f4, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -948,10 +880,6 @@ PrefabInstance:
     - target: {fileID: 3586381440851809972, guid: 0e96d6375c71a9845b3ee73bddf6c2f4, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 690154153
-      objectReference: {fileID: 0}
-    - target: {fileID: 3586381440851809972, guid: 0e96d6375c71a9845b3ee73bddf6c2f4, type: 3}
-      propertyPath: InScenePlacedSourceGlobalObjectIdHash
-      value: 2925934646
       objectReference: {fileID: 0}
     - target: {fileID: 4215076230667683246, guid: 0e96d6375c71a9845b3ee73bddf6c2f4, type: 3}
       propertyPath: m_AnchorMax.y

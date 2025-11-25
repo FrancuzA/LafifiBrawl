@@ -86,9 +86,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7502836973573653640}
   - component: {fileID: 1215902126009316358}
-  - component: {fileID: 942005575469439546}
-  - component: {fileID: 1764953560141186468}
-  - component: {fileID: 8441081700050592065}
   - component: {fileID: 3565580751687382179}
   - component: {fileID: 4235409950446274072}
   m_Layer: 0
@@ -149,70 +146,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &942005575469439546
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1344717220263780893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1128874091
-  InScenePlacedSourceGlobalObjectIdHash: 1073442262
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 0
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
---- !u!114 &1764953560141186468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1344717220263780893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad1e51aeec0b09f4da069f9fa1616baa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  stats:
-  - {fileID: 11400000, guid: a2960a92cbf25f4459be2acc84e8fd59, type: 2}
-  - {fileID: 11400000, guid: cb1bdd9e3b7e1ca46aa314b46f733e5c, type: 2}
-  - {fileID: 11400000, guid: db88110a1a3870547ade00ad382210ab, type: 2}
-  - {fileID: 11400000, guid: b431f55ed33466f488adc1f18d30b708, type: 2}
-  - {fileID: 11400000, guid: 532926fbdbdb1a84e9fd90d56d84b2cd, type: 2}
-  - {fileID: 11400000, guid: 3f763f5ece5ed7d419433555cbb80cb9, type: 2}
-  bloodManager: {fileID: 3573364489224960905}
-  playerHealth:
-    m_InternalValue: 100
-  blood:
-    m_InternalValue: 10
---- !u!114 &8441081700050592065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1344717220263780893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d5dae4edaae2d149ac087ae3f3d72c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBar: {fileID: 5644415318828248957}
-  playerScript: {fileID: 1764953560141186468}
 --- !u!114 &3565580751687382179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -351,6 +284,8 @@ GameObject:
   - component: {fileID: 6773043876627656584}
   - component: {fileID: 5587023090321418109}
   - component: {fileID: 3586381440851809972}
+  - component: {fileID: 3220609162460013305}
+  - component: {fileID: 107049203083228582}
   m_Layer: 5
   m_Name: Player2
   m_TagString: Untagged
@@ -453,8 +388,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1437719960
-  InScenePlacedSourceGlobalObjectIdHash: 0
+  GlobalObjectIdHash: 690154153
+  InScenePlacedSourceGlobalObjectIdHash: 2925934646
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
@@ -466,6 +401,46 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &3220609162460013305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2719014745798420055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad1e51aeec0b09f4da069f9fa1616baa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  stats:
+  - {fileID: 11400000, guid: a2960a92cbf25f4459be2acc84e8fd59, type: 2}
+  - {fileID: 11400000, guid: cb1bdd9e3b7e1ca46aa314b46f733e5c, type: 2}
+  - {fileID: 11400000, guid: db88110a1a3870547ade00ad382210ab, type: 2}
+  - {fileID: 11400000, guid: b431f55ed33466f488adc1f18d30b708, type: 2}
+  - {fileID: 11400000, guid: 532926fbdbdb1a84e9fd90d56d84b2cd, type: 2}
+  - {fileID: 11400000, guid: 3f763f5ece5ed7d419433555cbb80cb9, type: 2}
+  bloodManager: {fileID: 3573364489224960905}
+  playerImage: {fileID: 1215902126009316358}
+  playerHealth:
+    m_InternalValue: 100
+  blood:
+    m_InternalValue: 10
+--- !u!114 &107049203083228582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2719014745798420055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5dae4edaae2d149ac087ae3f3d72c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 7396606810059774256}
+  playerScript: {fileID: 3220609162460013305}
 --- !u!1 &3573364489224960905
 GameObject:
   m_ObjectHideFlags: 0
