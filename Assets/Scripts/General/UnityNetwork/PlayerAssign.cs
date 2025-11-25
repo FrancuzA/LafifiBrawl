@@ -11,24 +11,17 @@ namespace General.UnityNetwork
         public override void OnNetworkSpawn()
         {
             base.OnNetworkSpawn();
+            if (!IsServer) return;
             AssignPlayersServerRpc();
         }
 
         [ServerRpc(RequireOwnership = false)]
-        private void AssignPlayersServerRpc(ServerRpcParams rpcParams = default)
+        private void AssignPlayersServerRpc()
         {
-            var clientId = rpcParams.Receive.SenderClientId;
-            if (clientId == 0)
-            {
-                playerOne.RemoveOwnership();
-                playerOne.ChangeOwnership(rpcParams.Receive.SenderClientId);
-            }
-            else
-            {
-                playerTwo.RemoveOwnership();
-                playerTwo.ChangeOwnership(rpcParams.Receive.SenderClientId);
-            }
-
+            playerOne.RemoveOwnership();
+            playerTwo.RemoveOwnership();
+            playerOne.ChangeOwnership(0);
+            playerTwo.ChangeOwnership(1);
         }
     }
 }
