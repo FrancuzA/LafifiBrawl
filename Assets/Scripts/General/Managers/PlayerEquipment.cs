@@ -13,11 +13,8 @@ namespace General.Managers
         {
             Dependencies.Instance.RegisterDependency(this);
             DontDestroyOnLoad(this);
-            foreach (var unit in startingUnits)
-            {
-                equippedUnits[0].Add(unit);
-                equippedUnits[1].Add(unit);
-            }
+            equippedUnits.TryAdd(0, startingUnits);
+            equippedUnits.TryAdd(1, startingUnits);
         }
 
         public bool HasUnit(UnitsStats unitStats, ulong clientId)
@@ -34,14 +31,9 @@ namespace General.Managers
         
         public UnitsStats GetAnyUnit(ulong clientId)
         {
-            if (equippedUnits.Count == 0)
-            {
-                Debug.Log("No units to deploy.");
-                return null;
-            }
             var unitStats = equippedUnits[clientId][0];
-            equippedUnits[clientId].RemoveAt(0);
             Debug.Log($"Deployed unit: {unitStats.CharacterName}");
+            equippedUnits[clientId].RemoveAt(0);
             return unitStats;
         }
         
