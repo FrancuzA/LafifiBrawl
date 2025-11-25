@@ -10,13 +10,7 @@ namespace General.Managers
 
         private void Awake()
         {
-            if (Dependencies.Instance.GetDependency<PlayerEquipment>() != null)
-            {
-                Destroy(gameObject);
-                return;
-            }
             DontDestroyOnLoad(this);
-            Dependencies.Instance.RegisterDependency(this);
         }
 
         public bool HasUnit(UnitsStats unitStats)
