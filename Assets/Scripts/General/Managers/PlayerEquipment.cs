@@ -10,6 +10,7 @@ namespace General.Managers
 
         private void Start()
         {
+            Dependencies.Instance.RegisterDependency(this);
             DontDestroyOnLoad(this);
         }
 

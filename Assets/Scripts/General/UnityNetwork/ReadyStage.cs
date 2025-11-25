@@ -6,8 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class ReadyStage : NetworkBehaviour
 {
-    [SerializeField] private GameObject playerEq;
-    
     public NetworkVariable<bool> player1Ready = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<bool> player2Ready = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     
@@ -20,28 +18,7 @@ public class ReadyStage : NetworkBehaviour
         player2Ready.OnValueChanged += OnPlayerReadyChanged;
         DontDestroyOnLoad(this);
     }
-
-    public override void OnNetworkSpawn()
-    {
-        base.OnNetworkSpawn();
-        if(!IsServer) return;
-        SpawnEquipmentForPlayerServerRpc();
-    }
-
-    [ServerRpc]
-    private void SpawnEquipmentForPlayerServerRpc()
-    {
-        SpawnEquipmentForPlayerClientRpc();
-    }
-
-    [ClientRpc]
-    private void SpawnEquipmentForPlayerClientRpc()
-    {
-        var eq = Instantiate(playerEq);
-        eq.GetComponent<NetworkObject>().SpawnWithOwnership(NetworkManager.Singleton.LocalClientId);
-    }
-
-
+    
     public void SetPlayerReady()
     {
         SetPlayerReadyServerRpc();
