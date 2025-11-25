@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using General.Managers;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,11 +12,14 @@ public class ReadyStage : NetworkBehaviour
     
     [SerializeField] private NetworkObject playerOne;
     [SerializeField] private NetworkObject playerTwo;
+    
+    [SerializeField] private PlayerEquipment playerEquipment;
 
     private void Start()
     {
         player1Ready.OnValueChanged += OnPlayerReadyChanged;
         player2Ready.OnValueChanged += OnPlayerReadyChanged;
+        playerEquipment.Setup();
         DontDestroyOnLoad(this);
     }
     
@@ -58,6 +62,7 @@ public class ReadyStage : NetworkBehaviour
         {
             var clientId = client.ClientId;
             var player = Instantiate(clientId == 0 ? playerOne : playerTwo, transform);
+            player.GetComponent<Player>().SetPlayerEq(playerEquipment);
             player.SpawnAsPlayerObject(clientId, true);
         }
         

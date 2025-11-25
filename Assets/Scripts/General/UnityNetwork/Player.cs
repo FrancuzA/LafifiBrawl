@@ -12,7 +12,7 @@ public class Player : NetworkBehaviour
     [SerializeField] private GameObject bloodManager;
     [SerializeField] private Image playerImage;
     private NetworkSpawner _networkSpawner;
-    [SerializeField] private PlayerEquipment playerEquipment;
+    private PlayerEquipment _playerEquipment;
     
     [Header("Stats")]
     public NetworkVariable<ushort> playerHealth = new NetworkVariable<ushort>(100);
@@ -21,7 +21,7 @@ public class Player : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         _networkSpawner = Dependencies.Instance.GetDependency<NetworkSpawner>();
-        playerEquipment = Dependencies.Instance.GetDependency<PlayerEquipment>();
+        _playerEquipment = Dependencies.Instance.GetDependency<PlayerEquipment>();
         if (IsOwner)
         {
             playerImage.color = Color.white;
@@ -34,11 +34,17 @@ public class Player : NetworkBehaviour
         }
     }
 
+    public void SetPlayerEq(PlayerEquipment playerEquipment)
+    {
+        _playerEquipment = playerEquipment;
+    }
+
     private IEnumerator SpawnUnitsRoutine()
     {
         yield return new WaitUntil(() => NetworkManager.Singleton.ConnectedClients.Count > 1);
-        for (var i = 0; i < playerEquipment.GetEquippedUnitCount(OwnerClientId); i++)
+        for (var i = 0; i < _playerEquipment.GetEquippedUnitCount(OwnerClientId); i++)
         {
+            Debug.Log(i);
             Debug.Log($"[LOCAL] Player: {OwnerClientId} Requesting unit spawn from server...");
             RequestSpawnUnitServerRpc();
             yield return new WaitForSeconds(5f);
@@ -51,7 +57,7 @@ public class Player : NetworkBehaviour
         var clientId = rpcParams.Receive.SenderClientId;
         
         if (!_networkSpawner) _networkSpawner = Dependencies.Instance.GetDependency<NetworkSpawner>();
-        var unitStats = playerEquipment.GetAnyUnit(clientId);
+        var unitStats = _playerEquipment.GetAnyUnit(clientId);
         _networkSpawner.SpawnUnitsForPlayer(clientId, unitStats);
         Debug.Log($"[SERVER] Spawned unit: {unitStats.CharacterName} for Player: {clientId}.");
     }
