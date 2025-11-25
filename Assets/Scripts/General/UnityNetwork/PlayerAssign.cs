@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -12,10 +13,16 @@ namespace General.UnityNetwork
         {
             base.OnNetworkSpawn();
             if (!IsServer) return;
+            StartCoroutine(WaitForPlayersToConnect());
+        }
+
+        private IEnumerator WaitForPlayersToConnect()
+        {
+            yield return new WaitUntil(() => NetworkManager.Singleton.ConnectedClients.Count >= 2);
             AssignPlayersServerRpc();
         }
 
-        [ServerRpc(RequireOwnership = false)]
+        [ServerRpc]
         private void AssignPlayersServerRpc()
         {
             var player1 = Instantiate(playerOne, transform);
