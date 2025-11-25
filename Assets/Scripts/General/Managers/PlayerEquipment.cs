@@ -13,8 +13,13 @@ namespace General.Managers
         {
             Dependencies.Instance.RegisterDependency(this);
             DontDestroyOnLoad(this);
-            equippedUnits.TryAdd(0, startingUnits);
-            equippedUnits.TryAdd(1, startingUnits);
+            equippedUnits.TryAdd(0, new List<UnitsStats>());
+            equippedUnits.TryAdd(1, new List<UnitsStats>());
+            foreach (var unit in startingUnits)
+            {
+                equippedUnits[0].Add(unit);
+                equippedUnits[1].Add(unit);
+            }
         }
 
         public bool HasUnit(UnitsStats unitStats, ulong clientId)
