@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using JetBrains.Annotations;
 using Unity.Netcode;
 using Unity.Netcode.Components;
@@ -17,6 +15,7 @@ namespace General.UnityNetwork
         [Header("Look")]
         private SpriteRenderer _spriteRenderer;
     
+        [Tooltip("Belly = 0,\nGrzegorz = 1,\nKon = 2,\nLafifi = 3,\nAngelika = 4,\nRat = 5")]
         public Sprite[] sprites = new Sprite[3];
         [Header("Health")]
         public ushort MaxHealthPoints;

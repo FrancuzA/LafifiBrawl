@@ -179,10 +179,10 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   attackCooldownTimer: 0
   sprites:
+  - {fileID: 21300000, guid: 1d0ff559d6d3b6c449a70993c36e007d, type: 3}
   - {fileID: 21300000, guid: 46b946546120a624fa85a3a20f5f5921, type: 3}
-  - {fileID: 21300000, guid: 46b946546120a624fa85a3a20f5f5921, type: 3}
-  - {fileID: 21300000, guid: 46b946546120a624fa85a3a20f5f5921, type: 3}
-  - {fileID: -712631045867808456, guid: b670ab75dde984907b8570040daa08c5, type: 3}
+  - {fileID: 21300000, guid: 1d0ff559d6d3b6c449a70993c36e007d, type: 3}
+  - {fileID: 21300000, guid: 1d0ff559d6d3b6c449a70993c36e007d, type: 3}
   - {fileID: 21300000, guid: 1d57d3812195ee0488c46bd91624e648, type: 3}
   - {fileID: 21300000, guid: 1d0ff559d6d3b6c449a70993c36e007d, type: 3}
   MaxHealthPoints: 0
