@@ -28,15 +28,36 @@ namespace General.UnityNetwork
             player2Ready.OnValueChanged += OnPlayerReadyChanged;
         }
 
+        public void SetPlayerReady()
+        {
+            SetPlayerReadyServerRpc();
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        private void SetPlayerReadyServerRpc(ServerRpcParams serverRpcParams = default)
+        {
+            var clientId = serverRpcParams.Receive.SenderClientId;
+            switch (clientId)
+            {
+                case 0:
+                    player1Ready.Value = true;
+                    break;
+                case 1:
+                    player2Ready.Value = true;
+                    break;
+            }
+        }
+        
         private void OnPlayerReadyChanged(bool previousValue, bool newValue)
         {
-            if(player1Ready.Value && player2Ready.Value)
-            {
-                Debug.Log("Both players are ready!");
-                if (!IsServer) return;
-                NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += SceneManager_OnLoadComplete;
-                StartGame();
-            }
+            if (!player1Ready.Value || !player2Ready.Value || !IsServer) return;
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += SceneManager_OnLoadComplete;
+            StartGame();
+        }
+        
+        private void StartGame()
+        {
+            NetworkManager.Singleton.SceneManager.LoadScene("FightStage", LoadSceneMode.Single);
         }
 
         private void SceneManager_OnLoadComplete(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
@@ -48,37 +69,10 @@ namespace General.UnityNetwork
                 var player = Instantiate(clientId == 0 ? playerOne : playerTwo, transform);
                 player.SpawnAsPlayerObject(clientId, true);
             }
-        }
-
-        private void StartGame()
-        {
-            NetworkManager.Singleton.SceneManager.LoadScene("FightStage", LoadSceneMode.Single);
             
             player1Ready.OnValueChanged -= OnPlayerReadyChanged;
             player2Ready.OnValueChanged -= OnPlayerReadyChanged;
+            NetworkObject.Despawn();
         }
-
-        public void SetPlayerReady()
-        {
-            SetPlayerReadyServerRpc();
-        }
-
-        [ServerRpc(RequireOwnership = false)]
-        private void SetPlayerReadyServerRpc(ServerRpcParams serverRpcParams = default)
-        {
-            var clientId = serverRpcParams.Receive.SenderClientId;
-            if(clientId == 0)
-            {
-                player1Ready.Value = true;
-                Debug.Log("Player 1 is ready");
-            }
-            else if(clientId == 1)
-            {
-                player2Ready.Value = true;
-                Debug.Log("Player 2 is ready");
-            }
-        }
-
-
     }
 }

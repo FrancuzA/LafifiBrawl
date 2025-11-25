@@ -82,45 +82,44 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {  
-        if (!isBought)
-        {
-            if (cost > shop.Money) return;
-            else 
+            if (!isBought)
             {
-                    isBought = true; 
-                    shop.Money -= cost; 
-                    shop.UpdateMoneyCount();
-                    Audio.PlayBuySound();
-            }
-        }
-
-        if (canvas.renderMode == RenderMode.ScreenSpaceOverlay && isBought)
-        {
-            if (costText != null) DestroyText();
-            Dependencies.Instance.UnregisterDependency<DragUIElement>();
-            Dependencies.Instance.RegisterDependency<DragUIElement>(this);
-            ResetAvaibleSpsace();
-            originalZPosition = rectTransform.position.z;
-            
-            RectTransformUtility.ScreenPointToWorldPointInRectangle(
-                rectTransform,
-                eventData.position,
-                eventData.pressEventCamera,
-                out Vector3 worldPoint);
-
-            offset = rectTransform.position - worldPoint;
-            offset.z = 0;
-
-            isDragging = true;
-            targetScale = originalScale * dragScaleFactor;
-
-            if (canvasGroup != null)
-            {
-                canvasGroup.blocksRaycasts = false;
+                if (cost > shop.Money) return;
+                
+                isBought = true; 
+                shop.Money -= cost; 
+                shop.UpdateMoneyCount();
+                Audio.PlayBuySound();
+                
             }
 
-            RemoveItemFromGrid();
-        }
+            if (canvas.renderMode == RenderMode.ScreenSpaceOverlay && isBought)
+            {
+                if (costText != null) DestroyText();
+                Dependencies.Instance.UnregisterDependency<DragUIElement>();
+                Dependencies.Instance.RegisterDependency<DragUIElement>(this);
+                ResetAvaibleSpsace();
+                originalZPosition = rectTransform.position.z;
+                
+                RectTransformUtility.ScreenPointToWorldPointInRectangle(
+                    rectTransform,
+                    eventData.position,
+                    eventData.pressEventCamera,
+                    out Vector3 worldPoint);
+
+                offset = rectTransform.position - worldPoint;
+                offset.z = 0;
+
+                isDragging = true;
+                targetScale = originalScale * dragScaleFactor;
+
+                if (canvasGroup != null)
+                {
+                    canvasGroup.blocksRaycasts = false;
+                }
+
+                RemoveItemFromGrid();
+            }
         }
 
         if (eventData.button == PointerEventData.InputButton.Right)

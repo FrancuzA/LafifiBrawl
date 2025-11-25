@@ -10,7 +10,7 @@ namespace General.Managers
 
         private void Awake()
         {
-            if (Dependencies.Instance.GetDependency<PlayerEquipment>())
+            if (Dependencies.Instance.GetDependency<PlayerEquipment>() != null)
             {
                 Destroy(gameObject);
                 return;
