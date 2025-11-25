@@ -11,7 +11,6 @@ public class Player : NetworkBehaviour
     [SerializeField] private UnitsStats[] stats;
     [SerializeField] private GameObject bloodManager;
     [SerializeField] private Image playerImage;
-    private bool isSpawning = true;
     private NetworkSpawner _networkSpawner;
     private PlayerEquipment _playerEquipment;
     

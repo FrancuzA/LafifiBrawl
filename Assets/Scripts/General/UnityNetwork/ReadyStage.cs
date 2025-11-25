@@ -39,8 +39,6 @@ public class ReadyStage : NetworkBehaviour
     {
         var eq = Instantiate(playerEq);
         eq.GetComponent<NetworkObject>().SpawnWithOwnership(NetworkManager.Singleton.LocalClientId);
-        DontDestroyOnLoad(playerEq);
-        
     }
 
 

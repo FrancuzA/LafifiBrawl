@@ -8,6 +8,11 @@ namespace General.Managers
     {
         [SerializeField] private List<UnitsStats> equippedUnits = new();
 
+        private void Start()
+        {
+            DontDestroyOnLoad(this);
+        }
+
         public bool HasUnit(UnitsStats unitStats)
         {
             return equippedUnits.Contains(unitStats);
