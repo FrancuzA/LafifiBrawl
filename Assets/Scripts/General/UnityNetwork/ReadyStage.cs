@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 namespace General.UnityNetwork
 {
-    public class PlayersReady : NetworkBehaviour
+    public class ReadyStage : NetworkBehaviour
     {
         public NetworkVariable<bool> player1Ready = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         public NetworkVariable<bool> player2Ready = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -15,9 +16,14 @@ namespace General.UnityNetwork
         
         [SerializeField] private GameObject playerPrefab;
 
-        private void Start()
+
+        private void Awake()
         {
             DontDestroyOnLoad(this);
+        }
+
+        private void Start()
+        {
             player1Ready.OnValueChanged += OnPlayerReadyChanged;
             player2Ready.OnValueChanged += OnPlayerReadyChanged;
         }
@@ -47,6 +53,9 @@ namespace General.UnityNetwork
         private void StartGame()
         {
             NetworkManager.Singleton.SceneManager.LoadScene("FightStage", LoadSceneMode.Single);
+            
+            player1Ready.OnValueChanged -= OnPlayerReadyChanged;
+            player2Ready.OnValueChanged -= OnPlayerReadyChanged;
         }
 
         public void SetPlayerReady()

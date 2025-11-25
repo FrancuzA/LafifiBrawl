@@ -12,7 +12,7 @@ namespace General.UnityNetwork
 
         private void Awake()
         {
-            if(Dependencies.Instance.GetDependency<NetworkSpawner>() != null)
+            if(Dependencies.Instance.GetDependency<NetworkSpawner>())
             {
                 Destroy(gameObject);
                 return;
@@ -22,9 +22,6 @@ namespace General.UnityNetwork
     
         public void SpawnUnitsForPlayer(NetworkClient playerClient, UnitsStats stats)
         {
-            // Określ pozycję spawnu na podstawie clientId
-            // Niższe clientId (host, zazwyczaj 0) spawn'uje z lewej (mySpawnPoint)
-            // Wyższe clientId (client, zazwyczaj 1) spawn'uje z prawej (enemySpawnPoint)
             bool playerZero = playerClient.ClientId == 0;
         
             Transform spawnPoint = playerZero ? playerOneSpawnPoint : playerTwoSpawnPoint;

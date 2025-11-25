@@ -1,5 +1,6 @@
 using System.Collections;
 using General;
+using General.Managers;
 using General.UnityNetwork;
 using Unity.Netcode;
 using UnityEngine;
@@ -11,7 +12,8 @@ public class Player : NetworkBehaviour
     [SerializeField] private GameObject bloodManager;
     [SerializeField] private Image playerImage;
     private bool isSpawning = true;
-    private NetworkSpawner networkSpawner;
+    private NetworkSpawner _networkSpawner;
+    private PlayerEquipment _playerEquipment;
     
     [Header("Stats")]
     public NetworkVariable<ushort> playerHealth = new NetworkVariable<ushort>(100);
@@ -19,7 +21,8 @@ public class Player : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        networkSpawner = Dependencies.Instance.GetDependency<NetworkSpawner>();
+        _networkSpawner = Dependencies.Instance.GetDependency<NetworkSpawner>();
+        _playerEquipment = Dependencies.Instance.GetDependency<PlayerEquipment>();
         if (IsOwner)
         {
             playerImage.color = Color.white;
@@ -36,7 +39,8 @@ public class Player : NetworkBehaviour
     {
         yield return new WaitUntil(() => NetworkManager.Singleton.ConnectedClients.Count > 1);
         var wait = new WaitForSeconds(1f);
-        for (var i = 0; i < 10; i++)
+        _playerEquipment.ListEquippedUnits();
+        for (var i = 0; i < _playerEquipment.GetEquippedUnitCount(); i++)
         {
             SpawnUnitServerRpc();
             yield return wait;
@@ -48,8 +52,9 @@ public class Player : NetworkBehaviour
     {
         var clientId = rpcParams.Receive.SenderClientId;
         var client = NetworkManager.Singleton.ConnectedClients[clientId];
-        if (!networkSpawner) networkSpawner = Dependencies.Instance.GetDependency<NetworkSpawner>();
-        networkSpawner.SpawnUnitsForPlayer(client, stats[Random.Range(0, stats.Length)]);
+        if (!_networkSpawner) _networkSpawner = Dependencies.Instance.GetDependency<NetworkSpawner>();
+        
+        _networkSpawner.SpawnUnitsForPlayer(client, _playerEquipment.GetAnyUnit());
 
     }
 

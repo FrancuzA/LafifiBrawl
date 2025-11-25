@@ -103,7 +103,7 @@ namespace General.UnityNetwork
             }
             else
             {
-                var collider2Ds = Physics2D.OverlapCircleAll(transform.position, 10f);
+                var collider2Ds = Physics2D.OverlapCircleAll(transform.position, 50f);
                 foreach (var coli in collider2Ds)
                 {
                     if (!coli.gameObject.CompareTag("Unit")) continue;
