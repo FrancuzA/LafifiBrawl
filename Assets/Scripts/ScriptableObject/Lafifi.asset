@@ -16,7 +16,7 @@ MonoBehaviour:
   lafifiImg: 3
   MaxHealthPoints: 15
   AttackDMG: 0
-  AttackSpd: 20000
+  AttackSpd: 0
   Ult: 3
   UltCD: 12
   UltCost: 1

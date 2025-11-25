@@ -12,8 +12,7 @@ namespace General.UnityNetwork
     [RequireComponent(typeof(SpriteRenderer))]
     public class PlayerUnit : NetworkBehaviour
     {
-        private bool canAttack;
-        public UnitsStats stats = null;
+        [SerializeField] private float attackCooldownTimer;
     
         [Header("Look")]
         private SpriteRenderer _spriteRenderer;
@@ -21,7 +20,7 @@ namespace General.UnityNetwork
         public Sprite[] sprites = new Sprite[3];
         [Header("Health")]
         public ushort MaxHealthPoints;
-        private NetworkVariable<float> CurrentHealthPoints = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        [SerializeField] private NetworkVariable<float> currentHealthPoints = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         [Header("Attack")]
         public float AttackDMG;
         public ushort AttackSpd;
@@ -36,13 +35,14 @@ namespace General.UnityNetwork
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
             if(!IsServer) return;
-            CurrentHealthPoints.OnValueChanged += HealthChanged;
+            currentHealthPoints.OnValueChanged += HealthChanged;
         }
 
         public override void OnNetworkSpawn()
         {
             base.OnNetworkSpawn();
-            StartCoroutine(AttackCooldownCoroutine());
+            // StartCoroutine(AttackCooldownCoroutine());
+            attackCooldownTimer = AttackSpd;
         }
 
         private void HealthChanged(float previousValue, float newValue)
@@ -53,23 +53,14 @@ namespace General.UnityNetwork
             }
         }
 
-        private IEnumerator AttackCooldownCoroutine()
-        {
-            WaitForSeconds wait = new WaitForSeconds(AttackSpd);
-            canAttack = true;
-            /*while (true)
-            {
-                if (canAttack) continue;
-                Debug.Log($"{gameObject.name}:{NetworkObjectId} is waiting {AttackSpd} seconds to attack again.");
-                yield return wait;
-                canAttack = true;
-            }*/
-        }
-
         private void Update()
         {
             if (IsServer){
                 WalkForwardServerRpc();
+            }
+            if (attackCooldownTimer > -1f)
+            {
+                attackCooldownTimer -= Time.deltaTime;
             }
         }
 
@@ -80,7 +71,7 @@ namespace General.UnityNetwork
             if(enemyUnit.OwnerClientId == OwnerClientId) return;
             if(_targetUnit == null || _targetUnit != enemyUnit)
                 _targetUnit = enemyUnit;
-            if (!canAttack) return;
+            if (attackCooldownTimer > 0f) return;
             AttackEnemyUnitServerRpc();
         
         }
@@ -98,9 +89,11 @@ namespace General.UnityNetwork
                 {
                     if (!coli.gameObject.CompareTag("Unit")) continue;
                     coli.gameObject.TryGetComponent(out PlayerUnit enemyUnit);
-                    if (enemyUnit.OwnerClientId == OwnerClientId) continue;
-                    _targetUnit = enemyUnit;
-                    break;
+                    if (enemyUnit.OwnerClientId != OwnerClientId)
+                    {
+                        _targetUnit = enemyUnit;
+                        break;
+                    }
                 }
             }
         }
@@ -110,7 +103,7 @@ namespace General.UnityNetwork
         {
             if(!_targetUnit) return;
             _targetUnit.TakeDamageClientRpc(AttackDMG);
-            canAttack = false;
+            attackCooldownTimer = AttackSpd;
             Debug.Log($"{gameObject.name} attacked {_targetUnit.gameObject.name} for {AttackDMG} damage.");
         }
 
@@ -118,7 +111,7 @@ namespace General.UnityNetwork
         private void TakeDamageClientRpc(float damage)
         {
             if(!IsOwner) return;
-            CurrentHealthPoints.Value -= damage;
+            currentHealthPoints.Value -= damage;
         }
         
         [ServerRpc(RequireOwnership = false)]
@@ -137,7 +130,7 @@ namespace General.UnityNetwork
         public void SetStartHealthPointsClientRpc()
         {
             if (!IsOwner) return;
-            CurrentHealthPoints.Value = MaxHealthPoints;
+            currentHealthPoints.Value = MaxHealthPoints;
         }
 
         [ClientRpc]
