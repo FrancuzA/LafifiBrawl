@@ -19,11 +19,10 @@ namespace General.UnityNetwork
         private IEnumerator WaitForPlayersToConnect()
         {
             yield return new WaitUntil(() => NetworkManager.Singleton.ConnectedClients.Count >= 2);
-            AssignPlayersServerRpc();
+            AssignPlayers();
         }
 
-        [ServerRpc]
-        private void AssignPlayersServerRpc()
+        private void AssignPlayers()
         {
             var player1 = Instantiate(playerOne, transform);
             player1.SpawnAsPlayerObject(0, true);
