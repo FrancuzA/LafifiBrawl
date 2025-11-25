@@ -6,54 +6,60 @@ namespace General.Managers
 {
     public class PlayerEquipment : MonoBehaviour
     {
-        [SerializeField] private List<UnitsStats> equippedUnits = new();
+        [SerializeField] private List<UnitsStats> startingUnits;
+        private Dictionary<ulong, List<UnitsStats>> equippedUnits = new();
 
         private void Start()
         {
             Dependencies.Instance.RegisterDependency(this);
             DontDestroyOnLoad(this);
+            foreach (var unit in startingUnits)
+            {
+                equippedUnits[0].Add(unit);
+                equippedUnits[1].Add(unit);
+            }
         }
 
-        public bool HasUnit(UnitsStats unitStats)
+        public bool HasUnit(UnitsStats unitStats, ulong clientId)
         {
-            return equippedUnits.Contains(unitStats);
+            return equippedUnits[clientId].Contains(unitStats);
         }
         
-        public UnitsStats GetUnit(UnitsStats unitStats)
+        public UnitsStats GetUnit(UnitsStats unitStats, ulong clientId)
         {
-            equippedUnits.Remove(unitStats);
+            equippedUnits[clientId].Remove(unitStats);
             Debug.Log($"Deployed unit: {unitStats.CharacterName}");
             return unitStats;
         }
         
-        public UnitsStats GetAnyUnit()
+        public UnitsStats GetAnyUnit(ulong clientId)
         {
             if (equippedUnits.Count == 0)
             {
                 Debug.Log("No units to deploy.");
                 return null;
             }
-            var unitStats = equippedUnits[0];
-            equippedUnits.RemoveAt(0);
+            var unitStats = equippedUnits[clientId][0];
+            equippedUnits[clientId].RemoveAt(0);
             Debug.Log($"Deployed unit: {unitStats.CharacterName}");
             return unitStats;
         }
         
-        public void AddUnit(UnitsStats unitStats)
+        public void AddUnit(UnitsStats unitStats, ulong clientId)
         {
-            equippedUnits.Add(unitStats);
+            equippedUnits[clientId].Add(unitStats);
             Debug.Log($"Added unit: {unitStats.CharacterName}");
         }
         
-        public int GetEquippedUnitCount()
+        public int GetEquippedUnitCount(ulong clientId)
         {
             return equippedUnits.Count;
         }
         
-        public void ListEquippedUnits()
+        public void ListEquippedUnits(ulong clientId)
         {
             Debug.Log("Equipped Units:");
-            foreach (var unit in equippedUnits)
+            foreach (var unit in equippedUnits[clientId])
             {
                 Debug.Log($"- {unit.CharacterName}");
             }

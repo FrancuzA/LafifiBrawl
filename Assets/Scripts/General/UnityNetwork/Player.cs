@@ -38,7 +38,7 @@ public class Player : NetworkBehaviour
     {
         yield return new WaitUntil(() => NetworkManager.Singleton.ConnectedClients.Count > 1);
         var wait = new WaitForSeconds(5f);
-        for (var i = 0; i < _playerEquipment.GetEquippedUnitCount(); i++)
+        for (var i = 0; i < _playerEquipment.GetEquippedUnitCount(OwnerClientId); i++)
         {
             SpawnUnitServerRpc();
             yield return wait;
@@ -52,7 +52,7 @@ public class Player : NetworkBehaviour
         var client = NetworkManager.Singleton.ConnectedClients[clientId];
         if (!_networkSpawner) _networkSpawner = Dependencies.Instance.GetDependency<NetworkSpawner>();
         
-        _networkSpawner.SpawnUnitsForPlayer(client, _playerEquipment.GetAnyUnit());
+        _networkSpawner.SpawnUnitsForPlayer(client, _playerEquipment.GetAnyUnit(clientId));
 
     }
 
