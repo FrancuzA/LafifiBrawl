@@ -19,11 +19,6 @@ public class ReadyStage : NetworkBehaviour
         DontDestroyOnLoad(this);
     }
 
-    public override void OnNetworkSpawn()
-    {
-        base.OnNetworkSpawn();
-        Debug.Log("ReadyStage spawned on network for client " + NetworkManager.Singleton.LocalClientId);
-    }
 
     public void SetPlayerReady()
     {
