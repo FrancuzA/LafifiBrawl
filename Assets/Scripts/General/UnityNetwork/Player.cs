@@ -53,7 +53,7 @@ public class Player : NetworkBehaviour
         if (!_networkSpawner) _networkSpawner = Dependencies.Instance.GetDependency<NetworkSpawner>();
         var unitStats = playerEquipment.GetAnyUnit(clientId);
         _networkSpawner.SpawnUnitsForPlayer(clientId, unitStats);
-        Debug.Log($"[SERVER] Spawned unit: {unitStats.CharacterName} for Player: {clientId}");
+        Debug.Log($"[SERVER] Spawned unit: {unitStats.CharacterName} for Player: {clientId}.");
     }
 
 }
