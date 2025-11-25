@@ -1,24 +1,26 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerUI : MonoBehaviour
+namespace General.UnityNetwork
 {
-    [SerializeField] private Canvas playerCanvas;
-    [SerializeField] private Slider healthSlider;
-    [SerializeField] private Player playerScript;
+    public class PlayerUI : MonoBehaviour
+    {
+        //[SerializeField] private Canvas playerCanvas;
+        [SerializeField] private Image healthBar;
+        [SerializeField] private Player playerScript;
 
-    private void Awake()
+        /*private void Awake()
     {
         playerCanvas.worldCamera = Camera.main;
-    }
+    }*/
 
-    private void Update()
-    {
-        if (playerScript != null && healthSlider != null)
+        private void Update()
         {
-            healthSlider.value = playerScript.playerHealth.Value / 100f;
+            if (playerScript && healthBar)
+            {
+                healthBar.fillAmount = playerScript.playerHealth.Value / 100f;
+            }
         }
-    }
 
+    }
 }

@@ -19,8 +19,8 @@ namespace General.Managers
         public EventReference Attack;
         public EventReference Buy;
         public EventReference Sell;
-        
-        private List<EventInstance> _eventInstances = new List<EventInstance>();
+
+        private List<EventInstance> _eventInstances = new();
         private EventInstance _backpackSoundInstance;
         private EventInstance AngelikaUltInstance;
         private EventInstance RatUltInstance;
@@ -31,8 +31,8 @@ namespace General.Managers
         private EventInstance AttackInstance;
         private EventInstance BuyInstance;
         private EventInstance SellInstance;
-        
-        
+
+
         private void Awake()
         {
             if (Dependencies.Instance.GetDependency<AudioManager>() != null)
@@ -40,9 +40,10 @@ namespace General.Managers
                 Destroy(gameObject);
                 return;
             }
+
             Dependencies.Instance.RegisterDependency(this);
             DontDestroyOnLoad(gameObject);
-            
+
             _backpackSoundInstance = CreateEventInstance(backpackSoundRef);
             AngelikaUltInstance = CreateEventInstance(AngelikaUlt);
             RatUltInstance = CreateEventInstance(RatUlt);
@@ -57,10 +58,7 @@ namespace General.Managers
 
         private void OnDestroy()
         {
-            foreach (var eventInstance in _eventInstances)
-            {
-                ReleaseEventInstance(eventInstance);
-            }
+            foreach (var eventInstance in _eventInstances) ReleaseEventInstance(eventInstance);
             Dependencies.Instance.UnregisterDependency<AudioManager>();
         }
 
@@ -105,32 +103,37 @@ namespace General.Managers
         {
             PlayEventInstance(RatUltInstance);
         }
+
         public void PlayCleanMaBelleyUlt()
         {
             PlayEventInstance(CleanMABelleyUltInstance);
         }
+
         public void PlayKonLongUlt()
         {
             PlayEventInstance(KonLongUltInstance);
         }
+
         public void PlayGrzegorzUlt()
         {
             PlayEventInstance(GrzegorzUltInstance);
         }
+
         public void PlayLafifiUlt()
         {
             PlayEventInstance(LafifiUltInstance);
         }
 
-        public void PlayAttackSound() 
+        public void PlayAttackSound()
         {
             PlayEventInstance(AttackInstance);
         }
+
         public void PlayBackpackSound()
         {
             PlayEventInstance(_backpackSoundInstance);
         }
-        
+
         public void StopBackpackSound()
         {
             StopEventInstance(_backpackSoundInstance);
@@ -153,17 +156,17 @@ namespace General.Managers
             _eventInstances.Add(eventInstance);
             return eventInstance;
         }
-        
+
         private void PlayEventInstance(EventInstance eventInstance)
         {
             eventInstance.start();
         }
-        
+
         private void StopEventInstance(EventInstance eventInstance)
         {
             eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
-        
+
         private void ReleaseEventInstance(EventInstance eventInstance)
         {
             eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);

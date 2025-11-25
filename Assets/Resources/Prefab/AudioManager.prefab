@@ -107,3 +107,17 @@ MonoBehaviour:
       Data3: -1922872916
       Data4: 15216311
     Path: event:/Attack
+  Buy:
+    Guid:
+      Data1: 119400806
+      Data2: 1332667908
+      Data3: -794892655
+      Data4: -1138312457
+    Path: event:/BuyingSound
+  Sell:
+    Guid:
+      Data1: 1207680478
+      Data2: 1291785360
+      Data3: 270906505
+      Data4: 1676502480
+    Path: event:/SellingSound

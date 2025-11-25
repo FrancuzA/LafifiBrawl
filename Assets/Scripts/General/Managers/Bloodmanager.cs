@@ -11,7 +11,7 @@ namespace General.Managers
         [Header("Blood Settings")]
         [SerializeField] private int maxBlood = 10;
         [SerializeField] private int currentBlood = 0;
-        private Image bloodBar;
+        private Image _bloodBar;
         
         public bool inGame = true;
         private AudioManager _audioManager;
@@ -20,9 +20,9 @@ namespace General.Managers
         {
             Dependencies.Instance.RegisterDependency<Bloodmanager>(this);
             _audioManager = Dependencies.Instance.GetDependency<AudioManager>();
-            bloodBar = GetComponent<Image>();
+            _bloodBar = GetComponent<Image>();
             StartCoroutine(BloodRegen());
-            bloodBar.fillAmount = 0;
+            _bloodBar.fillAmount = 0;
         
         }
 
@@ -53,7 +53,7 @@ namespace General.Managers
 
         private void LoadBloodBar()
         {
-            bloodBar.fillAmount = (float)currentBlood / maxBlood;
+            _bloodBar.fillAmount = (float)currentBlood / maxBlood;
         }
     }
 }

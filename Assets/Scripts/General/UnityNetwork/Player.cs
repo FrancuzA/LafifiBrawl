@@ -1,5 +1,6 @@
 using System.Collections;
 using General;
+using General.UnityNetwork;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -17,12 +18,11 @@ public class Player : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        
         spriteRenderer = GetComponent<SpriteRenderer>();
         networkSpawner = Dependencies.Instance.GetDependency<NetworkSpawner>();
         if (IsOwner)
         {
-            transform.position = new Vector3(0, -3.8f, 0);
+            //transform.position = new Vector3(0, -3.8f, 0);
             spriteRenderer.color = Color.white;
             bloodManager.SetActive(true);
             StartCoroutine(SpawnUnitsRoutine());

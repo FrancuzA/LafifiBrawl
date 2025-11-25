@@ -1,63 +1,63 @@
-using System.Collections.Generic;
-using General;
-using General.UnityNetwork;
 using Unity.Netcode;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class NetworkSpawner : MonoBehaviour
+namespace General.UnityNetwork
 {
-    [SerializeField] private GameObject unitPrefab;
-    [SerializeField] private Transform playerOneSpawnPoint;
-    [SerializeField] private Transform PlayerTwoSpawnpoint;
-
-    private void Awake()
+    public class NetworkSpawner : MonoBehaviour
     {
-        if(Dependencies.Instance.GetDependency<NetworkSpawner>() != null)
+        [SerializeField] private GameObject unitPrefab;
+        [SerializeField] private Transform playerOneSpawnPoint;
+        [SerializeField] private Transform PlayerTwoSpawnpoint;
+
+        private void Awake()
         {
-            Destroy(gameObject);
-            return;
+            if(Dependencies.Instance.GetDependency<NetworkSpawner>() != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            Dependencies.Instance.RegisterDependency(this);
         }
-        Dependencies.Instance.RegisterDependency(this);
-    }
     
-    public void SpawnUnitsForPlayer(NetworkClient playerClient, UnitsStats stats)
-    {
-        // Określ pozycję spawnu na podstawie clientId
-        // Niższe clientId (host, zazwyczaj 0) spawn'uje z lewej (mySpawnPoint)
-        // Wyższe clientId (client, zazwyczaj 1) spawn'uje z prawej (enemySpawnPoint)
-        bool playerZero = playerClient.ClientId == 0;
+        public void SpawnUnitsForPlayer(NetworkClient playerClient, UnitsStats stats)
+        {
+            // Określ pozycję spawnu na podstawie clientId
+            // Niższe clientId (host, zazwyczaj 0) spawn'uje z lewej (mySpawnPoint)
+            // Wyższe clientId (client, zazwyczaj 1) spawn'uje z prawej (enemySpawnPoint)
+            bool playerZero = playerClient.ClientId == 0;
         
-        Transform spawnPoint = playerZero ? playerOneSpawnPoint : PlayerTwoSpawnpoint;
-        Vector3 spawnPosition = GetRandomSpawnPosition(spawnPoint);
+            Transform spawnPoint = playerZero ? playerOneSpawnPoint : PlayerTwoSpawnpoint;
+            Vector3 spawnPosition = GetRandomSpawnPosition(spawnPoint);
         
-        var unit = Instantiate(unitPrefab, spawnPosition, Quaternion.identity);
-        var playerUnit = unit.GetComponent<PlayerUnit>();
+            var unit = Instantiate(unitPrefab, spawnPosition, Quaternion.identity);
+            var playerUnit = unit.GetComponent<PlayerUnit>();
         
-        var unitNetworkObject = unit.GetComponent<NetworkObject>();
-        unitNetworkObject.SpawnWithOwnership(playerClient.ClientId);
+            var unitNetworkObject = unit.GetComponent<NetworkObject>();
+            unitNetworkObject.SpawnWithOwnership(playerClient.ClientId);
         
-        // Ustaw kolor po spawnie na wszystkich klientach
-        playerUnit.SetColorClientRpc(playerClient.ClientId);
+            // Ustaw kolor po spawnie na wszystkich klientach
+            playerUnit.SetColorClientRpc(playerClient.ClientId);
 
-        // Ustaw statystyki jednostki
-        playerUnit.SetStatsClientRpc(
-            stats.CharacterName, stats.lafifiImg, 
-            stats.MaxHealthPoints,
-            stats.AttackDMG,
-            stats.AttackSpd,
-            stats.Ult,
-            stats.UltCD,
-            stats.UltCost);
+            // Ustaw statystyki jednostki
+            playerUnit.SetStatsClientRpc(
+                stats.CharacterName, stats.lafifiImg, 
+                stats.MaxHealthPoints,
+                stats.AttackDMG,
+                stats.AttackSpd,
+                stats.Ult,
+                stats.UltCD,
+                stats.UltCost);
 
-        playerUnit.SetStartHealthPointsClientRpc();
-    }
+            playerUnit.SetStartHealthPointsClientRpc();
+        }
     
-    private Vector3 GetRandomSpawnPosition(Transform spawnPoint)
-    {
-        var xOffset = Random.Range(-1f, 1f);
-        var yOffset = Random.Range(-2.5f, 2.5f);
-        return spawnPoint.position + new Vector3(xOffset, yOffset, 0);
+        private Vector3 GetRandomSpawnPosition(Transform spawnPoint)
+        {
+            var xOffset = Random.Range(-1f, 1f);
+            var yOffset = Random.Range(-2.5f, 2.5f);
+            return spawnPoint.position + new Vector3(xOffset, yOffset, 0);
+        }
     }
 }
 

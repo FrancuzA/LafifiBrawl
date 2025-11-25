@@ -22,16 +22,13 @@ public class PlayersReady : NetworkBehaviour
         if(player1Ready.Value && player2Ready.Value)
         {
             Debug.Log("Both players are ready!");
-            // You can add additional logic here to start the game
-            if(IsServer)
-            {
-                NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += SceneManager_OnLoadComplete;
-                StartGame();
-            }
+            if (!IsServer) return;
+            //NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += SceneManager_OnLoadComplete;
+            StartGame();
         }
     }
 
-    private void SceneManager_OnLoadComplete(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
+    /*private void SceneManager_OnLoadComplete(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
     {
         Debug.Log("Scene Loaded for all clients");
         //NetworkManager.Singleton.SceneManager.UnloadScene(SceneManager.GetSceneByName("InventoryStage"));
@@ -40,7 +37,7 @@ public class PlayersReady : NetworkBehaviour
             GameObject instantiatedPlayer = Instantiate(playerPrefab);
             instantiatedPlayer.GetComponent<NetworkObject>().SpawnAsPlayerObject(client.ClientId, false);
         }
-    }
+    }*/
 
     private void StartGame()
     {
