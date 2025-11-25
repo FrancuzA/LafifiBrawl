@@ -18,10 +18,10 @@ namespace General.UnityNetwork
         [ServerRpc(RequireOwnership = false)]
         private void AssignPlayersServerRpc()
         {
-            playerOne.RemoveOwnership();
-            playerTwo.RemoveOwnership();
-            playerOne.ChangeOwnership(0);
-            playerTwo.ChangeOwnership(1);
+            var player1 = Instantiate(playerOne, transform);
+            player1.SpawnAsPlayerObject(0, true);
+            var player2 = Instantiate(playerTwo, transform);
+            player2.SpawnAsPlayerObject(1, true);
         }
     }
 }

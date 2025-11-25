@@ -21,23 +21,14 @@ public class Player : NetworkBehaviour
     {
         playerImage = GetComponent<Image>();
         networkSpawner = Dependencies.Instance.GetDependency<NetworkSpawner>();
-        
-    }
-
-    protected override void OnOwnershipChanged(ulong previous, ulong current)
-    {
-        base.OnOwnershipChanged(previous, current);
         if (IsOwner)
         {
-            Debug.Log($"Player {OwnerClientId} gained ownership.");
             playerImage.color = Color.white;
             bloodManager.SetActive(true);
-            Debug.Log($"Player {OwnerClientId} is owner, starting unit spawn.");
             StartCoroutine(SpawnUnitsRoutine());
         }
         else
         {
-            Debug.Log($"Player {OwnerClientId} is enemy.");
             playerImage.color = Color.black;
         }
     }
@@ -51,7 +42,6 @@ public class Player : NetworkBehaviour
             SpawnUnitServerRpc();
             yield return wait;
         }
-        
     }
     
     [ServerRpc]
