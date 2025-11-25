@@ -50,7 +50,7 @@ namespace General.Managers
         
         public int GetEquippedUnitCount(ulong clientId)
         {
-            return equippedUnits.Count;
+            return equippedUnits[clientId].Count;
         }
         
         public void ListEquippedUnits(ulong clientId)
