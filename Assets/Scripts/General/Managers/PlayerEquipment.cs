@@ -25,6 +25,9 @@ namespace General.Managers
                 equippedUnits[0].Add(unit);
                 equippedUnits[1].Add(unit);
             }
+
+            Debug.Log($"PLayer 0 has {GetEquippedUnitCount(0)} units");
+            Debug.Log($"PLayer 1 has {GetEquippedUnitCount(1)} units");
         }
 
         public bool HasUnit(UnitsStats unitStats, ulong clientId)
@@ -41,6 +44,17 @@ namespace General.Managers
         
         public UnitsStats GetAnyUnit(ulong clientId)
         {
+            if (!equippedUnits.TryGetValue(clientId, out var equippedUnit))
+            {
+                Debug.LogError($"No equipment found for client {clientId}");
+                return null;
+            }
+
+            if (equippedUnit.Count == 0)
+            {
+                Debug.LogError($"No units left for client {clientId}");
+                return null;
+            }
             var unitStats = equippedUnits[clientId][0];
             equippedUnits[clientId].RemoveAt(0);
             return unitStats;
