@@ -26,7 +26,7 @@ public class Player : NetworkBehaviour
     protected override void OnOwnershipChanged(ulong previous, ulong current)
     {
         base.OnOwnershipChanged(previous, current);
-        if (IsOwner)
+        if (current == NetworkManager.Singleton.LocalClientId)
         {
             //transform.position = new Vector3(0, -3.8f, 0);
             spriteRenderer.color = Color.white;
