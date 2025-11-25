@@ -9,6 +9,10 @@ namespace General.UnityNetwork
     {
         public NetworkVariable<bool> player1Ready = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         public NetworkVariable<bool> player2Ready = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        
+        [SerializeField] private NetworkObject playerOne;
+        [SerializeField] private NetworkObject playerTwo;
+        
         [SerializeField] private GameObject playerPrefab;
 
         private void Start()
@@ -24,25 +28,25 @@ namespace General.UnityNetwork
             {
                 Debug.Log("Both players are ready!");
                 if (!IsServer) return;
-                //NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += SceneManager_OnLoadComplete;
+                NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += SceneManager_OnLoadComplete;
                 StartGame();
             }
         }
 
-        /*private void SceneManager_OnLoadComplete(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
+        private void SceneManager_OnLoadComplete(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
         {
             Debug.Log("Scene Loaded for all clients");
             foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
             {
-                GameObject instantiatedPlayer = Instantiate(playerPrefab);
-                instantiatedPlayer.GetComponent<NetworkObject>().SpawnAsPlayerObject(client.ClientId, false);
+                var clientId = client.ClientId;
+                var player = Instantiate(clientId == 0 ? playerOne : playerTwo, transform);
+                player.SpawnAsPlayerObject(clientId, true);
             }
-        }*/
+        }
 
         private void StartGame()
         {
             NetworkManager.Singleton.SceneManager.LoadScene("FightStage", LoadSceneMode.Single);
-        
         }
 
         public void SetPlayerReady()
