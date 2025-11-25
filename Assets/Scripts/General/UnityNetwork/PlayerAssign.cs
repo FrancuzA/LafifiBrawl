@@ -8,8 +8,9 @@ namespace General.UnityNetwork
         [SerializeField] private NetworkObject playerOne;
         [SerializeField] private NetworkObject playerTwo;
 
-        private void Start()
+        public override void OnNetworkSpawn()
         {
+            base.OnNetworkSpawn();
             AssignPlayersServerRpc();
         }
 
