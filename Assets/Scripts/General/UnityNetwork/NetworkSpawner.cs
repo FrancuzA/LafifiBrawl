@@ -20,21 +20,22 @@ namespace General.UnityNetwork
             Dependencies.Instance.RegisterDependency(this);
         }
     
-        public void SpawnUnitsForPlayer(NetworkClient playerClient, UnitsStats stats)
+        public void SpawnUnitsForPlayer(ulong clientId, UnitsStats stats)
         {
-            bool playerZero = playerClient.ClientId == 0;
+            bool playerZero = clientId == 0;
         
             Transform spawnPoint = playerZero ? playerOneSpawnPoint : playerTwoSpawnPoint;
             Vector3 spawnPosition = GetRandomSpawnPosition(spawnPoint);
         
             var unit = Instantiate(unitPrefab, spawnPosition, Quaternion.identity);
-            var playerUnit = unit.GetComponent<PlayerUnit>();
         
+            var playerUnit = unit.GetComponent<PlayerUnit>();
             var unitNetworkObject = unit.GetComponent<NetworkObject>();
-            unitNetworkObject.SpawnWithOwnership(playerClient.ClientId);
+            
+            unitNetworkObject.SpawnWithOwnership(clientId);
         
             // Ustaw kolor po spawnie na wszystkich klientach
-            playerUnit.SetColorClientRpc(playerClient.ClientId);
+            playerUnit.SetColorClientRpc(clientId);
 
             // Ustaw statystyki jednostki
             playerUnit.SetStatsClientRpc(

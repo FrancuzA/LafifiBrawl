@@ -12,7 +12,7 @@ public class Player : NetworkBehaviour
     [SerializeField] private GameObject bloodManager;
     [SerializeField] private Image playerImage;
     private NetworkSpawner _networkSpawner;
-    private PlayerEquipment _playerEquipment;
+    [SerializeField] private PlayerEquipment playerEquipment;
     
     [Header("Stats")]
     public NetworkVariable<ushort> playerHealth = new NetworkVariable<ushort>(100);
@@ -21,7 +21,7 @@ public class Player : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         _networkSpawner = Dependencies.Instance.GetDependency<NetworkSpawner>();
-        _playerEquipment = Dependencies.Instance.GetDependency<PlayerEquipment>();
+        playerEquipment = Dependencies.Instance.GetDependency<PlayerEquipment>();
         if (IsOwner)
         {
             playerImage.color = Color.white;
@@ -37,23 +37,23 @@ public class Player : NetworkBehaviour
     private IEnumerator SpawnUnitsRoutine()
     {
         yield return new WaitUntil(() => NetworkManager.Singleton.ConnectedClients.Count > 1);
-        var wait = new WaitForSeconds(5f);
-        for (var i = 0; i < _playerEquipment.GetEquippedUnitCount(OwnerClientId); i++)
+        for (var i = 0; i < playerEquipment.GetEquippedUnitCount(OwnerClientId); i++)
         {
-            SpawnUnitServerRpc();
-            yield return wait;
+            Debug.Log($"[LOCAL] Player: {OwnerClientId} Requesting unit spawn from server...");
+            RequestSpawnUnitServerRpc();
+            yield return new WaitForSeconds(5f);
         }
     }
     
     [ServerRpc]
-    private void SpawnUnitServerRpc(ServerRpcParams rpcParams = default)
+    private void RequestSpawnUnitServerRpc(ServerRpcParams rpcParams = default)
     {
         var clientId = rpcParams.Receive.SenderClientId;
-        var client = NetworkManager.Singleton.ConnectedClients[clientId];
-        if (!_networkSpawner) _networkSpawner = Dependencies.Instance.GetDependency<NetworkSpawner>();
         
-        _networkSpawner.SpawnUnitsForPlayer(client, _playerEquipment.GetAnyUnit(clientId));
-
+        if (!_networkSpawner) _networkSpawner = Dependencies.Instance.GetDependency<NetworkSpawner>();
+        var unitStats = playerEquipment.GetAnyUnit(clientId);
+        _networkSpawner.SpawnUnitsForPlayer(clientId, unitStats);
+        Debug.Log($"[SERVER] Spawned unit: {unitStats.CharacterName} for Player: {clientId}");
     }
 
 }

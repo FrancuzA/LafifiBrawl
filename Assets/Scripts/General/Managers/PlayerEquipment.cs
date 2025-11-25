@@ -11,8 +11,13 @@ namespace General.Managers
 
         private void Start()
         {
-            Dependencies.Instance.RegisterDependency(this);
+            if(Dependencies.Instance.GetDependency<PlayerEquipment>() != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
             DontDestroyOnLoad(this);
+            Dependencies.Instance.RegisterDependency(this);
             equippedUnits.TryAdd(0, new List<UnitsStats>());
             equippedUnits.TryAdd(1, new List<UnitsStats>());
             foreach (var unit in startingUnits)
@@ -37,7 +42,6 @@ namespace General.Managers
         public UnitsStats GetAnyUnit(ulong clientId)
         {
             var unitStats = equippedUnits[clientId][0];
-            Debug.Log($"Deployed unit: {unitStats.CharacterName}");
             equippedUnits[clientId].RemoveAt(0);
             return unitStats;
         }
