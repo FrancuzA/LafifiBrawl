@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Unity.Netcode;
 using Unity.Netcode.Components;
@@ -11,12 +12,13 @@ namespace General.UnityNetwork
     public class PlayerUnit : NetworkBehaviour
     {
         [SerializeField] private float attackCooldownTimer;
-    
+        private const float Speed = 1f;
+        
         [Header("Look")]
         private SpriteRenderer _spriteRenderer;
     
         [Tooltip("Belly = 0,\nGrzegorz = 1,\nKon = 2,\nLafifi = 3,\nAngelika = 4,\nRat = 5")]
-        public Sprite[] sprites = new Sprite[3];
+        public List<Sprite> sprites = new ();
         [Header("Health")]
         public ushort MaxHealthPoints;
         [SerializeField] private NetworkVariable<float> currentHealthPoints = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -72,7 +74,6 @@ namespace General.UnityNetwork
             if(!_targetUnit) return;
             _targetUnit.TakeDamageClientRpc(AttackDMG);
             attackCooldownTimer = AttackSpd;
-            //Debug.Log($"{gameObject.name} attacked {_targetUnit.gameObject.name} for {AttackDMG} damage.");
         }
         
         [ClientRpc]
@@ -89,7 +90,7 @@ namespace General.UnityNetwork
         [ServerRpc(RequireOwnership = false)]
         private void DespawnUnitServerRpc()
         {
-            Debug.LogWarning($"Despawned: {gameObject.name}:{NetworkObjectId}.");
+            //Debug.LogWarning($"Despawned: {gameObject.name}:{NetworkObjectId}.");
             currentHealthPoints.OnValueChanged -= HealthChanged;
             NetworkObject.Despawn();
         }
@@ -98,11 +99,10 @@ namespace General.UnityNetwork
         {
             if (_targetUnit)
             {
-                transform.Translate((_targetUnit.transform.position - transform.position).normalized * (0.2f * Time.deltaTime));
+                dir = (_targetUnit.transform.position - transform.position).normalized;
             }
             else
             {
-                transform.Translate(dir * (0.2f * Time.deltaTime));
                 var collider2Ds = Physics2D.OverlapCircleAll(transform.position, 10f);
                 foreach (var coli in collider2Ds)
                 {
@@ -113,6 +113,7 @@ namespace General.UnityNetwork
                     break;
                 }
             }
+            transform.Translate(dir * (Speed * Time.deltaTime));
         }
         
         [ServerRpc(RequireOwnership = false)]

@@ -8,7 +8,7 @@ namespace General.UnityNetwork
     {
         [SerializeField] private GameObject unitPrefab;
         [SerializeField] private Transform playerOneSpawnPoint;
-        [SerializeField] private Transform PlayerTwoSpawnpoint;
+        [SerializeField] private Transform playerTwoSpawnPoint;
 
         private void Awake()
         {
@@ -27,7 +27,7 @@ namespace General.UnityNetwork
             // Wyższe clientId (client, zazwyczaj 1) spawn'uje z prawej (enemySpawnPoint)
             bool playerZero = playerClient.ClientId == 0;
         
-            Transform spawnPoint = playerZero ? playerOneSpawnPoint : PlayerTwoSpawnpoint;
+            Transform spawnPoint = playerZero ? playerOneSpawnPoint : playerTwoSpawnPoint;
             Vector3 spawnPosition = GetRandomSpawnPosition(spawnPoint);
         
             var unit = Instantiate(unitPrefab, spawnPosition, Quaternion.identity);
@@ -54,8 +54,8 @@ namespace General.UnityNetwork
     
         private Vector3 GetRandomSpawnPosition(Transform spawnPoint)
         {
-            var xOffset = Random.Range(-1f, 1f);
-            var yOffset = Random.Range(-2.5f, 2.5f);
+            var xOffset = Random.Range(-20f, 10f);
+            var yOffset = Random.Range(-25f, 25f);
             return spawnPoint.position + new Vector3(xOffset, yOffset, 0);
         }
     }
