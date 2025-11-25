@@ -563,6 +563,8 @@ MonoBehaviour:
     m_InternalValue: 0
   player2Ready:
     m_InternalValue: 0
+  playerOne: {fileID: 8963333878927096346, guid: 11264863130052642aa0e6aed18a3297, type: 3}
+  playerTwo: {fileID: 3586381440851809972, guid: 0e96d6375c71a9845b3ee73bddf6c2f4, type: 3}
   playerPrefab: {fileID: 1208468465438502709, guid: a3fd5ecb8500f424a8d6badf1245ce8f, type: 3}
 --- !u!4 &703277337
 Transform:
