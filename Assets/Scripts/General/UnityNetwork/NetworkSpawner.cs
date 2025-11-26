@@ -26,7 +26,6 @@ namespace General.UnityNetwork
                 return;
             }
             Singleton = this;
-            DontDestroyOnLoad(this);
         }
     
         public void SpawnUnitsForPlayer(ulong clientId, UnitsStats stats)
