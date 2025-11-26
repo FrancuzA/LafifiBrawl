@@ -107,7 +107,7 @@ namespace General.UnityNetwork
             }
         }
         
-        public void DeleteUnit(ulong clientId, UnitsStats unitStats)
+        public void DeleteUnit(UnitsStats unitStats, ulong clientId)
         {
             if (availableUnits[clientId].Contains(unitStats))
             {
