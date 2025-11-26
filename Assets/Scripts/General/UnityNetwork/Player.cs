@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using General;
 using General.Managers;
 using General.UnityNetwork;
@@ -9,6 +10,7 @@ using UnityEngine.UI;
 public class Player : NetworkBehaviour
 {
     [SerializeField] private UnitsStats[] stats;
+    [SerializeField] private List<UnitsStats> equippedUnits;
     [SerializeField] private GameObject bloodManager;
     [SerializeField] private Image playerImage;
     private NetworkSpawner _networkSpawner;
@@ -19,7 +21,7 @@ public class Player : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        _networkSpawner = Dependencies.Instance.GetDependency<NetworkSpawner>();
+        _networkSpawner = NetworkSpawner.Singleton;
         if (IsOwner)
         {
             playerImage.color = Color.white;

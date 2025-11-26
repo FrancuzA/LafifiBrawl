@@ -5,8 +5,10 @@ using Random = UnityEngine.Random;
 
 namespace General.UnityNetwork
 {
-    public class NetworkSpawner : MonoBehaviour
+    public class NetworkSpawner : NetworkBehaviour
     {
+        public static NetworkSpawner Singleton;
+        
         [SerializeField] private GameObject unitPrefab;
         [SerializeField] private Transform playerOneSpawnPoint;
         [SerializeField] private Transform playerTwoSpawnPoint;
@@ -18,12 +20,12 @@ namespace General.UnityNetwork
 
         private void Awake()
         {
-            if(Dependencies.Instance.GetDependency<NetworkSpawner>())
+            if(Singleton)
             {
                 Destroy(gameObject);
                 return;
             }
-            Dependencies.Instance.RegisterDependency(this);
+            Singleton = this;
             DontDestroyOnLoad(this);
         }
     
