@@ -8,7 +8,6 @@ using UnityEngine;
 public class Shopmanager : MonoBehaviour
 {
     [SerializeField] private NetworkSpawner networkSpawner;
-    [SerializeField] private List<UnitsStats> unitsStats;
     public List<GameObject> ItemsToBuy = new List<GameObject>();
     public List<Transform> ItemPlacements = new List<Transform>();
     public List<int> ChosenItems = new List<int>();
@@ -58,8 +57,15 @@ public class Shopmanager : MonoBehaviour
         currentMoneyText.text = $"Gold: {Money.ToString()}";
     }
 
-    public void Add()
+    public void Add(UnitsStats unitStat)
     {
-        networkSpawner.AddUnit(unitsStats[0], NetworkManager.Singleton.LocalClientId);
+        networkSpawner.AddUnit(unitStat, NetworkManager.Singleton.LocalClientId);
     }
+
+    public void Remove(UnitsStats unitStat)
+    {
+
+       networkSpawner.DeleteUnit(unitStat,NetworkManager.Singleton.LocalClientId);
+    }
+
 }

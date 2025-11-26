@@ -384,6 +384,7 @@ MonoBehaviour:
   cost: 3
   costText: {fileID: 8384861348934410367}
   isBought: 1
+  stats: {fileID: 11400000, guid: 3f763f5ece5ed7d419433555cbb80cb9, type: 2}
   audioManager: {fileID: 0}
 --- !u!114 &-5635676871364396956
 MonoBehaviour:
