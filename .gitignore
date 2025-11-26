@@ -73,3 +73,7 @@ UserSettings/Layouts/default-6000.dwlt
 .idea/.idea.LafifiBrawl/.idea/
 
 fmod_editor.log
+
+Assets\Plugins\FMOD\Cache\Editor\FMODStudioCache.asset
+
+UserSettings/EditorUserSettings.asset
