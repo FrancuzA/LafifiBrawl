@@ -10,7 +10,11 @@ namespace General.UnityNetwork
         [SerializeField] private GameObject unitPrefab;
         [SerializeField] private Transform playerOneSpawnPoint;
         [SerializeField] private Transform playerTwoSpawnPoint;
-        private Dictionary<ulong, List<UnitsStats>> availableUnits = new();
+        private Dictionary<ulong, List<UnitsStats>> availableUnits = new()
+        {
+            [0] = new List<UnitsStats>(),
+            [1] = new List<UnitsStats>()
+        };
 
         private void Awake()
         {
