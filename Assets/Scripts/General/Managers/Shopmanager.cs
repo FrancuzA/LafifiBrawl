@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class Shopmanager : MonoBehaviour
 {
-    [SerializeField] private NetworkSpawner networkSpawner;
     public List<GameObject> ItemsToBuy = new List<GameObject>();
     public List<Transform> ItemPlacements = new List<Transform>();
     public List<int> ChosenItems = new List<int>();
@@ -22,7 +21,6 @@ public class Shopmanager : MonoBehaviour
 
     private void InitializeShop()
     {
-        networkSpawner = NetworkSpawner.Singleton;
         Dependencies.Instance.RegisterDependency<Shopmanager>(this);
         ChosenItems.Clear();
         foreach (Transform placement in ItemPlacements)
@@ -60,12 +58,12 @@ public class Shopmanager : MonoBehaviour
 
     public void Add(UnitsStats unitStat)
     {
-        networkSpawner.AddUnitServerRpc(NetworkManager.Singleton.LocalClientId, unitStat);
+        NetworkSpawner.Singleton.AddUnitServerRpc(NetworkManager.Singleton.LocalClientId, unitStat);
     }
 
     public void Remove(UnitsStats unitStat)
     {
-       networkSpawner.DeleteUnit(NetworkManager.Singleton.LocalClientId, unitStat);
+        NetworkSpawner.Singleton.DeleteUnit(NetworkManager.Singleton.LocalClientId, unitStat);
     }
 
 }
