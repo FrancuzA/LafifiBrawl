@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -12,8 +13,10 @@ namespace General.UnityNetwork
         [SerializeField] private GameObject unitPrefab;
         [SerializeField] private Transform playerOneSpawnPoint;
         [SerializeField] private Transform playerTwoSpawnPoint;
-        private List<UnitsStats> availableUnits0 = new();
-        private List<UnitsStats> availableUnits1 = new();
+
+        private List<UnitsStats> playerOneStats = new();
+        private List<UnitsStats> playerTwoStats = new();
+        
 
         private void Awake()
         {
@@ -66,45 +69,46 @@ namespace General.UnityNetwork
 
         #region Equipment Managment
 
-        public bool HasUnit(UnitsStats unitStats, ulong clientId)
+        public bool HasUnit(ulong clientId, UnitsStats unitStats)
         {
-            return clientId == 0 ? availableUnits0.Contains(unitStats) : availableUnits1.Contains(unitStats);
+            var availableUnits = clientId == 0 ? playerOneStats : playerTwoStats;
+            return availableUnits.Contains(unitStats);
         }
         
-        public UnitsStats GetUnit(UnitsStats unitStats, ulong clientId)
+        public void GetUnit(ulong clientId, UnitsStats unitStats, out UnitsStats unitStat)
         {
-            
-            var availableUnits = clientId == 0 ? availableUnits0 : availableUnits1;
+            var availableUnits = clientId == 0 ? playerOneStats : playerTwoStats;
+            unitStat = unitStats;
             availableUnits.Remove(unitStats);
             Debug.Log($"Deployed unit: {unitStats.CharacterName}");
-            return unitStats;
         }
         
-        public UnitsStats GetAnyUnit(ulong clientId)
+        [ServerRpc(RequireOwnership = false)]
+        public void GetAnyUnitServerRpc(ulong clientId, out UnitsStats unitStats)
         {
-            var availableUnits = clientId == 0 ? availableUnits0 : availableUnits1;
-            var unitStats = availableUnits[0];
+            var availableUnits = clientId == 0 ? playerOneStats : playerTwoStats;
+            unitStats = availableUnits[0];
             availableUnits.RemoveAt(0);
             Debug.Log($"Deployed unit: {unitStats.CharacterName}, {GetEquippedUnitCount(clientId)} units left for player {clientId}");
-            return unitStats;
         }
         
-        public void AddUnit(UnitsStats unitStats, ulong clientId)
+        [ServerRpc(RequireOwnership = false)]
+        public void AddUnitServerRpc(ulong clientId, UnitsStats unitStats)
         {
-            var availableUnits = clientId == 0 ? availableUnits0 : availableUnits1;
+            var availableUnits = clientId == 0 ? playerOneStats : playerTwoStats;
             availableUnits.Add(unitStats);
             Debug.Log($"Added unit: {unitStats.CharacterName}");
         }
         
         public int GetEquippedUnitCount(ulong clientId)
         {
-            var availableUnits = clientId == 0 ? availableUnits0 : availableUnits1;
+            var availableUnits = clientId == 0 ? playerOneStats : playerTwoStats;
             return availableUnits.Count;
         }
         
         public void ListEquippedUnits(ulong clientId)
         {
-            var availableUnits = clientId == 0 ? availableUnits0 : availableUnits1;
+            var availableUnits = clientId == 0 ? playerOneStats : playerTwoStats;
             Debug.Log("Equipped Units:");
             foreach (var unit in availableUnits)
             {
@@ -112,9 +116,9 @@ namespace General.UnityNetwork
             }
         }
         
-        public void DeleteUnit(UnitsStats unitStats, ulong clientId)
+        public void DeleteUnit(ulong clientId, UnitsStats unitStats)
         {
-            var availableUnits = clientId == 0 ? availableUnits0 : availableUnits1;
+            var availableUnits = clientId == 0 ? playerOneStats : playerTwoStats;
             if (availableUnits.Contains(unitStats))
             {
                 availableUnits.Remove(unitStats);
@@ -127,6 +131,9 @@ namespace General.UnityNetwork
         }
 
         #endregion
+
     }
 }
+
+
 

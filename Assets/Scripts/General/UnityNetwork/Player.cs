@@ -50,7 +50,8 @@ public class Player : NetworkBehaviour
         var clientId = rpcParams.Receive.SenderClientId;
         
         if (!_networkSpawner) _networkSpawner = NetworkSpawner.Singleton;
-        _networkSpawner.SpawnUnitsForPlayer(clientId, _networkSpawner.GetAnyUnit(clientId));
+        _networkSpawner.GetAnyUnitServerRpc(clientId, out var unitStat);
+        _networkSpawner.SpawnUnitsForPlayer(clientId, unitStat);
     }
 
 }

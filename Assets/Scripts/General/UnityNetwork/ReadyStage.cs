@@ -40,7 +40,7 @@ public class ReadyStage : NetworkBehaviour
     {
         var clientId = serverRpcParams.Receive.SenderClientId;
         for(var i = 0; i < 7; i++)
-            networkSpawner.AddUnit(unitsStats, clientId);
+            networkSpawner.AddUnitServerRpc(clientId, unitsStats);
     }
 
     [ServerRpc(RequireOwnership = false)]

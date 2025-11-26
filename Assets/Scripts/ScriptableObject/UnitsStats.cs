@@ -1,8 +1,9 @@
 using System;
+using Unity.Netcode;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Units Statistics", menuName = "Scriptable/Units Statistics")]
-public class UnitsStats : ScriptableObject
+public class UnitsStats : ScriptableObject, INetworkSerializable
 {
     [Header("Name and Image")]
     public string CharacterName;
@@ -16,6 +17,18 @@ public class UnitsStats : ScriptableObject
     public UltID Ult;
     public ushort UltCD;
     public ushort UltCost;
+
+    public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+    {
+        serializer.SerializeValue(ref CharacterName);
+        serializer.SerializeValue(ref lafifiImg);
+        serializer.SerializeValue(ref MaxHealthPoints);
+        serializer.SerializeValue(ref AttackDMG);
+        serializer.SerializeValue(ref AttackSpd);
+        serializer.SerializeValue(ref Ult);
+        serializer.SerializeValue(ref UltCD);
+        serializer.SerializeValue(ref UltCost);
+    }
 }
 
 public enum UltID

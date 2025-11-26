@@ -60,13 +60,12 @@ public class Shopmanager : MonoBehaviour
 
     public void Add(UnitsStats unitStat)
     {
-        networkSpawner.AddUnit(unitStat, NetworkManager.Singleton.LocalClientId);
+        networkSpawner.AddUnitServerRpc(NetworkManager.Singleton.LocalClientId, unitStat);
     }
 
     public void Remove(UnitsStats unitStat)
     {
-
-       networkSpawner.DeleteUnit(unitStat,NetworkManager.Singleton.LocalClientId);
+       networkSpawner.DeleteUnit(NetworkManager.Singleton.LocalClientId, unitStat);
     }
 
 }
