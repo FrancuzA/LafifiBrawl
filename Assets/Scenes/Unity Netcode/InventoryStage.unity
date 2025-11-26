@@ -6955,7 +6955,7 @@ PrefabInstance:
     - target: {fileID: 7645403447225880656, guid: d5d34b0c99a76a249ab2ac1a61c59a0c, type: 3}
       propertyPath: currentMoneyText
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 822956154}
     - target: {fileID: 7645403447225880656, guid: d5d34b0c99a76a249ab2ac1a61c59a0c, type: 3}
       propertyPath: 'ItemsToBuy.Array.data[0]'
       value: 
@@ -6983,15 +6983,15 @@ PrefabInstance:
     - target: {fileID: 7645403447225880656, guid: d5d34b0c99a76a249ab2ac1a61c59a0c, type: 3}
       propertyPath: 'ItemPlacements.Array.data[0]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1469869027}
     - target: {fileID: 7645403447225880656, guid: d5d34b0c99a76a249ab2ac1a61c59a0c, type: 3}
       propertyPath: 'ItemPlacements.Array.data[1]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 387139782}
     - target: {fileID: 7645403447225880656, guid: d5d34b0c99a76a249ab2ac1a61c59a0c, type: 3}
       propertyPath: 'ItemPlacements.Array.data[2]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 317392065}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
