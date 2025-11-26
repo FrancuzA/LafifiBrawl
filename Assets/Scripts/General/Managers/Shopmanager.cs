@@ -22,6 +22,7 @@ public class Shopmanager : MonoBehaviour
 
     private void InitializeShop()
     {
+        networkSpawner = NetworkSpawner.Singleton;
         Dependencies.Instance.RegisterDependency<Shopmanager>(this);
         ChosenItems.Clear();
         foreach (Transform placement in ItemPlacements)
