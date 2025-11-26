@@ -106,6 +106,19 @@ namespace General.UnityNetwork
                 Debug.Log($"- {unit.CharacterName}");
             }
         }
+        
+        public void DeleteUnit(ulong clientId, UnitsStats unitStats)
+        {
+            if (availableUnits[clientId].Contains(unitStats))
+            {
+                availableUnits[clientId].Remove(unitStats);
+                Debug.Log($"Deleted unit: {unitStats.CharacterName}");
+            }
+            else
+            {
+                Debug.LogWarning($"Unit not found: {unitStats.CharacterName}");
+            }
+        }
 
         #endregion
     }
