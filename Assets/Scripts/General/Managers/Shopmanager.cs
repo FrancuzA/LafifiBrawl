@@ -1,10 +1,14 @@
 using General;
 using System.Collections.Generic;
+using General.UnityNetwork;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 
 public class Shopmanager : MonoBehaviour
 {
+    [SerializeField] private NetworkSpawner networkSpawner;
+    [SerializeField] private List<UnitsStats> unitsStats;
     public List<GameObject> ItemsToBuy = new List<GameObject>();
     public List<Transform> ItemPlacements = new List<Transform>();
     public List<int> ChosenItems = new List<int>();
@@ -52,5 +56,10 @@ public class Shopmanager : MonoBehaviour
     public void UpdateMoneyCount()
     {
         currentMoneyText.text = $"Gold: {Money.ToString()}";
+    }
+
+    public void Add()
+    {
+        networkSpawner.AddUnit(unitsStats[0], NetworkManager.Singleton.LocalClientId);
     }
 }
