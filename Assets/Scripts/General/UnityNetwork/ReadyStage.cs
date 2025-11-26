@@ -39,7 +39,8 @@ public class ReadyStage : NetworkBehaviour
     private void AddUnitServerRpc(ServerRpcParams serverRpcParams = default)
     {
         var clientId = serverRpcParams.Receive.SenderClientId;
-        networkSpawner.AddUnit(unitsStats, clientId);
+        for(var i = 0; i < 7; i++)
+            networkSpawner.AddUnit(unitsStats, clientId);
     }
 
     [ServerRpc(RequireOwnership = false)]
