@@ -46,7 +46,8 @@ namespace General.UnityNetwork
 
             // Ustaw statystyki jednostki
             playerUnit.SetStatsClientRpc(
-                stats.CharacterName, stats.lafifiImg, 
+                stats.CharacterName,
+                stats.lafifiImg, 
                 stats.MaxHealthPoints,
                 stats.AttackDMG,
                 stats.AttackSpd,
