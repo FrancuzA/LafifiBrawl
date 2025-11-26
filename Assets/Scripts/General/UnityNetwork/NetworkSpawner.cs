@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -9,6 +10,7 @@ namespace General.UnityNetwork
         [SerializeField] private GameObject unitPrefab;
         [SerializeField] private Transform playerOneSpawnPoint;
         [SerializeField] private Transform playerTwoSpawnPoint;
+        private Dictionary<ulong, List<UnitsStats>> availableUnits = new();
 
         private void Awake()
         {
@@ -18,6 +20,7 @@ namespace General.UnityNetwork
                 return;
             }
             Dependencies.Instance.RegisterDependency(this);
+            DontDestroyOnLoad(this);
         }
     
         public void SpawnUnitsForPlayer(ulong clientId, UnitsStats stats)
@@ -56,6 +59,50 @@ namespace General.UnityNetwork
             var yOffset = Random.Range(-25f, 25f);
             return spawnPoint.position + new Vector3(xOffset, yOffset, 0);
         }
+
+        #region Equipment Managment
+
+        public bool HasUnit(UnitsStats unitStats, ulong clientId)
+        {
+            return availableUnits[clientId].Contains(unitStats);
+        }
+        
+        public UnitsStats GetUnit(UnitsStats unitStats, ulong clientId)
+        {
+            availableUnits[clientId].Remove(unitStats);
+            Debug.Log($"Deployed unit: {unitStats.CharacterName}");
+            return unitStats;
+        }
+        
+        public UnitsStats GetAnyUnit(ulong clientId)
+        {
+            var unitStats = availableUnits[clientId][0];
+            availableUnits[clientId].RemoveAt(0);
+            Debug.Log($"Deployed unit: {unitStats.CharacterName}, {GetEquippedUnitCount(clientId)} units left for player {clientId}");
+            return unitStats;
+        }
+        
+        public void AddUnit(UnitsStats unitStats, ulong clientId)
+        {
+            availableUnits[clientId].Add(unitStats);
+            Debug.Log($"Added unit: {unitStats.CharacterName}");
+        }
+        
+        public int GetEquippedUnitCount(ulong clientId)
+        {
+            return availableUnits[clientId].Count;
+        }
+        
+        public void ListEquippedUnits(ulong clientId)
+        {
+            Debug.Log("Equipped Units:");
+            foreach (var unit in availableUnits[clientId])
+            {
+                Debug.Log($"- {unit.CharacterName}");
+            }
+        }
+
+        #endregion
     }
 }
 

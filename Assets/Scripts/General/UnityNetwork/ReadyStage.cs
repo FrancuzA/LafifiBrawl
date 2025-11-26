@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using General.Managers;
+using General.UnityNetwork;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,20 +13,33 @@ public class ReadyStage : NetworkBehaviour
     
     [SerializeField] private NetworkObject playerOne;
     [SerializeField] private NetworkObject playerTwo;
+
+    [SerializeField] private NetworkSpawner networkSpawner;
     
-    [SerializeField] private PlayerEquipment playerEquipment;
+    [SerializeField] private UnitsStats unitsStats;
 
     private void Start()
     {
         player1Ready.OnValueChanged += OnPlayerReadyChanged;
         player2Ready.OnValueChanged += OnPlayerReadyChanged;
-        playerEquipment.Setup();
         DontDestroyOnLoad(this);
     }
     
     public void SetPlayerReady()
     {
         SetPlayerReadyServerRpc();
+    }
+
+    public void AddUnitButton()
+    {
+        AddUnitServerRpc();
+    }
+    
+    [ServerRpc(RequireOwnership = false)]
+    private void AddUnitServerRpc(ServerRpcParams serverRpcParams = default)
+    {
+        var clientId = serverRpcParams.Receive.SenderClientId;
+        networkSpawner.AddUnit(unitsStats, clientId);
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -62,12 +76,11 @@ public class ReadyStage : NetworkBehaviour
         {
             var clientId = client.ClientId;
             var player = Instantiate(clientId == 0 ? playerOne : playerTwo, transform);
-            player.GetComponent<Player>().SetPlayerEq(playerEquipment);
             player.SpawnAsPlayerObject(clientId, true);
         }
         
         player1Ready.OnValueChanged -= OnPlayerReadyChanged;
         player2Ready.OnValueChanged -= OnPlayerReadyChanged;
-        NetworkObject.Despawn();
+        //NetworkObject.Despawn();
     }
 }
