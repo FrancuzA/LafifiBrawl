@@ -6363,6 +6363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b606e89a4acdf7f4ebb18592f71572c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   unitPrefab: {fileID: 1648190094190495329, guid: e890ba8159cfbd9409b9af847680a278, type: 3}
   playerOneSpawnPoint: {fileID: 45110049}
   playerTwoSpawnPoint: {fileID: 1193413849}
