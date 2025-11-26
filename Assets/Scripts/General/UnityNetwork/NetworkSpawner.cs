@@ -12,11 +12,8 @@ namespace General.UnityNetwork
         [SerializeField] private GameObject unitPrefab;
         [SerializeField] private Transform playerOneSpawnPoint;
         [SerializeField] private Transform playerTwoSpawnPoint;
-        private Dictionary<ulong, List<UnitsStats>> availableUnits = new()
-        {
-            [0] = new List<UnitsStats>(),
-            [1] = new List<UnitsStats>()
-        };
+        private List<UnitsStats> availableUnits0 = new();
+        private List<UnitsStats> availableUnits1 = new();
 
         private void Awake()
         {
@@ -71,39 +68,45 @@ namespace General.UnityNetwork
 
         public bool HasUnit(UnitsStats unitStats, ulong clientId)
         {
-            return availableUnits[clientId].Contains(unitStats);
+            return clientId == 0 ? availableUnits0.Contains(unitStats) : availableUnits1.Contains(unitStats);
         }
         
         public UnitsStats GetUnit(UnitsStats unitStats, ulong clientId)
         {
-            availableUnits[clientId].Remove(unitStats);
+            
+            var availableUnits = clientId == 0 ? availableUnits0 : availableUnits1;
+            availableUnits.Remove(unitStats);
             Debug.Log($"Deployed unit: {unitStats.CharacterName}");
             return unitStats;
         }
         
         public UnitsStats GetAnyUnit(ulong clientId)
         {
-            var unitStats = availableUnits[clientId][0];
-            availableUnits[clientId].RemoveAt(0);
+            var availableUnits = clientId == 0 ? availableUnits0 : availableUnits1;
+            var unitStats = availableUnits[0];
+            availableUnits.RemoveAt(0);
             Debug.Log($"Deployed unit: {unitStats.CharacterName}, {GetEquippedUnitCount(clientId)} units left for player {clientId}");
             return unitStats;
         }
         
         public void AddUnit(UnitsStats unitStats, ulong clientId)
         {
-            availableUnits[clientId].Add(unitStats);
+            var availableUnits = clientId == 0 ? availableUnits0 : availableUnits1;
+            availableUnits.Add(unitStats);
             Debug.Log($"Added unit: {unitStats.CharacterName}");
         }
         
         public int GetEquippedUnitCount(ulong clientId)
         {
-            return availableUnits[clientId].Count;
+            var availableUnits = clientId == 0 ? availableUnits0 : availableUnits1;
+            return availableUnits.Count;
         }
         
         public void ListEquippedUnits(ulong clientId)
         {
+            var availableUnits = clientId == 0 ? availableUnits0 : availableUnits1;
             Debug.Log("Equipped Units:");
-            foreach (var unit in availableUnits[clientId])
+            foreach (var unit in availableUnits)
             {
                 Debug.Log($"- {unit.CharacterName}");
             }
@@ -111,9 +114,10 @@ namespace General.UnityNetwork
         
         public void DeleteUnit(UnitsStats unitStats, ulong clientId)
         {
-            if (availableUnits[clientId].Contains(unitStats))
+            var availableUnits = clientId == 0 ? availableUnits0 : availableUnits1;
+            if (availableUnits.Contains(unitStats))
             {
-                availableUnits[clientId].Remove(unitStats);
+                availableUnits.Remove(unitStats);
                 Debug.Log($"Deleted unit: {unitStats.CharacterName}");
             }
             else
