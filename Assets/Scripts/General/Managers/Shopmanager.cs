@@ -58,22 +58,11 @@ public class Shopmanager : MonoBehaviour
 
     public void Add(LafifiIndex unitIndex)
     {
-        AddUnitServerRpc(unitIndex);
-    }
-
-    private static void AddUnitServerRpc(LafifiIndex unitIndex)
-    {
         NetworkSpawner.Singleton.AddUnitServerRpc(NetworkManager.Singleton.LocalClientId, (ushort)unitIndex);
     }
-
+    
     public void Remove(LafifiIndex unitIndex)
     {
-        RemoveUnitServerRpc(unitIndex);
-    }
-
-    [ServerRpc]
-    private static void RemoveUnitServerRpc(LafifiIndex unitIndex)
-    {
-        NetworkSpawner.Singleton.DeleteUnit(NetworkManager.Singleton.LocalClientId, (ushort)unitIndex);
+        NetworkSpawner.Singleton.DeleteUnitServerRpc(NetworkManager.Singleton.LocalClientId, (ushort)unitIndex);
     }
 }

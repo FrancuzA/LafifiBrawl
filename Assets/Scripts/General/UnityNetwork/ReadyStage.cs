@@ -61,7 +61,7 @@ public class ReadyStage : NetworkBehaviour
         {
             var clientId = client.ClientId;
             var player = Instantiate(clientId == 0 ? playerOne : playerTwo, transform);
-            player.SpawnAsPlayerObject(clientId, true);
+            player.SpawnWithOwnership(clientId);
         }
         
         player1Ready.OnValueChanged -= OnPlayerReadyChanged;

@@ -45,16 +45,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemsToBuy:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 3670517494859662059, guid: dfa93b397db68c344a7d3c910b897367, type: 3}
+  - {fileID: 511110105408677060, guid: 2f83eca5a997c4c4ebb3abcc86bb687b, type: 3}
+  - {fileID: 5651331218631983125, guid: 5d0ef9e18fbac2748a0341f6ca3ac3e0, type: 3}
+  - {fileID: 564203646776038834, guid: 0ec3f261008a2804f9b9f2277a1ac430, type: 3}
+  - {fileID: 6755685298009632228, guid: ea1ca966843246a4e8f459e776b0e602, type: 3}
+  - {fileID: 7950040068597558016, guid: fbe613964b561f543ab479af1b12983d, type: 3}
   ItemPlacements:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   ChosenItems: 
+  currentMoneyText: {fileID: 0}
   Money: 20
   killSwitch: 0

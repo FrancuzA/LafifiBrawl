@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using General;
@@ -21,15 +22,37 @@ public class Player : NetworkBehaviour
     [SerializeField] private Image playerImage;
     [SerializeField] private GameObject spawnButtons;
     private NetworkSpawner _networkSpawner;
+    private AudioManager _audioManager;
+    [SerializeField] private bool inGame = true;
     
     [Header("Stats")]
-    public NetworkVariable<ushort> playerHealth = new NetworkVariable<ushort>(100);
-    public NetworkVariable<int> blood = new NetworkVariable<int>(10);
+    
+    [SerializeField] private Image healthBarFill;
+    [SerializeField] private Image bloodBarFill;
+    
+    [SerializeField] private float maxHealth = 100f;
+    [SerializeField] private int maxBlood = 10;
+    public NetworkVariable<float> currentHealth { get; } = new (100, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<float> currentBlood { get; } = new(10, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+    private void Start()
+    {
+        
+        StartCoroutine(BloodRegen());
+    }
 
     public override void OnNetworkSpawn()
     {
+        _audioManager = Dependencies.Instance.GetDependency<AudioManager>();
+        currentHealth.OnValueChanged += OnHealthChanged;
+        currentBlood.OnValueChanged += OnBloodChanged;
+        bloodBarFill.fillAmount = 0;
+        healthBarFill.fillAmount = 0;
+        
         if (IsOwner)
         {
+            currentHealth.Value = maxHealth; 
+            currentBlood.Value = maxBlood;
             playerImage.color = Color.white;
             bloodManager.SetActive(true);
             spawnButtons.SetActive(true);
@@ -40,43 +63,100 @@ public class Player : NetworkBehaviour
             playerImage.color = Color.black;
         }
     }
+
+    private void OnBloodChanged(float previousValue, float newValue)
+    {
+        bloodBarFill.fillAmount = newValue / maxBlood;
+    }
+
+    private void OnHealthChanged(float previousValue, float newValue)
+    {
+        healthBarFill.fillAmount = newValue / maxHealth;
+    }
     
+    IEnumerator BloodRegen(float waitTime = 3f)
+    {
+        var wait = new WaitForSeconds(waitTime);
+        while (inGame)
+        {
+            yield return wait;
+            AddBlood(1);
+        }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        if(!IsOwner) return;
+        if (currentHealth.Value <= damage) { currentHealth.Value = 0; }
+        else { currentHealth.Value -= damage; }
+    }
+    
+    public void AddHealth(float healthToAdd)
+    {
+        if(!IsOwner) return;
+        currentHealth.Value += healthToAdd;
+        if (currentHealth.Value > maxHealth)
+        {
+            currentHealth.Value = maxHealth;
+            return;
+        }
+    }
+    
+    public void AddBlood(float bloodToAdd)
+    {
+        if(!IsOwner) return;
+        currentBlood.Value += bloodToAdd;
+        if (currentBlood.Value > maxBlood) { 
+            currentBlood.Value = maxBlood;
+            return;
+        }
+        _audioManager.PlayOneShot(_audioManager.bloodRegenRef);
+    }
+    
+    public void RemoveBlood(float bloodToRemove)
+    {
+        if(!IsOwner) return;
+        currentBlood.Value -= bloodToRemove;
+        if (currentBlood.Value < 0) { currentBlood.Value = 0; }
+    }
+
+    #region Spawning
+
     public void SpawnUnitBelly()
     {
-        RequestSpawnUnitServerRpc(0);
+        RequestSpawnUnit(0);
     }
     
     public void SpawnUnitGrzegorz()
     {
-        RequestSpawnUnitServerRpc(1);
+        RequestSpawnUnit(1);
     }
     
     public void SpawnUnitKon()
     {
-        RequestSpawnUnitServerRpc(2);
+        RequestSpawnUnit(2);
     }
     
     public void SpawnUnitLafifi()
     {
-        RequestSpawnUnitServerRpc(3);
+        RequestSpawnUnit(3);
     }
     
     public void SpawnUnitAngelika()
     {
-        RequestSpawnUnitServerRpc(4);
+        RequestSpawnUnit(4);
     }
     
     public void SpawnUnitRat()
     {
-        RequestSpawnUnitServerRpc(5);
+        RequestSpawnUnit(5);
     }
-    
-    [ServerRpc(RequireOwnership = false)]
-    private void RequestSpawnUnitServerRpc(ushort unitStatIndex, ServerRpcParams rpcParams = default)
+
+    private void RequestSpawnUnit(ushort unitStatIndex, ServerRpcParams serverRpcParams = default)
     {
-        var clientId = rpcParams.Receive.SenderClientId;
-        
-        NetworkSpawner.Singleton.SpawnUnitsForPlayer(clientId, unitStatIndex);
+        NetworkSpawner.Singleton.SpawnUnitsForPlayerServerRpc(NetworkManager.Singleton.LocalClientId, unitStatIndex);
     }
+
+    #endregion
 
 }

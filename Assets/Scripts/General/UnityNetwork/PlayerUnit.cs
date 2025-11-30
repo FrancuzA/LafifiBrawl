@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Unity.Netcode;
@@ -12,7 +13,7 @@ namespace General.UnityNetwork
     public class PlayerUnit : NetworkBehaviour
     {
         [SerializeField] private float attackCooldownTimer;
-        private const float Speed = 1f;
+        private const float Speed = 5f;
         
         [Header("Look")]
         private SpriteRenderer _spriteRenderer;
@@ -67,7 +68,7 @@ namespace General.UnityNetwork
             if (attackCooldownTimer > 0f) return;
             AttackEnemyUnitServerRpc();
         }
-        
+
         [ServerRpc(RequireOwnership = false)]
         private void AttackEnemyUnitServerRpc()
         {
@@ -90,7 +91,6 @@ namespace General.UnityNetwork
         [ServerRpc(RequireOwnership = false)]
         private void DespawnUnitServerRpc()
         {
-            //Debug.LogWarning($"Despawned: {gameObject.name}:{NetworkObjectId}.");
             currentHealthPoints.OnValueChanged -= HealthChanged;
             NetworkObject.Despawn();
         }

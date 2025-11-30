@@ -77,10 +77,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b606e89a4acdf7f4ebb18592f71572c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitsStats: []
+  unitsStats:
+  - {fileID: 11400000, guid: db88110a1a3870547ade00ad382210ab, type: 2}
+  - {fileID: 11400000, guid: a2960a92cbf25f4459be2acc84e8fd59, type: 2}
+  - {fileID: 11400000, guid: cb1bdd9e3b7e1ca46aa314b46f733e5c, type: 2}
+  - {fileID: 11400000, guid: 532926fbdbdb1a84e9fd90d56d84b2cd, type: 2}
+  - {fileID: 11400000, guid: b431f55ed33466f488adc1f18d30b708, type: 2}
+  - {fileID: 11400000, guid: 3f763f5ece5ed7d419433555cbb80cb9, type: 2}
   unitPrefab: {fileID: 1648190094190495329, guid: e890ba8159cfbd9409b9af847680a278, type: 3}
   playerOneSpawnPoint: {fileID: 8523951043464636387}
   playerTwoSpawnPoint: {fileID: 4915977038593003721}
+  players: []
 --- !u!1 &6612728353297753281
 GameObject:
   m_ObjectHideFlags: 0
