@@ -1,3 +1,5 @@
+using System;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,6 +23,5 @@ namespace General.UnityNetwork
                 healthBar.fillAmount = playerScript.playerHealth.Value / 100f;
             }
         }
-
     }
 }

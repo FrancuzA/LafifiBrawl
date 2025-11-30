@@ -50,3 +50,13 @@ public enum LafifiImg
     Angelika = 4,
     Rat = 5
 }
+
+public enum LafifiIndex
+{
+    Belly = 0,
+    Grzegorz = 1,
+    Kon = 2,
+    Lafifi = 3,
+    Angelika = 4,
+    Rat = 5
+}

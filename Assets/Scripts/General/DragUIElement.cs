@@ -22,7 +22,7 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public int cost;
     public TextMeshProUGUI costText;
     public bool isBought = true;
-    public UnitsStats stats;
+    public LafifiIndex unitIndex;
 
     [Header("Audio")]
     [SerializeField] private AudioManager audioManager;
@@ -91,7 +91,7 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                 shop.Money -= cost; 
                 shop.UpdateMoneyCount();
                 Audio.PlayBuySound();
-                shop.Add(stats);
+                shop.Add(unitIndex);
             }
 
             if (canvas.renderMode == RenderMode.ScreenSpaceOverlay && isBought)
@@ -129,7 +129,7 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             shop.Money += cost; 
             shop.UpdateMoneyCount();
             Destroy(gameObject);
-            shop.Remove(stats);
+            shop.Remove(unitIndex);
         }
     }
 

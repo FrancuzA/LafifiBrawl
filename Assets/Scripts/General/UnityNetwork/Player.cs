@@ -9,10 +9,17 @@ using UnityEngine.UI;
 
 public class Player : NetworkBehaviour
 {
-    [SerializeField] private UnitsStats[] stats;
+    //Belly = 0
+    //Grzegorz = 1
+    //Kon = 2
+    //Lafifi = 3
+    //nAngelika = 4
+    //Rat = 5
+    
     [SerializeField] private List<UnitsStats> equippedUnits;
     [SerializeField] private GameObject bloodManager;
     [SerializeField] private Image playerImage;
+    [SerializeField] private GameObject spawnButtons;
     private NetworkSpawner _networkSpawner;
     
     [Header("Stats")]
@@ -21,37 +28,55 @@ public class Player : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        _networkSpawner = NetworkSpawner.Singleton;
         if (IsOwner)
         {
             playerImage.color = Color.white;
             bloodManager.SetActive(true);
-            StartCoroutine(SpawnUnitsRoutine());
+            spawnButtons.SetActive(true);
         }
         else
         {
+            spawnButtons.SetActive(false);
             playerImage.color = Color.black;
         }
     }
-
-    private IEnumerator SpawnUnitsRoutine()
+    
+    public void SpawnUnitBelly()
     {
-        yield return new WaitUntil(() => NetworkManager.Singleton.ConnectedClients.Count > 1);
-        for (var i = 0; i < _networkSpawner.GetEquippedUnitCount(OwnerClientId); i++)
-        {
-            RequestSpawnUnitServerRpc();
-            yield return new WaitForSeconds(5f);
-        }
+        RequestSpawnUnitServerRpc(0);
     }
     
-    [ServerRpc]
-    private void RequestSpawnUnitServerRpc(ServerRpcParams rpcParams = default)
+    public void SpawnUnitGrzegorz()
+    {
+        RequestSpawnUnitServerRpc(1);
+    }
+    
+    public void SpawnUnitKon()
+    {
+        RequestSpawnUnitServerRpc(2);
+    }
+    
+    public void SpawnUnitLafifi()
+    {
+        RequestSpawnUnitServerRpc(3);
+    }
+    
+    public void SpawnUnitAngelika()
+    {
+        RequestSpawnUnitServerRpc(4);
+    }
+    
+    public void SpawnUnitRat()
+    {
+        RequestSpawnUnitServerRpc(5);
+    }
+    
+    [ServerRpc(RequireOwnership = false)]
+    private void RequestSpawnUnitServerRpc(ushort unitStatIndex, ServerRpcParams rpcParams = default)
     {
         var clientId = rpcParams.Receive.SenderClientId;
         
-        if (!_networkSpawner) _networkSpawner = NetworkSpawner.Singleton;
-        _networkSpawner.GetAnyUnitServerRpc(clientId, out var unitStat);
-        _networkSpawner.SpawnUnitsForPlayer(clientId, unitStat);
+        NetworkSpawner.Singleton.SpawnUnitsForPlayer(clientId, unitStatIndex);
     }
 
 }

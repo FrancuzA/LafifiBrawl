@@ -14,9 +14,6 @@ public class ReadyStage : NetworkBehaviour
     [SerializeField] private NetworkObject playerOne;
     [SerializeField] private NetworkObject playerTwo;
 
-    [SerializeField] private NetworkSpawner networkSpawner;
-    
-    [SerializeField] private UnitsStats unitsStats;
 
     private void Start()
     {
@@ -28,19 +25,6 @@ public class ReadyStage : NetworkBehaviour
     public void SetPlayerReady()
     {
         SetPlayerReadyServerRpc();
-    }
-
-    public void AddUnitButton()
-    {
-        AddUnitServerRpc();
-    }
-    
-    [ServerRpc(RequireOwnership = false)]
-    private void AddUnitServerRpc(ServerRpcParams serverRpcParams = default)
-    {
-        var clientId = serverRpcParams.Receive.SenderClientId;
-        for(var i = 0; i < 7; i++)
-            networkSpawner.AddUnitServerRpc(clientId, unitsStats);
     }
 
     [ServerRpc(RequireOwnership = false)]

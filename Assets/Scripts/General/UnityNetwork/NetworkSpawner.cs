@@ -6,16 +6,21 @@ using Random = UnityEngine.Random;
 
 namespace General.UnityNetwork
 {
-    public class NetworkSpawner : NetworkBehaviour
+    public class NetworkSpawner : MonoBehaviour
     {
         public static NetworkSpawner Singleton;
+        
+        [Tooltip("Belly = 0,\nGrzegorz = 1,\nKon = 2,\nLafifi = 3,\nAngelika = 4,\nRat = 5")]
+        [SerializeField] private UnitsStats[] unitsStats;
         
         [SerializeField] private GameObject unitPrefab;
         [SerializeField] private Transform playerOneSpawnPoint;
         [SerializeField] private Transform playerTwoSpawnPoint;
 
-        private List<UnitsStats> playerOneStats = new();
-        private List<UnitsStats> playerTwoStats = new();
+        private Dictionary<ulong, List<UnitsStats>> playerStats = new(){
+            {0, new List<UnitsStats>()},
+            {1, new List<UnitsStats>()}
+        };
         
 
         private void Awake()
@@ -28,8 +33,17 @@ namespace General.UnityNetwork
             Singleton = this;
         }
     
-        public void SpawnUnitsForPlayer(ulong clientId, UnitsStats stats)
+        public void SpawnUnitsForPlayer(ulong clientId, ushort statsIndex)
         {
+            
+            ListEquippedUnits(0);
+            ListEquippedUnits(1);
+            
+            var stats = unitsStats[statsIndex]; 
+            
+            if (!HasUnit(clientId, statsIndex)) return;
+            GetUnitServerRc(clientId, statsIndex);
+            
             bool playerZero = clientId == 0;
         
             Transform spawnPoint = playerZero ? playerOneSpawnPoint : playerTwoSpawnPoint;
@@ -68,59 +82,51 @@ namespace General.UnityNetwork
 
         #region Equipment Managment
 
-        public bool HasUnit(ulong clientId, UnitsStats unitStats)
+        private bool HasUnit(ulong clientId, ushort unitIndex)
         {
-            var availableUnits = clientId == 0 ? playerOneStats : playerTwoStats;
-            return availableUnits.Contains(unitStats);
+            var unitStats = unitsStats[unitIndex];
+            
+            return playerStats[clientId].Contains(unitStats);
         }
-        
-        public void GetUnit(ulong clientId, UnitsStats unitStats, out UnitsStats unitStat)
+
+        [ServerRpc (RequireOwnership = false)]
+        private void GetUnitServerRc(ulong clientId, ushort unitIndex)
         {
-            var availableUnits = clientId == 0 ? playerOneStats : playerTwoStats;
-            unitStat = unitStats;
-            availableUnits.Remove(unitStats);
-            Debug.Log($"Deployed unit: {unitStats.CharacterName}");
-        }
-        
-        [ServerRpc(RequireOwnership = false)]
-        public void GetAnyUnitServerRpc(ulong clientId, out UnitsStats unitStats)
-        {
-            var availableUnits = clientId == 0 ? playerOneStats : playerTwoStats;
-            unitStats = availableUnits[0];
-            availableUnits.RemoveAt(0);
-            Debug.Log($"Deployed unit: {unitStats.CharacterName}, {GetEquippedUnitCount(clientId)} units left for player {clientId}");
+            var unitStats = unitsStats[unitIndex];
+            playerStats[clientId].Remove(unitStats);
+            //Debug.Log($"Deployed unit: {unitStats.CharacterName}");
         }
         
         [ServerRpc(RequireOwnership = false)]
-        public void AddUnitServerRpc(ulong clientId, UnitsStats unitStats)
+        public void AddUnitServerRpc(ulong clientId, ushort unitIndex)
         {
-            var availableUnits = clientId == 0 ? playerOneStats : playerTwoStats;
-            availableUnits.Add(unitStats);
-            Debug.Log($"Added unit: {unitStats.CharacterName}");
+            var unitStats = unitsStats[unitIndex];
+            playerStats[clientId].Add(unitStats);
+            //Debug.Log($"Added unit: {unitStats.CharacterName}");
         }
         
         public int GetEquippedUnitCount(ulong clientId)
         {
-            var availableUnits = clientId == 0 ? playerOneStats : playerTwoStats;
-            return availableUnits.Count;
+            var unitStats = playerStats[clientId];
+            return unitStats.Count;
         }
         
         public void ListEquippedUnits(ulong clientId)
         {
-            var availableUnits = clientId == 0 ? playerOneStats : playerTwoStats;
-            Debug.Log("Equipped Units:");
-            foreach (var unit in availableUnits)
+            string debugMessage = $"Client {clientId} has the following equipped units:";
+            foreach (var unit in playerStats[clientId])
             {
-                Debug.Log($"- {unit.CharacterName}");
+                debugMessage += $"\n- {unit.CharacterName}";
             }
+            Debug.Log(debugMessage);
         }
         
-        public void DeleteUnit(ulong clientId, UnitsStats unitStats)
+        public void DeleteUnit(ulong clientId, ushort unitIndex)
         {
-            var availableUnits = clientId == 0 ? playerOneStats : playerTwoStats;
-            if (availableUnits.Contains(unitStats))
+            var unitStats = unitsStats[unitIndex];
+            if (playerStats[clientId].Contains(unitStats))
             {
-                availableUnits.Remove(unitStats);
+                playerStats[clientId].Remove(unitStats);
                 Debug.Log($"Deleted unit: {unitStats.CharacterName}");
             }
             else

@@ -56,14 +56,24 @@ public class Shopmanager : MonoBehaviour
         currentMoneyText.text = $"Gold: {Money.ToString()}";
     }
 
-    public void Add(UnitsStats unitStat)
+    public void Add(LafifiIndex unitIndex)
     {
-        NetworkSpawner.Singleton.AddUnitServerRpc(NetworkManager.Singleton.LocalClientId, unitStat);
+        AddUnitServerRpc(unitIndex);
     }
 
-    public void Remove(UnitsStats unitStat)
+    private static void AddUnitServerRpc(LafifiIndex unitIndex)
     {
-        NetworkSpawner.Singleton.DeleteUnit(NetworkManager.Singleton.LocalClientId, unitStat);
+        NetworkSpawner.Singleton.AddUnitServerRpc(NetworkManager.Singleton.LocalClientId, (ushort)unitIndex);
     }
 
+    public void Remove(LafifiIndex unitIndex)
+    {
+        RemoveUnitServerRpc(unitIndex);
+    }
+
+    [ServerRpc]
+    private static void RemoveUnitServerRpc(LafifiIndex unitIndex)
+    {
+        NetworkSpawner.Singleton.DeleteUnit(NetworkManager.Singleton.LocalClientId, (ushort)unitIndex);
+    }
 }
