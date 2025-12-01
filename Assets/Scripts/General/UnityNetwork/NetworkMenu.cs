@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
@@ -39,6 +40,11 @@ namespace General.UnityNetwork
         {
             yield return new WaitUntil(() => NetworkManager.Singleton.ConnectedClients.Count > 1);
             NetworkManager.Singleton.SceneManager.LoadScene("InventoryStage", LoadSceneMode.Single);
+        }
+
+        private void OnDisable()
+        {
+            StopAllCoroutines();
         }
     }
 }

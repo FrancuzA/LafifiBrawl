@@ -27,6 +27,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Unity Netcode/FightStage.unity
     guid: 57d6eaa4e22c8a7448a45cb5c4b9466f
   m_configObjects:
+    com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000, guid: d17a154617dba554d9f537d0bd742444, type: 2}
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 10e12eaa438348b47b01b65d4df8b8f5, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 1afb5b44573193648b719c607834ccbe, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

@@ -3,7 +3,6 @@
     "com.community.netcode.transport.photon-realtime": "https://github.com/Unity-Technologies/multiplayer-community-contributions.git?path=/Transports/com.community.netcode.transport.photon-realtime",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
-    "com.unity.adaptiveperformance": "5.1.6",
     "com.unity.collab-proxy": "2.9.3",
     "com.unity.ext.nunit": "2.0.5",
     "com.unity.feature.2d": "2.0.1",
