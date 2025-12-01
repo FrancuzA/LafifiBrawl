@@ -2902,10 +2902,12 @@ MonoBehaviour:
     m_InternalValue: 0
   player2Ready:
     m_InternalValue: 0
-  playerOne: {fileID: 8963333878927096346, guid: 11264863130052642aa0e6aed18a3297, type: 3}
-  playerTwo: {fileID: 3586381440851809972, guid: 0e96d6375c71a9845b3ee73bddf6c2f4, type: 3}
-  killzoneOne: {fileID: 5928974214733079180, guid: dd8cdd829968e384f8c876ee44d3707e, type: 3}
-  killzoneTwo: {fileID: 8164124386403454387, guid: 79c86de80163ba4489015539bcc965fa, type: 3}
+  playerPrefab:
+  - {fileID: 8963333878927096346, guid: 11264863130052642aa0e6aed18a3297, type: 3}
+  - {fileID: 3586381440851809972, guid: 0e96d6375c71a9845b3ee73bddf6c2f4, type: 3}
+  killZones:
+  - {fileID: 5928974214733079180, guid: dd8cdd829968e384f8c876ee44d3707e, type: 3}
+  - {fileID: 8164124386403454387, guid: 79c86de80163ba4489015539bcc965fa, type: 3}
 --- !u!4 &703277337
 Transform:
   m_ObjectHideFlags: 0

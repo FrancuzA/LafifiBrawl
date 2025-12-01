@@ -12,11 +12,14 @@ namespace General.UnityNetwork
     [RequireComponent(typeof(SpriteRenderer))]
     public class PlayerUnit : NetworkBehaviour
     {
-        [SerializeField] private float attackCooldownTimer;
+        private float _attackCooldownTimer;
+        private float _ultCooldownTimer;
         private const float Speed = 5f;
+        public NetworkSpawner spawner;
         
         [Header("Look")]
         private SpriteRenderer _spriteRenderer;
+        [SerializeField] private SpriteRenderer teamSpriteRenderer;
     
         [Tooltip("Belly = 0,\nGrzegorz = 1,\nKon = 2,\nLafifi = 3,\nAngelika = 4,\nRat = 5")]
         public List<Sprite> sprites = new ();
@@ -40,16 +43,22 @@ namespace General.UnityNetwork
 
         private void Update()
         {
-            if (attackCooldownTimer > -1f) attackCooldownTimer -= Time.deltaTime;
+            if (_attackCooldownTimer > -1f) _attackCooldownTimer -= Time.deltaTime;
+            if (_ultCooldownTimer > -1f) _ultCooldownTimer -= Time.deltaTime;
 
+            if(IsOwner){
+                UseUlt();
+            }
+            
             if (!IsServer) return;
             WalkForwardServerRpc();
         }
-        
+
         public override void OnNetworkSpawn()
         {
             base.OnNetworkSpawn();
-            attackCooldownTimer = AttackSpd;
+            _attackCooldownTimer = AttackSpd;
+            _ultCooldownTimer = UltCD;
             currentHealthPoints.OnValueChanged += HealthChanged;
         }
 
@@ -65,7 +74,7 @@ namespace General.UnityNetwork
             if(enemyUnit.OwnerClientId == OwnerClientId) return;
             if(_targetUnit == null || _targetUnit != enemyUnit) 
                 _targetUnit = enemyUnit;
-            if (attackCooldownTimer > 0f) return;
+            if (_attackCooldownTimer > 0f) return;
             AttackEnemyUnitServerRpc();
         }
 
@@ -74,7 +83,31 @@ namespace General.UnityNetwork
         {
             if(!_targetUnit) return;
             _targetUnit.TakeDamageClientRpc(AttackDMG);
-            attackCooldownTimer = AttackSpd;
+            _attackCooldownTimer = AttackSpd;
+        }
+        
+        private void UseUlt()
+        {
+            if(_ultCooldownTimer > 0f) return;
+            _ultCooldownTimer = UltCD;
+            switch (Ult)
+            {
+                case UltID.Belly:
+                    break;
+                case UltID.Grzegorz:
+                    break;
+                case UltID.Kon:
+                    break;
+                case UltID.Lafifi:
+                    break;
+                case UltID.Angelika:
+                    spawner.AngelikaUltServerRpc();
+                    break;
+                case UltID.Rat:
+                    break;
+                default:
+                    break;
+            }
         }
         
         [ClientRpc]
@@ -87,11 +120,18 @@ namespace General.UnityNetwork
                 DespawnUnitServerRpc();
             }
         }
+
+        [ServerRpc(RequireOwnership = false)]
+        public void HealUnitServerRpc(float healAmount)
+        {
+            currentHealthPoints.Value = Math.Min(currentHealthPoints.Value + healAmount, MaxHealthPoints);
+        }
         
         [ServerRpc(RequireOwnership = false)]
         private void DespawnUnitServerRpc()
         {
             currentHealthPoints.OnValueChanged -= HealthChanged;
+            spawner.AddUnitServerRpc(NetworkObject.OwnerClientId, (ushort)Ult);
             NetworkObject.Despawn();
         }
         
@@ -145,7 +185,7 @@ namespace General.UnityNetwork
         [ClientRpc]
         public void SetColorClientRpc(ulong unitOwnerId)
         {
-            _spriteRenderer.color = unitOwnerId == NetworkManager.Singleton.LocalClientId ? Color.green : Color.red;
+            teamSpriteRenderer.color = unitOwnerId == NetworkManager.Singleton.LocalClientId ? Color.green : Color.red;
         }
     }
 }

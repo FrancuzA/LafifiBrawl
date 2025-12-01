@@ -7,36 +7,23 @@ namespace General.UnityNetwork
     public class PlayerEquipment : MonoBehaviour
     {
         [SerializeField] private List<ushort> equippedItems = new ();
+        [SerializeField] private List<PlayerUnit> _deployedUnits = new ();
         
         #region Equipment Managment
 
         public bool HasUnit(ushort unitIndex)
         {
-            //Debug.Log($"Checking for unit: {unitIndex}: {equippedItems.Contains(unitIndex)}");
             return equippedItems.Contains(unitIndex);
         }
 
         public void GetUnit(ushort unitIndex)
         {
-            //Debug.Log($"Getting unit: {unitIndex}");
             equippedItems.Remove(unitIndex);
-            //Debug.Log($"Deployed unit: {unitStats.CharacterName}");
         }
         
         public void AddUnit(ushort unitIndex)
         {
             equippedItems.Add(unitIndex);
-            //Debug.Log($"Added unit: {unitStats.CharacterName}");
-        }
-        
-        public void ListEquippedUnits()
-        {
-            string debugMessage = $"Equipped units (index):";
-            foreach (var unit in equippedItems)
-            {
-                debugMessage += $"\n- {equippedItems}";
-            }
-            Debug.Log(debugMessage);
         }
         
         public void DeleteUnit(ushort unitIndex)
@@ -50,6 +37,25 @@ namespace General.UnityNetwork
             {
                 Debug.LogWarning($"Unit not found: {equippedItems}");
             }
+        }
+
+        #endregion
+
+        #region Deployment
+
+        public void DeployUnit(PlayerUnit unit)
+        {
+            _deployedUnits.Add(unit);
+        }
+        
+        public void UndeployUnit(PlayerUnit unit)
+        {
+            _deployedUnits.Remove(unit);
+        }
+        
+        public List<PlayerUnit> GetDeployedUnits()
+        {
+            return _deployedUnits;
         }
 
         #endregion

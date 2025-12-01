@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
-using General.Managers;
-using General.UnityNetwork;
+using JetBrains.Annotations;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,13 +8,12 @@ public class ReadyStage : NetworkBehaviour
 {
     public NetworkVariable<bool> player1Ready = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<bool> player2Ready = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-    
-    [SerializeField] private NetworkObject playerOne;
-    [SerializeField] private NetworkObject playerTwo;
 
-    [SerializeField] private GameObject killzoneOne;
-    [SerializeField] private GameObject killzoneTwo;
+    [SerializeField] private NetworkObject[] playerPrefab;
 
+    [SerializeField] private GameObject[] killZones;
+
+    [ItemCanBeNull] private List<Player> _playerInstances = new();
 
     private void Start()
     {
@@ -63,7 +60,8 @@ public class ReadyStage : NetworkBehaviour
         foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
         {
             var clientId = client.ClientId;
-            var player = Instantiate(clientId == 0 ? playerOne : playerTwo, transform);
+            var player = Instantiate(playerPrefab[clientId], transform);
+            _playerInstances.Add(player.GetComponent<Player>());
             player.SpawnWithOwnership(clientId);
         }
         SpawnZonesClientRpc();
@@ -76,9 +74,19 @@ public class ReadyStage : NetworkBehaviour
     [ClientRpc]
     private void SpawnZonesClientRpc()
     {
-        var killzone = Instantiate(killzoneOne, transform);
-        killzone.GetComponent<KillZone>().readyStage = this;
-        killzone = Instantiate(killzoneTwo, transform);
-        killzone.GetComponent<KillZone>().readyStage = this;
+        Instantiate(killZones[0], transform).GetComponent<KillZone>().readyStage = this;
+        Instantiate(killZones[1], transform).GetComponent<KillZone>().readyStage = this;
+    }
+    
+    [ServerRpc(RequireOwnership = false)]
+    public void DespawnUnitServerRpc(NetworkObjectReference unitRef, ServerRpcParams serverRpcParams = default)
+    {
+        var clientId = serverRpcParams.Receive.SenderClientId;
+        _playerInstances[(int)clientId]?.TakeDamage(10f);
+        if (!IsServer) return;
+        if (unitRef.TryGet(out var unit))
+        {
+            unit.Despawn();
+        }
     }
 }

@@ -32,13 +32,13 @@ namespace General.UnityNetwork
         }
 
         [Rpc(SendTo.Server, RequireOwnership = false)]
-        public void SpawnUnitsForPlayerServerRpc(ulong clientId, ushort statsIndex)
+        public void SpawnUnitsForPlayerServerRpc(ulong clientId, ushort unitIndex)
         {
             //Debug.Log($"Client {clientId} want to spawn unit with index {statsIndex}.");
             
-            var stats = unitsStats[statsIndex]; 
-            if (!player[(int)clientId].HasUnit(statsIndex)) return;
-            player[(int)clientId].GetUnit(statsIndex);
+            var stats = unitsStats[unitIndex]; 
+            if (!player[(int)clientId].HasUnit(unitIndex)) return;
+            player[(int)clientId].GetUnit(unitIndex);
             
             bool playerZero = clientId == 0;
         
@@ -48,6 +48,8 @@ namespace General.UnityNetwork
             var unit = Instantiate(unitPrefab, spawnPosition, Quaternion.identity);
         
             var playerUnit = unit.GetComponent<PlayerUnit>();
+            playerUnit.spawner = this;
+            player[(int)clientId].DeployUnit(playerUnit);
             var unitNetworkObject = unit.GetComponent<NetworkObject>();
             
             unitNetworkObject.SpawnWithOwnership(clientId);
@@ -74,6 +76,16 @@ namespace General.UnityNetwork
             var xOffset = Random.Range(-20f, 10f);
             var yOffset = Random.Range(-25f, 25f);
             return spawnPoint.position + new Vector3(xOffset, yOffset, 0);
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        public void AngelikaUltServerRpc(ServerRpcParams serverRpcParams = default)
+        {
+            var clientId = serverRpcParams.Receive.SenderClientId;
+            foreach (var unit in player[(int)clientId].GetDeployedUnits())
+            {
+                unit.HealUnitServerRpc(5);
+            }
         }
         
         [ServerRpc(RequireOwnership = false)]
