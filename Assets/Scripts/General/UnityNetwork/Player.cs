@@ -33,7 +33,7 @@ public class Player : NetworkBehaviour
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private int maxBlood = 10;
     public NetworkVariable<float> currentHealth { get; } = new (100, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-    public NetworkVariable<float> currentBlood { get; } = new(10, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<float> currentBlood { get; } = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     private void Start()
     {
@@ -51,8 +51,8 @@ public class Player : NetworkBehaviour
         
         if (IsOwner)
         {
-            currentHealth.Value = maxHealth; 
-            currentBlood.Value = maxBlood;
+            currentHealth.Value = maxHealth;
+            currentBlood.Value = 0;
             playerImage.color = Color.white;
             bloodManager.SetActive(true);
             spawnButtons.SetActive(true);
@@ -62,18 +62,31 @@ public class Player : NetworkBehaviour
             spawnButtons.SetActive(false);
             playerImage.color = Color.black;
         }
+        
+        UpdateBlood();
+        UpdateHealth();
     }
 
     private void OnBloodChanged(float previousValue, float newValue)
     {
-        bloodBarFill.fillAmount = newValue / maxBlood;
+        UpdateBlood();
+    }
+
+    private void UpdateBlood()
+    {
+        bloodBarFill.fillAmount = currentBlood.Value / maxBlood;
     }
 
     private void OnHealthChanged(float previousValue, float newValue)
     {
-        healthBarFill.fillAmount = newValue / maxHealth;
+        UpdateHealth();
     }
-    
+
+    private void UpdateHealth()
+    {
+        healthBarFill.fillAmount = currentHealth.Value / maxHealth;
+    }
+
     IEnumerator BloodRegen(float waitTime = 3f)
     {
         var wait = new WaitForSeconds(waitTime);

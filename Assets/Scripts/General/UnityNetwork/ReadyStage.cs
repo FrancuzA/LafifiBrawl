@@ -14,6 +14,9 @@ public class ReadyStage : NetworkBehaviour
     [SerializeField] private NetworkObject playerOne;
     [SerializeField] private NetworkObject playerTwo;
 
+    [SerializeField] private GameObject killzoneOne;
+    [SerializeField] private GameObject killzoneTwo;
+
 
     private void Start()
     {
@@ -63,9 +66,19 @@ public class ReadyStage : NetworkBehaviour
             var player = Instantiate(clientId == 0 ? playerOne : playerTwo, transform);
             player.SpawnWithOwnership(clientId);
         }
+        SpawnZonesClientRpc();
         
         player1Ready.OnValueChanged -= OnPlayerReadyChanged;
         player2Ready.OnValueChanged -= OnPlayerReadyChanged;
         //NetworkObject.Despawn();
+    }
+
+    [ClientRpc]
+    private void SpawnZonesClientRpc()
+    {
+        var killzone = Instantiate(killzoneOne, transform);
+        killzone.GetComponent<KillZone>().readyStage = this;
+        killzone = Instantiate(killzoneTwo, transform);
+        killzone.GetComponent<KillZone>().readyStage = this;
     }
 }

@@ -12,13 +12,13 @@ namespace General.UnityNetwork
 
         public bool HasUnit(ushort unitIndex)
         {
-            Debug.Log($"Checking for unit: {unitIndex}: {equippedItems.Contains(unitIndex)}");
+            //Debug.Log($"Checking for unit: {unitIndex}: {equippedItems.Contains(unitIndex)}");
             return equippedItems.Contains(unitIndex);
         }
 
         public void GetUnit(ushort unitIndex)
         {
-            Debug.Log($"Getting unit: {unitIndex}");
+            //Debug.Log($"Getting unit: {unitIndex}");
             equippedItems.Remove(unitIndex);
             //Debug.Log($"Deployed unit: {unitStats.CharacterName}");
         }

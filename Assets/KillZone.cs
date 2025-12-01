@@ -5,6 +5,7 @@ using UnityEngine;
 public class KillZone : MonoBehaviour
 {
     [SerializeField] private ulong owner;
+    public ReadyStage readyStage;
     
     private void OnTriggerEnter2D(Collider2D other)
     {
