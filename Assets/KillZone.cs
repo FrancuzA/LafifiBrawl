@@ -1,4 +1,5 @@
 using System;
+using General.UnityNetwork;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -10,10 +11,12 @@ public class KillZone : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(!other.CompareTag("Unit")) return; 
-        if(!other.TryGetComponent<NetworkObject>(out var networkObject)) return;
+        if(!other.TryGetComponent<NetworkBehaviour>(out var networkObject)) return;
+        if(!other.TryGetComponent<PlayerUnit>(out var playerUnit)) return;
+        
         if (networkObject.OwnerClientId != owner)
         {
-            readyStage.DespawnUnitServerRpc(networkObject);
+            readyStage.DespawnUnitServerRpc(networkObject, playerUnit.GetUnitIndex());
         }
     }
 }

@@ -181,7 +181,7 @@ MonoBehaviour:
   spawner: {fileID: 0}
   teamSpriteRenderer: {fileID: 4051019825127328818}
   sprites:
-  - {fileID: 21300000, guid: 1d0ff559d6d3b6c449a70993c36e007d, type: 3}
+  - {fileID: -5533620472151542504, guid: 39e770056aa12fd42b205308e51f7c3c, type: 3}
   - {fileID: 21300000, guid: 46b946546120a624fa85a3a20f5f5921, type: 3}
   - {fileID: 5165673720122519575, guid: 135e4a31b2a45924a812f34be311e303, type: 3}
   - {fileID: 21300000, guid: 1d0ff559d6d3b6c449a70993c36e007d, type: 3}

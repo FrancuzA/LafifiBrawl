@@ -52,7 +52,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 892974577867737961}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -195,6 +195,7 @@ MonoBehaviour:
   RTransform: {fileID: 7506083776856418366}
   HeightMultip: 1
   WidthMultip: 1
+  Rows: 6
 --- !u!114 &9209451312154693257
 MonoBehaviour:
   m_ObjectHideFlags: 0

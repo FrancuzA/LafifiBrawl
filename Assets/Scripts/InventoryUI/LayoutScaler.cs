@@ -10,7 +10,7 @@ public class LayoutScaler : MonoBehaviour
     [SerializeField] private int HeightMultip;
     [SerializeField] private int WidthMultip;
     private DragUIElement _dragUI;
-    private const float Rows = 8f;
+    [SerializeField] private float Rows = 8f;
 
     void OnEnable()
     {

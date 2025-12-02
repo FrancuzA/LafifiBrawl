@@ -130,11 +130,10 @@ namespace General.UnityNetwork
         [ServerRpc(RequireOwnership = false)]
         private void DespawnUnitServerRpc()
         {
-            if(IsOwner){
-                currentHealthPoints.OnValueChanged -= HealthChanged;
-                spawner.AddUnitServerRpc(NetworkObject.OwnerClientId, (ushort)Ult);
-                NetworkObject.Despawn();
-            }
+            if (!IsServer) return;
+            spawner.AddUnitServerRpc(NetworkObject.OwnerClientId, (ushort)Ult);
+            NetworkObject.Despawn();
+            currentHealthPoints.OnValueChanged -= HealthChanged;
         }
         
         private void MoveOrDie(Vector3 dir)
@@ -188,6 +187,11 @@ namespace General.UnityNetwork
         public void SetColorClientRpc(ulong unitOwnerId)
         {
             teamSpriteRenderer.color = unitOwnerId == NetworkManager.Singleton.LocalClientId ? Color.green : Color.red;
+        }
+
+        public ushort GetUnitIndex()
+        {
+            return (ushort)Ult;
         }
     }
 }

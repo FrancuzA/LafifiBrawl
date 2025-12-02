@@ -32,11 +32,15 @@ namespace General.UnityNetwork
         }
 
         [Rpc(SendTo.Server, RequireOwnership = false)]
-        public void SpawnUnitsForPlayerServerRpc(ulong clientId, ushort unitIndex)
+        public void SpawnUnitsForPlayerServerRpc(ulong clientId, ushort unitIndex, NetworkBehaviourReference netRef)
         {
             var stats = unitsStats[unitIndex]; 
             if (!player[(int)clientId].HasUnit(unitIndex)) return;
             player[(int)clientId].GetUnit(unitIndex);
+            if(netRef.TryGet(out Player playerScript))
+            {
+                playerScript.RemoveBloodClientRpc(stats.UltCost);
+            }
             
             bool playerZero = clientId == 0;
         
@@ -71,12 +75,12 @@ namespace General.UnityNetwork
     
         private Vector3 GetRandomSpawnPosition(Transform spawnPoint)
         {
-            var xOffset = Random.Range(-20f, 10f);
+            var xOffset = Random.Range(-5f, 5f);
             var yOffset = Random.Range(-25f, 25f);
             return spawnPoint.position + new Vector3(xOffset, yOffset, 0);
         }
 
-        [ServerRpc(RequireOwnership = false)]
+        /*[ServerRpc(RequireOwnership = false)]
         public void AngelikaUltServerRpc(ServerRpcParams serverRpcParams = default)
         {
             var clientId = serverRpcParams.Receive.SenderClientId;
@@ -84,7 +88,7 @@ namespace General.UnityNetwork
             {
                 unit.HealUnitServerRpc(5);
             }
-        }
+        }*/
         
         [ServerRpc(RequireOwnership = false)]
         public void AddUnitServerRpc(ulong clientId, ushort unitIndex)
@@ -97,6 +101,13 @@ namespace General.UnityNetwork
         {
             player[(int)clientId].DeleteUnit(unitIndex);
         }
+
+        /*public void ClearDeployedUnitServerRpc(NetworkBehaviourReference netRef, ServerRpcParams serverRpcParams = default)
+        {
+            var clientId = serverRpcParams.Receive.SenderClientId;
+            netRef.TryGet(out PlayerUnit unit);
+            player[(int)clientId].UndeployUnit(unit);
+        }*/
     }
 }
 

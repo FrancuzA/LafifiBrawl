@@ -17,14 +17,17 @@ public class Player : NetworkBehaviour
     //nAngelika = 4
     //Rat = 5
     
-    [SerializeField] private List<UnitsStats> equippedUnits;
     [SerializeField] private GameObject bloodManager;
     [SerializeField] private Image playerImage;
-    [SerializeField] private GameObject spawnButtons;
+    [SerializeField] private GameObject[] spawnButtons;
+    [Tooltip("Belly = 0\nGrzegorz = 1\nKon = 2\nLafifi = 3\nAngelika = 4\nRat = 5")]
+    [SerializeField] private UnitsStats[] unitsStats;
     private NetworkSpawner _networkSpawner;
     private AudioManager _audioManager;
     [SerializeField] private bool inGame = true;
     [SerializeField] private RectTransform rectTransform;
+    
+    private List<UnitsStats> equippedUnits;
     
     [Header("Stats")]
     
@@ -60,7 +63,8 @@ public class Player : NetworkBehaviour
             currentBlood.Value = 0;
             playerImage.color = Color.white;
             bloodManager.SetActive(true);
-            spawnButtons.SetActive(true);
+            spawnButtons[0].SetActive(true);
+            spawnButtons[1].SetActive(true);
             StartCoroutine(BloodRegen());
         }
         else
@@ -70,8 +74,9 @@ public class Player : NetworkBehaviour
             rectTransform.pivot = new Vector2(0.5f, 1);
             rectTransform.anchoredPosition = new Vector2(0, 0);
             bloodManager.SetActive(false);
-            spawnButtons.SetActive(false);
-            playerImage.color = Color.black;
+            spawnButtons[0].SetActive(false);
+            spawnButtons[1].SetActive(false);
+            //playerImage.color = Color.black;
         }
         
         UpdateBlood();
@@ -113,6 +118,10 @@ public class Player : NetworkBehaviour
         if(!IsOwner) return;
         if (currentHealth.Value <= damage) { currentHealth.Value = 0; }
         else { currentHealth.Value -= damage; }
+        if(currentHealth.Value <= 0)
+        {
+            Application.Quit();
+        }
     }
     
     public void AddHealth(float healthToAdd)
@@ -137,7 +146,8 @@ public class Player : NetworkBehaviour
         _audioManager.PlayOneShot(_audioManager.bloodRegenRef);
     }
     
-    public void RemoveBlood(float bloodToRemove)
+    [ClientRpc]
+    public void RemoveBloodClientRpc(float bloodToRemove)
     {
         if(!IsOwner) return;
         currentBlood.Value -= bloodToRemove;
@@ -178,7 +188,9 @@ public class Player : NetworkBehaviour
 
     private void RequestSpawnUnit(ushort unitStatIndex, ServerRpcParams serverRpcParams = default)
     {
-        NetworkSpawner.Singleton.SpawnUnitsForPlayerServerRpc(NetworkManager.Singleton.LocalClientId, unitStatIndex);
+        if(currentBlood.Value < unitsStats[unitStatIndex].UltCost) return;
+        NetworkSpawner.Singleton.SpawnUnitsForPlayerServerRpc(NetworkManager.Singleton.LocalClientId,
+                unitStatIndex, this);
     }
 
     #endregion

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using General.UnityNetwork;
 using JetBrains.Annotations;
 using Unity.Netcode;
 using UnityEngine;
@@ -79,14 +80,15 @@ public class ReadyStage : NetworkBehaviour
     }
     
     [ServerRpc(RequireOwnership = false)]
-    public void DespawnUnitServerRpc(NetworkObjectReference unitRef, ServerRpcParams serverRpcParams = default)
+    public void DespawnUnitServerRpc(NetworkBehaviourReference unitRef, ushort unitIndex, ServerRpcParams serverRpcParams = default)
     {
         var clientId = serverRpcParams.Receive.SenderClientId;
         _playerInstances[(int)clientId]?.TakeDamage(10f);
         if (!IsServer) return;
-        if (unitRef.TryGet(out var unit))
-        {
-            unit.Despawn();
-        }
+        if (!unitRef.TryGet(out var unit)) return;
+        
+        NetworkSpawner.Singleton.AddUnitServerRpc(unit.OwnerClientId, unitIndex);
+        //NetworkSpawner.Singleton.ClearDeployedUnitServerRpc(unit);
+        unit.NetworkObject.Despawn();
     }
 }
