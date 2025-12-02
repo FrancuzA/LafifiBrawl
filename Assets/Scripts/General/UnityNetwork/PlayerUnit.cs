@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using General.Managers;
 using JetBrains.Annotations;
 using Unity.Netcode;
 using Unity.Netcode.Components;
@@ -16,6 +17,7 @@ namespace General.UnityNetwork
         private float _ultCooldownTimer;
         private const float Speed = 5f;
         public NetworkSpawner spawner;
+        private AudioManager _audioManager;
         
         [Header("Look")]
         private SpriteRenderer _spriteRenderer;
@@ -39,7 +41,10 @@ namespace General.UnityNetwork
         private void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            _audioManager = 
+                Dependencies.Instance.GetDependency<AudioManager>();
         }
+
 
         private void Update()
         {
@@ -69,6 +74,7 @@ namespace General.UnityNetwork
 
         private void OnCollisionStay2D(Collision2D other)
         {
+            if (!IsOwner) return;
             if(!other.gameObject.CompareTag("Unit")) return;
             other.gameObject.TryGetComponent(out PlayerUnit enemyUnit);
             if(enemyUnit.OwnerClientId == OwnerClientId) return;
@@ -76,6 +82,7 @@ namespace General.UnityNetwork
                 _targetUnit = enemyUnit;
             if (_attackCooldownTimer > 0f) return;
             AttackEnemyUnitServerRpc();
+            _audioManager.PlayAttackSound();
         }
 
         [ServerRpc(RequireOwnership = false)]

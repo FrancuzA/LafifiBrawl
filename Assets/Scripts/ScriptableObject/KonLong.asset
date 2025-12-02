@@ -17,6 +17,6 @@ MonoBehaviour:
   MaxHealthPoints: 22
   AttackDMG: 2
   AttackSpd: 1
-  Ult: 1
+  Ult: 2
   UltCD: 8
   UltCost: 3
