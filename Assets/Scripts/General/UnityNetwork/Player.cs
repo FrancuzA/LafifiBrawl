@@ -24,11 +24,12 @@ public class Player : NetworkBehaviour
     private NetworkSpawner _networkSpawner;
     private AudioManager _audioManager;
     [SerializeField] private bool inGame = true;
+    [SerializeField] private RectTransform rectTransform;
     
     [Header("Stats")]
     
-    [SerializeField] private Image healthBarFill;
-    [SerializeField] private Image bloodBarFill;
+    [SerializeField] private Slider healthBarFill;
+    [SerializeField] private Slider bloodBarFill;
     
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private int maxBlood = 10;
@@ -37,28 +38,38 @@ public class Player : NetworkBehaviour
 
     private void Start()
     {
-        
-        StartCoroutine(BloodRegen());
+        rectTransform = GetComponent<RectTransform>();
     }
 
     public override void OnNetworkSpawn()
     {
+        base.OnNetworkSpawn();
         _audioManager = Dependencies.Instance.GetDependency<AudioManager>();
         currentHealth.OnValueChanged += OnHealthChanged;
         currentBlood.OnValueChanged += OnBloodChanged;
-        bloodBarFill.fillAmount = 0;
-        healthBarFill.fillAmount = 0;
+        bloodBarFill.value = 0;
+        healthBarFill.value = 0;
         
         if (IsOwner)
         {
+            rectTransform.anchorMin = new Vector2(0, 0);
+            rectTransform.anchorMax = new Vector2(1, 0);
+            rectTransform.pivot = new Vector2(0.5f, 0);
+            rectTransform.anchoredPosition = new Vector2(0, 0);
             currentHealth.Value = maxHealth;
             currentBlood.Value = 0;
             playerImage.color = Color.white;
             bloodManager.SetActive(true);
             spawnButtons.SetActive(true);
+            StartCoroutine(BloodRegen());
         }
         else
         {
+            rectTransform.anchorMin = new Vector2(0, 1);
+            rectTransform.anchorMax = new Vector2(1, 1);
+            rectTransform.pivot = new Vector2(0.5f, 1);
+            rectTransform.anchoredPosition = new Vector2(0, 0);
+            bloodManager.SetActive(false);
             spawnButtons.SetActive(false);
             playerImage.color = Color.black;
         }
@@ -74,7 +85,7 @@ public class Player : NetworkBehaviour
 
     private void UpdateBlood()
     {
-        bloodBarFill.fillAmount = currentBlood.Value / maxBlood;
+        bloodBarFill.value = currentBlood.Value / maxBlood;
     }
 
     private void OnHealthChanged(float previousValue, float newValue)
@@ -84,7 +95,7 @@ public class Player : NetworkBehaviour
 
     private void UpdateHealth()
     {
-        healthBarFill.fillAmount = currentHealth.Value / maxHealth;
+        healthBarFill.value = currentHealth.Value / maxHealth;
     }
 
     IEnumerator BloodRegen(float waitTime = 3f)

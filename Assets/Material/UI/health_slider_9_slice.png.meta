@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7a03e37e87988d141a4147a1a0851fc6
+guid: 2d2e3d167bd68ce4eb8baa73e21c977e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8990529373598725076
-    second: entity5_0
+      213: -2961739151670221118
+    second: health_slider_9_slice_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,23 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: entity5_0
+      name: health_slider_9_slice_0
       rect:
         serializedVersion: 2
-        x: 392
-        y: 55
-        width: 2494
-        height: 3056
+        x: 0
+        y: 0
+        width: 500
+        height: 500
       alignment: 0
       pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 87, y: 94, z: 87, w: 95}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: c2ccee72b293b3380800000000000000
-      internalID: -8990529373598725076
+      spriteID: bf831e48852b8064f89fbf553b22c778
+      internalID: 2095148311
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 98f8eb0aa3ed07e4e89e72f003792a47
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      entity5_0: -8990529373598725076
+      health_slider_9_slice_0: 2095148311
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

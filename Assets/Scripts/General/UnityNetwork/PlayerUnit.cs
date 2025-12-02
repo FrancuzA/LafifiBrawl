@@ -101,7 +101,7 @@ namespace General.UnityNetwork
                 case UltID.Lafifi:
                     break;
                 case UltID.Angelika:
-                    spawner.AngelikaUltServerRpc();
+                    //spawner.AngelikaUltServerRpc();
                     break;
                 case UltID.Rat:
                     break;
@@ -130,9 +130,11 @@ namespace General.UnityNetwork
         [ServerRpc(RequireOwnership = false)]
         private void DespawnUnitServerRpc()
         {
-            currentHealthPoints.OnValueChanged -= HealthChanged;
-            spawner.AddUnitServerRpc(NetworkObject.OwnerClientId, (ushort)Ult);
-            NetworkObject.Despawn();
+            if(IsOwner){
+                currentHealthPoints.OnValueChanged -= HealthChanged;
+                spawner.AddUnitServerRpc(NetworkObject.OwnerClientId, (ushort)Ult);
+                NetworkObject.Despawn();
+            }
         }
         
         private void MoveOrDie(Vector3 dir)

@@ -34,8 +34,6 @@ namespace General.UnityNetwork
         [Rpc(SendTo.Server, RequireOwnership = false)]
         public void SpawnUnitsForPlayerServerRpc(ulong clientId, ushort unitIndex)
         {
-            //Debug.Log($"Client {clientId} want to spawn unit with index {statsIndex}.");
-            
             var stats = unitsStats[unitIndex]; 
             if (!player[(int)clientId].HasUnit(unitIndex)) return;
             player[(int)clientId].GetUnit(unitIndex);

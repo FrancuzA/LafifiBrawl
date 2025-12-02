@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using General;
 using General.Managers;
@@ -19,13 +20,14 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [Header("ItemInfo")]
     public List<GameObject> cellsToCheck;
     public Vector3 centerOffsetValue;
+    public Vector2 cellCountOffset;
     public int cost;
     public TextMeshProUGUI costText;
     public bool isBought = true;
     public LafifiIndex unitIndex;
 
     [Header("Audio")]
-    [SerializeField] private AudioManager audioManager;
+    private AudioManager _audioManager;
 
 
     private Canvas canvas;
@@ -45,9 +47,6 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private Shopmanager shop;
     private AudioManager Audio;
     
-    
-    
-
     private void Awake()
     {
         startPosition = gameObject.transform.position;
@@ -78,6 +77,23 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         }
     }
 
+    public void DestroyText()
+    {
+        Destroy(costText.gameObject);
+    }
+
+    /// <summary>
+    /// Rysuje zieloną linię w edytorze pokazującą offset od środka obiektu
+    /// </summary>
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Vector3 centerPosition = cellsToCheck[0].transform.position;
+        Vector3 offsetPosition = centerPosition + centerOffsetValue;
+
+        Gizmos.DrawLine(centerPosition, offsetPosition);
+        Gizmos.DrawWireSphere(offsetPosition, 5f);
+    }
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -252,42 +268,41 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void FindCellToSnap() 
     {
-            Vector2 screenPosition;
-            RectTransform rectTransform = cellsToCheck[0].GetComponent<RectTransform>();
-            if (rectTransform != null)
-            {
-                screenPosition = rectTransform.position;
-            }
-            else
-            {
-                screenPosition = Camera.main.WorldToScreenPoint(cellsToCheck[0].transform.position);
-            }
+        Vector2 screenPosition;
+        RectTransform rectTransform = cellsToCheck[0].GetComponent<RectTransform>();
+        if (rectTransform != null)
+        {
+            screenPosition = rectTransform.position;
+        }
+        else
+        {
+            screenPosition = Camera.main.WorldToScreenPoint(cellsToCheck[0].transform.position);
+        }
 
-            GraphicRaycaster raycaster = FindFirstObjectByType<GraphicRaycaster>();
+        GraphicRaycaster raycaster = FindFirstObjectByType<GraphicRaycaster>();
 
-            PointerEventData pointerData = new PointerEventData(EventSystem.current);
-            pointerData.position = screenPosition;
+        PointerEventData pointerData = new PointerEventData(EventSystem.current);
+        pointerData.position = screenPosition;
 
-            List<RaycastResult> results = new List<RaycastResult>();
-            raycaster.Raycast(pointerData, results);
+        List<RaycastResult> results = new List<RaycastResult>();
+        raycaster.Raycast(pointerData, results);
 
-            if (results.Count > 0)
+        if (results.Count > 0)
+        {
+            foreach (RaycastResult result in results)
             {
-                foreach (RaycastResult result in results)
-                {
-                  CellScript cellScript = result.gameObject.GetComponent<CellScript>();
-                   if (cellScript != null)
-                  {
-                    cellScript.SendTransformToItem();
-                    break;
-                  }
-                }
+              CellScript cellScript = result.gameObject.GetComponent<CellScript>();
+               if (cellScript != null)
+              {
+                cellScript.SendTransformToItem();
+                break;
+              }
             }
-            else
-            {
-                Debug.Log($"No UI elements found at position for cell: {cellsToCheck[0].name}");
-            }
-        
+        }
+        else
+        {
+            Debug.Log($"No UI elements found at position for cell: {cellsToCheck[0].name}");
+        }
     }
 
     public void SetCellToSnap(Transform position)
@@ -299,9 +314,9 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         gameObject.transform.SetPositionAndRotation(cellToSnap.position + centerOffsetValue, Quaternion.identity);
         originalPosition = gameObject.transform.position;
-        if (audioManager == null)audioManager = Dependencies.Instance.GetDependency<AudioManager>();
-        audioManager.StopBackpackSound();
-        audioManager.PlayBackpackSound();
+        if (_audioManager == null)_audioManager = Dependencies.Instance.GetDependency<AudioManager>();
+        _audioManager.StopBackpackSound();
+        _audioManager.PlayBackpackSound();
         foreach (GameObject cell in cellsToCheck)
         {
             if (cell == null) continue;
@@ -390,9 +405,5 @@ public class DragUIElement : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         }
     }
 
-    public void DestroyText()
-    {
-        Destroy(costText.gameObject);
-    }
-
 }
+

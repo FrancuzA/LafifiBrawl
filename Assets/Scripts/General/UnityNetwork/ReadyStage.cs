@@ -9,7 +9,7 @@ public class ReadyStage : NetworkBehaviour
     public NetworkVariable<bool> player1Ready = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<bool> player2Ready = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
-    [SerializeField] private NetworkObject[] playerPrefab;
+    [SerializeField] private NetworkObject playerPrefab;
 
     [SerializeField] private GameObject[] killZones;
 
@@ -60,7 +60,7 @@ public class ReadyStage : NetworkBehaviour
         foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
         {
             var clientId = client.ClientId;
-            var player = Instantiate(playerPrefab[clientId], transform);
+            var player = Instantiate(playerPrefab);
             _playerInstances.Add(player.GetComponent<Player>());
             player.SpawnWithOwnership(clientId);
         }
