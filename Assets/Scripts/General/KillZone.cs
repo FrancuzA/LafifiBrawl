@@ -13,7 +13,7 @@ public class KillZone : MonoBehaviour
         if(!other.TryGetComponent<NetworkBehaviour>(out var networkObject)) return;
         if(!other.TryGetComponent<PlayerUnit>(out var playerUnit)) return;
         
-        if (networkObject.OwnerClientId != owner)
+        if (playerUnit.OwnerClientId != owner)
         {
             readyStage.DespawnUnitAndDealDamageServerRpc(networkObject, playerUnit.GetUnitIndex());
         }

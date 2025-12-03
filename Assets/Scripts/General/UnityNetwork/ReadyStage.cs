@@ -83,12 +83,12 @@ public class ReadyStage : NetworkBehaviour
     public void DespawnUnitAndDealDamageServerRpc(NetworkBehaviourReference unitRef, ushort unitIndex, ServerRpcParams serverRpcParams = default)
     {
         var clientId = serverRpcParams.Receive.SenderClientId;
+        Debug.Log(clientId);
         _playerInstances[(int)clientId]?.TakeDamageClientRpc(10f);
         if (!IsServer) return;
         if (!unitRef.TryGet(out var unit)) return;
         
         NetworkSpawner.Singleton.AddUnitServerRpc(unit.OwnerClientId, unitIndex);
-        //NetworkSpawner.Singleton.ClearDeployedUnitServerRpc(unit);
         unit.NetworkObject.Despawn();
     }
 }
