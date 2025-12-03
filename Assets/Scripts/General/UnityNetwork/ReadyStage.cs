@@ -79,7 +79,7 @@ public class ReadyStage : NetworkBehaviour
         Instantiate(killZones[1], transform).GetComponent<KillZone>().readyStage = this;
     }
     
-    [Rpc(SendTo.Server, RequireOwnership = false)]
+    [ServerRpc(RequireOwnership = false)]
     public void DespawnUnitAndDealDamageServerRpc(NetworkBehaviourReference unitRef, ushort unitIndex, ServerRpcParams serverRpcParams = default)
     {
         var clientId = serverRpcParams.Receive.SenderClientId;
