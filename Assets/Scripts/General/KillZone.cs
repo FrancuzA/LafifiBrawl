@@ -15,7 +15,7 @@ public class KillZone : MonoBehaviour
         
         if (networkObject.OwnerClientId != owner)
         {
-            readyStage.DespawnUnitServerRpc(networkObject, playerUnit.GetUnitIndex());
+            readyStage.DespawnUnitAndDealDamageServerRpc(networkObject, playerUnit.GetUnitIndex());
         }
     }
 }

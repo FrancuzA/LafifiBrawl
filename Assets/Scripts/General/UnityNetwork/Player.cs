@@ -112,12 +112,13 @@ public class Player : NetworkBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
+    [ClientRpc]
+    public void TakeDamageClientRpc(float damage)
     {
-        if(!IsOwner) return;
+        if (!IsOwner) return;
         if (currentHealth.Value <= damage) { currentHealth.Value = 0; }
         else { currentHealth.Value -= damage; }
-        if(currentHealth.Value <= 0)
+        if (currentHealth.Value <= 0)
         {
             Application.Quit();
         }
