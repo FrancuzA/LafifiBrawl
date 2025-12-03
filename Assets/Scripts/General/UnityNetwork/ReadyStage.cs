@@ -80,9 +80,8 @@ public class ReadyStage : NetworkBehaviour
     }
     
     [ServerRpc(RequireOwnership = false)]
-    public void DespawnUnitAndDealDamageServerRpc(NetworkBehaviourReference unitRef, ushort unitIndex, ServerRpcParams serverRpcParams = default)
+    public void DespawnUnitAndDealDamageServerRpc(NetworkBehaviourReference unitRef, ushort unitIndex, ulong clientId)
     {
-        var clientId = serverRpcParams.Receive.SenderClientId;
         Debug.Log(clientId);
         _playerInstances[(int)clientId]?.TakeDamageClientRpc(10f);
         if (!IsServer) return;
